@@ -203,6 +203,7 @@ export interface Dictionary {
     delete: string;
     deleting: string;
     deleteConfirm: string;
+    guests: string;
   };
   common: {
     langSwitcherLabel: string;

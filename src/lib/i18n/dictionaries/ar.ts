@@ -301,6 +301,7 @@ const ar: Dictionary = {
     delete: "حذف",
     deleting: "جاري الحذف...",
     deleteConfirm: "هل أنتم متأكدون من حذف هذه الدعوة؟ لا يمكن التراجع عن هذا الإجراء.",
+    guests: "الضيوف",
   },
   common: {
     langSwitcherLabel: "اللغة",

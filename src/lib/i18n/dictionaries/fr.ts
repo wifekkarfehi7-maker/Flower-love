@@ -301,6 +301,7 @@ const fr: Dictionary = {
     delete: "Supprimer",
     deleting: "Suppression...",
     deleteConfirm: "Voulez-vous vraiment supprimer cette invitation ? Cette action est irréversible.",
+    guests: "Invités",
   },
   common: {
     langSwitcherLabel: "Langue",

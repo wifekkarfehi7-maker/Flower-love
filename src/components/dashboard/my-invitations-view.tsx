@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Copy, Eye, Heart, Loader2, MoreVertical, Pencil, Plus, Trash2 } from "lucide-react";
+import { CalendarCheck, Copy, Eye, Heart, HelpCircle, Loader2, MoreVertical, Pencil, Plus, Trash2, Users } from "lucide-react";
 
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
@@ -25,12 +25,19 @@ const STATUS_BADGE_VARIANT: Record<InvitationStatus, BadgeProps["variant"]> = {
   expired: "destructive",
 };
 
+export interface InvitationStats {
+  attending: number;
+  pending: number;
+}
+
 export function MyInvitationsView({
   profile,
   invitations: initialInvitations,
+  stats = {},
 }: {
   profile: ProfileRow | null;
   invitations: InvitationRow[];
+  stats?: Record<string, InvitationStats>;
 }) {
   const { t, locale } = useTranslation();
   const { user } = useAuth();
@@ -124,9 +131,19 @@ export function MyInvitationsView({
                   <p className="mt-2 text-xs text-ink-400">
                     {new Date(invitation.created_at).toLocaleDateString(locale === "ar" ? "ar-TN" : locale)}
                   </p>
-                  <div className="mt-4 flex items-center gap-1.5 text-xs text-ink-400">
-                    <Eye className="h-3.5 w-3.5" />
-                    {invitation.view_count}
+                  <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-400">
+                    <span className="flex items-center gap-1.5">
+                      <Eye className="h-3.5 w-3.5" />
+                      {invitation.view_count}
+                    </span>
+                    <span className="flex items-center gap-1.5 text-emerald-600">
+                      <CalendarCheck className="h-3.5 w-3.5" />
+                      {stats[invitation.id]?.attending ?? 0}
+                    </span>
+                    <span className="flex items-center gap-1.5 text-gold-600">
+                      <HelpCircle className="h-3.5 w-3.5" />
+                      {stats[invitation.id]?.pending ?? 0}
+                    </span>
                   </div>
 
                   <div className="mt-5 flex items-center gap-2">
@@ -139,6 +156,11 @@ export function MyInvitationsView({
                     <Button asChild variant="ghost" size="sm" className="px-3">
                       <Link href={`/invitations/${invitation.id}/preview`} aria-label={t.dashboard.preview}>
                         <Eye className="h-3.5 w-3.5" />
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" size="sm" className="px-3">
+                      <Link href={`/invitations/${invitation.id}/guests`} aria-label={t.dashboard.guests}>
+                        <Users className="h-3.5 w-3.5" />
                       </Link>
                     </Button>
 
