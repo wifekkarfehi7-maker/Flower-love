@@ -9,10 +9,10 @@ export const metadata: Metadata = { title: "إدارة الضيوف — Flower &
 export const dynamic = "force-dynamic";
 
 export default async function GuestsPage({ params }: { params: { id: string } }) {
-  const { user } = await getCurrentUserAndProfile();
+  const { user, profile } = await getCurrentUserAndProfile();
   if (!user) redirect(`/login?next=/invitations/${params.id}/guests`);
 
-  const data = await getGuestPageData(params.id, user.id);
+  const data = await getGuestPageData(params.id, user.id, profile?.role === "admin");
   if (!data) notFound();
 
   return <GuestManagementView invitation={data.invitation} guests={data.guests} rsvps={data.rsvps} />;

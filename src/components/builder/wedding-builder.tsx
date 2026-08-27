@@ -10,10 +10,9 @@ import { SaveIndicator } from "./save-indicator";
 import { LivePreviewPanel } from "./live-preview-panel";
 import { useInvitationAutosave } from "@/hooks/use-invitation-autosave";
 import { useTranslation } from "@/lib/i18n/use-translation";
-import { markReadyForPayment } from "@/lib/invitations/client";
 import { getInvitationExtra, withInvitationExtra } from "@/lib/invitations/data-extra";
-import type { EventRow, GalleryImageRow, InvitationPageRow, InvitationRow, MusicFileRow } from "@/types/database";
-import type { EventItem, PageConfig, TemplateRecord } from "@/types/invitation";
+import type { EventRow, GalleryImageRow, InvitationPageRow, InvitationRow, MusicFileRow, ProfileRow } from "@/types/database";
+import type { EventItem, PageConfig, PricingPlanRecord, TemplateRecord } from "@/types/invitation";
 import { cn } from "@/lib/utils";
 
 import { CoupleInfoStep } from "./steps/couple-info-step";
@@ -95,6 +94,8 @@ export function WeddingBuilder({
   gallery: initialGallery,
   music: initialMusic,
   templates,
+  plans,
+  profile,
   userId,
 }: {
   invitation: InvitationRow;
@@ -103,6 +104,8 @@ export function WeddingBuilder({
   gallery: GalleryImageRow[];
   music: MusicFileRow | null;
   templates: TemplateRecord[];
+  plans: PricingPlanRecord[];
+  profile: ProfileRow | null;
   userId: string;
 }) {
   const { locale, dir } = useTranslation();
@@ -148,6 +151,7 @@ export function WeddingBuilder({
       events,
       gallery: gallery.map((g) => ({ id: g.id, url: g.url ?? "", caption: g.caption ?? undefined })),
       pages,
+      isWatermarked: invitation.is_watermarked,
     };
   }, [invitation, events, gallery, pages, music]);
 
@@ -164,7 +168,6 @@ export function WeddingBuilder({
 
   async function handlePublishStep() {
     await flushNow();
-    await markReadyForPayment(invitation.id);
     router.push("/my-invitations");
   }
 
@@ -178,7 +181,15 @@ export function WeddingBuilder({
     <MusicStep key="music" invitationId={invitation.id} userId={userId} music={music} onMusicChange={setMusic} />,
     <RsvpStep key="rsvp" invitation={invitation} pages={pages} onPatch={patchInvitation} onPagesChange={setPages} />,
     <PreviewStep key="preview" invitation={invitation} events={events} gallery={gallery} pages={pages} music={music} template={selectedTemplate} />,
-    <PublishStep key="publish" invitation={invitation} template={selectedTemplate} onPublish={handlePublishStep} />,
+    <PublishStep
+      key="publish"
+      invitation={invitation}
+      template={selectedTemplate}
+      plans={plans}
+      profile={profile}
+      userId={userId}
+      onPublish={handlePublishStep}
+    />,
   ];
 
   const isLastStep = stepIndex === STEPS.length - 1;

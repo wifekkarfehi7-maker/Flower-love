@@ -4,9 +4,16 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { PricingCard } from "@/components/pricing-card";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import type { PricingPlanRecord } from "@/types/invitation";
 
-export function PricingPreview() {
-  const { t } = useTranslation();
+const PERIOD_LABELS: Record<"ar" | "fr" | "en", Record<string, string>> = {
+  ar: { trial: "تجربة", per_invitation: "للدعوة الواحدة" },
+  fr: { trial: "essai", per_invitation: "par invitation" },
+  en: { trial: "trial", per_invitation: "per invitation" },
+};
+
+export function PricingPreview({ plans }: { plans: PricingPlanRecord[] }) {
+  const { t, locale } = useTranslation();
 
   return (
     <section id="pricing" className="bg-ink-50/60 py-24 sm:py-32">
@@ -20,22 +27,25 @@ export function PricingPreview() {
         </Reveal>
 
         <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {t.pricing.plans.map((plan, index) => (
-            <Reveal key={plan.name} delay={index * 100}>
-              <PricingCard
-                name={plan.name}
-                price={plan.price}
-                period={plan.period}
-                currency={t.pricing.currency}
-                description={plan.description}
-                features={plan.features}
-                ctaLabel={t.pricing.choosePlan}
-                ctaHref="/register"
-                highlighted={index === 2}
-                badgeLabel={index === 2 ? t.pricing.mostPopular : undefined}
-              />
-            </Reveal>
-          ))}
+          {plans.map((plan, index) => {
+            const highlighted = plan.slug === "premium" || (plan.slug !== "free" && index === plans.length - 1);
+            return (
+              <Reveal key={plan.id} delay={index * 100}>
+                <PricingCard
+                  name={locale === "ar" ? plan.nameAr : plan.name}
+                  price={String(plan.price)}
+                  period={PERIOD_LABELS[locale][plan.period] ?? plan.period}
+                  currency={t.pricing.currency}
+                  description={plan.description ?? ""}
+                  features={plan.features}
+                  ctaLabel={t.pricing.choosePlan}
+                  ctaHref="/register"
+                  highlighted={highlighted}
+                  badgeLabel={highlighted ? t.pricing.mostPopular : undefined}
+                />
+              </Reveal>
+            );
+          })}
         </div>
       </Container>
     </section>

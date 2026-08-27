@@ -9,13 +9,17 @@ export interface GuestPageData {
   rsvps: RsvpRow[];
 }
 
-/** Loads an invitation with its guest list and RSVP responses. Returns null if not found or not owned by userId. */
-export async function getGuestPageData(invitationId: string, userId: string): Promise<GuestPageData | null> {
+/** Loads an invitation with its guest list and RSVP responses. Returns null if not found or not owned by userId (unless isAdmin). */
+export async function getGuestPageData(
+  invitationId: string,
+  userId: string,
+  isAdmin = false
+): Promise<GuestPageData | null> {
   const supabase = getSupabaseServerClient();
   if (!supabase) return null;
 
   const { data: invitation } = await supabase.from("invitations").select("*").eq("id", invitationId).single();
-  if (!invitation || invitation.user_id !== userId) return null;
+  if (!invitation || (invitation.user_id !== userId && !isAdmin)) return null;
 
   const [{ data: guests }, { data: rsvps }] = await Promise.all([
     supabase.from("guests").select("*").eq("invitation_id", invitationId).order("created_at", { ascending: false }),

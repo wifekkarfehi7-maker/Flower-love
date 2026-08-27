@@ -6,15 +6,18 @@ import { PricingPreview } from "@/components/landing/pricing-preview";
 import { Testimonials } from "@/components/landing/testimonials";
 import { Faq } from "@/components/landing/faq";
 import { WhatsAppSection } from "@/components/landing/whatsapp-section";
+import { getActivePricingPlans } from "@/lib/pricing/get-plans";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const plans = await getActivePricingPlans();
+
   return (
     <>
       <Hero />
       <HowItWorks />
       <TemplatesPreview />
       <Features />
-      <PricingPreview />
+      <PricingPreview plans={plans} />
       <Testimonials />
       <Faq />
       <WhatsAppSection />

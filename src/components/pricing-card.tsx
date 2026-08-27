@@ -19,11 +19,7 @@ export interface PricingCardProps {
   badgeLabel?: string;
 }
 
-/**
- * Reusable pricing plan card. Rendered from data — the landing page passes
- * static preview data for now; Phase 7 wires this to `pricing_plans` rows
- * fetched from the database so prices are never hard-coded per component.
- */
+/** Reusable pricing plan card, rendered from `pricing_plans` rows fetched from the database. */
 export function PricingCard({
   name,
   price,

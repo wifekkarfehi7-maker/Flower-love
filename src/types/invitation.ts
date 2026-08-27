@@ -60,6 +60,7 @@ export interface InvitationData {
   events: EventItem[];
   gallery: GalleryImageItem[];
   pages: PageConfig[];
+  isWatermarked?: boolean;
 }
 
 /**
@@ -111,5 +112,20 @@ export interface TemplateRecord {
   status: "active" | "draft" | "disabled";
   theme: TemplateTheme;
   fonts: TemplateFonts;
+  sortOrder: number;
+}
+
+/** View model for a pricing plan — same shape whether sourced from the DB or the static fallback. */
+export interface PricingPlanRecord {
+  id: string;
+  slug: string;
+  name: string;
+  nameAr: string;
+  price: number;
+  currency: string;
+  period: string;
+  description: string | null;
+  features: string[];
+  isWatermarked: boolean;
   sortOrder: number;
 }

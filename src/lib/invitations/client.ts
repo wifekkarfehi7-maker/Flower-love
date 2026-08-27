@@ -307,10 +307,3 @@ export async function duplicateInvitation(source: InvitationRow, userId: string)
 
   return ok({ id: newInvitation.id });
 }
-
-export async function markReadyForPayment(id: string): Promise<ActionResult<null>> {
-  const supabase = getSupabaseBrowserClient();
-  if (!supabase) return fail(NOT_CONFIGURED);
-  const { error } = await supabase.from("invitations").update({ status: "pending_payment" }).eq("id", id);
-  return error ? fail(error.message) : ok(null);
-}

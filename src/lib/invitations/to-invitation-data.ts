@@ -39,5 +39,6 @@ export function toInvitationData(
     })),
     gallery: gallery.map((g) => ({ id: g.id, url: g.url ?? "", caption: g.caption ?? undefined })),
     pages: pages.map((p) => ({ pageType: p.page_type, isEnabled: p.is_enabled, sortOrder: p.sort_order })),
+    isWatermarked: invitation.is_watermarked,
   };
 }

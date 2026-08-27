@@ -11,10 +11,10 @@ export const metadata: Metadata = { title: "معاينة الدعوة — Flower
 export const dynamic = "force-dynamic";
 
 export default async function InvitationOwnerPreviewPage({ params }: { params: { id: string } }) {
-  const { user } = await getCurrentUserAndProfile();
+  const { user, profile } = await getCurrentUserAndProfile();
   if (!user) redirect(`/login?next=/invitations/${params.id}/preview`);
 
-  const data = await getInvitationForBuilder(params.id, user.id);
+  const data = await getInvitationForBuilder(params.id, user.id, profile?.role === "admin");
   if (!data) notFound();
 
   const template = data.invitation.template_id

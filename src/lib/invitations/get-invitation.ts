@@ -11,13 +11,17 @@ export interface InvitationBuilderData {
   music: MusicFileRow | null;
 }
 
-/** Loads an invitation with all its related builder data. Returns null if not found or not owned by userId. */
-export async function getInvitationForBuilder(id: string, userId: string): Promise<InvitationBuilderData | null> {
+/** Loads an invitation with all its related builder data. Returns null if not found or not owned by userId (unless isAdmin). */
+export async function getInvitationForBuilder(
+  id: string,
+  userId: string,
+  isAdmin = false
+): Promise<InvitationBuilderData | null> {
   const supabase = getSupabaseServerClient();
   if (!supabase) return null;
 
   const { data: invitation } = await supabase.from("invitations").select("*").eq("id", id).single();
-  if (!invitation || invitation.user_id !== userId) return null;
+  if (!invitation || (invitation.user_id !== userId && !isAdmin)) return null;
 
   const [{ data: pages }, { data: events }, { data: gallery }, { data: music }] = await Promise.all([
     supabase.from("invitation_pages").select("*").eq("invitation_id", id).order("sort_order"),

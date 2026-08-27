@@ -75,6 +75,27 @@ export function InvitationRenderer({
           triggerAutoplay={isOpen}
         />
       )}
+
+      {invitation.isWatermarked && <Watermark />}
+    </div>
+  );
+}
+
+/** Visible repeating watermark for invitations on the free plan — removed once the customer upgrades. */
+function Watermark() {
+  const tile = (
+    <span className="whitespace-nowrap font-heading text-xl font-bold tracking-wide">Flower &amp; Love</span>
+  );
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 z-[60] overflow-hidden opacity-[0.14] mix-blend-difference"
+    >
+      <div className="grid h-[200%] w-[200%] -translate-x-1/4 -translate-y-1/4 -rotate-[30deg] grid-cols-4 gap-x-16 gap-y-20 text-white">
+        {Array.from({ length: 40 }).map((_, i) => (
+          <React.Fragment key={i}>{tile}</React.Fragment>
+        ))}
+      </div>
     </div>
   );
 }
