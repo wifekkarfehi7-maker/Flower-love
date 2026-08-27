@@ -8,7 +8,12 @@ import { Container } from "@/components/ui/container";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { useTranslation } from "@/lib/i18n/use-translation";
 
-export function ComingSoon({ variant }: { variant: "login" | "register" }) {
+/**
+ * Honest "not built yet" placeholder for the invitation builder, which
+ * lands in a later phase. Offers a working WhatsApp fallback instead of a
+ * dead end.
+ */
+export function ComingSoon() {
   const { t, dir } = useTranslation();
   const BackIcon = dir === "rtl" ? ArrowRight : ArrowLeft;
 
@@ -25,17 +30,17 @@ export function ComingSoon({ variant }: { variant: "login" | "register" }) {
           </span>
 
           <h1 className="mt-4 font-heading text-2xl font-bold text-ink-900 sm:text-3xl">
-            {variant === "login" ? t.comingSoon.loginTitle : t.comingSoon.registerTitle}
+            {t.comingSoon.builderTitle}
           </h1>
 
-          <p className="mt-4 text-balance leading-relaxed text-ink-500">{t.comingSoon.description}</p>
+          <p className="mt-4 text-balance leading-relaxed text-ink-500">{t.comingSoon.builderDescription}</p>
 
           <div className="mt-8 flex flex-col gap-3">
-            <WhatsAppButton message={t.comingSoon.whatsappMessage} size="lg">
+            <WhatsAppButton message={t.comingSoon.builderWhatsappMessage} size="lg">
               {t.comingSoon.whatsappCta}
             </WhatsAppButton>
             <Button asChild variant="ghost">
-              <Link href="/">
+              <Link href="/my-invitations">
                 <BackIcon className="h-4 w-4" />
                 {t.comingSoon.backHome}
               </Link>

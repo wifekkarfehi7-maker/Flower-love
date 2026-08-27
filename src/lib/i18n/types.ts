@@ -101,6 +101,101 @@ export interface Dictionary {
     backHome: string;
     whatsappCta: string;
     whatsappMessage: string;
+    builderTitle: string;
+    builderDescription: string;
+    builderWhatsappMessage: string;
+  };
+  auth: {
+    orDivider: string;
+    continueWithGoogle: string;
+    backToHome: string;
+    notConfiguredTitle: string;
+    notConfiguredDescription: string;
+
+    registerTitle: string;
+    registerSubtitle: string;
+    fullNameLabel: string;
+    fullNamePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    passwordLabel: string;
+    passwordPlaceholder: string;
+    confirmPasswordLabel: string;
+    confirmPasswordPlaceholder: string;
+    whatsappLabel: string;
+    whatsappHelper: string;
+    whatsappPlaceholder: string;
+    countryLabel: string;
+    languageLabel: string;
+    agreeTermsPrefix: string;
+    agreeTermsPrivacy: string;
+    agreeTermsAnd: string;
+    agreeTermsTerms: string;
+    registerCta: string;
+    registerCtaLoading: string;
+    haveAccount: string;
+    loginLink: string;
+    registerSuccessTitle: string;
+    registerSuccessDescription: string;
+
+    loginTitle: string;
+    loginSubtitle: string;
+    loginCta: string;
+    loginCtaLoading: string;
+    noAccount: string;
+    registerLink: string;
+    forgotPasswordLink: string;
+
+    completeProfileTitle: string;
+    completeProfileDescription: string;
+    completeProfileCta: string;
+    completeProfileCtaLoading: string;
+
+    forgotPasswordTitle: string;
+    forgotPasswordDescription: string;
+    forgotPasswordCta: string;
+    forgotPasswordCtaLoading: string;
+    forgotPasswordSuccessTitle: string;
+    forgotPasswordSuccessDescription: string;
+
+    resetPasswordTitle: string;
+    resetPasswordDescription: string;
+    newPasswordLabel: string;
+    resetPasswordCta: string;
+    resetPasswordCtaLoading: string;
+    resetPasswordSuccessTitle: string;
+    resetPasswordSuccessDescription: string;
+    goToLogin: string;
+
+    myInvitations: string;
+    signOut: string;
+    welcomeBack: string;
+
+    errorInvalidCredentials: string;
+    errorEmailInUse: string;
+    errorWeakPassword: string;
+    errorPasswordMismatch: string;
+    errorWhatsappInvalid: string;
+    errorRequiredField: string;
+    errorInvalidEmail: string;
+    errorMustAgreeTerms: string;
+    errorGeneric: string;
+  };
+  dashboard: {
+    title: string;
+    welcomePrefix: string;
+    emptyTitle: string;
+    emptyDescription: string;
+    createCta: string;
+    profileIncompleteBanner: string;
+    completeProfileCta: string;
+    statusDraft: string;
+    statusPendingPayment: string;
+    statusPaymentReview: string;
+    statusPaid: string;
+    statusActive: string;
+    statusCancelled: string;
+    statusExpired: string;
   };
   common: {
     langSwitcherLabel: string;

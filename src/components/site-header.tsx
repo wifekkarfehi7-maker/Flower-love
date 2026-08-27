@@ -2,16 +2,18 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Heart, Menu, X } from "lucide-react";
+import { Heart, LayoutGrid, LogOut, Menu, User, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import { useAuth } from "@/lib/auth/provider";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
   const { t } = useTranslation();
+  const { user, profile, signOut } = useAuth();
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
@@ -61,12 +63,18 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/login">{t.nav.login}</Link>
-          </Button>
-          <Button asChild variant="gold" size="sm">
-            <Link href="/register">{t.nav.createInvitation}</Link>
-          </Button>
+          {user ? (
+            <AccountMenu name={profile?.full_name} onSignOut={signOut} />
+          ) : (
+            <>
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/login">{t.nav.login}</Link>
+              </Button>
+              <Button asChild variant="gold" size="sm">
+                <Link href="/register">{t.nav.createInvitation}</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
@@ -97,16 +105,95 @@ export function SiteHeader() {
               </a>
             ))}
             <div className="mt-2 flex flex-col gap-2 border-t border-ink-100 pt-4">
-              <Button asChild variant="outline">
-                <Link href="/login">{t.nav.login}</Link>
-              </Button>
-              <Button asChild variant="gold">
-                <Link href="/register">{t.nav.createInvitation}</Link>
-              </Button>
+              {user ? (
+                <>
+                  <Button asChild variant="outline" onClick={() => setOpen(false)}>
+                    <Link href="/my-invitations">
+                      <LayoutGrid className="h-4 w-4" />
+                      {t.auth.myInvitations}
+                    </Link>
+                  </Button>
+                  <Button variant="ghost" onClick={() => { setOpen(false); signOut(); }}>
+                    <LogOut className="h-4 w-4" />
+                    {t.auth.signOut}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button asChild variant="outline" onClick={() => setOpen(false)}>
+                    <Link href="/login">{t.nav.login}</Link>
+                  </Button>
+                  <Button asChild variant="gold" onClick={() => setOpen(false)}>
+                    <Link href="/register">{t.nav.createInvitation}</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </Container>
         </div>
       )}
     </header>
+  );
+}
+
+function AccountMenu({ name, onSignOut }: { name?: string | null; onSignOut: () => void }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = React.useState(false);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    function onClickOutside(event: MouseEvent) {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false);
+    }
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const initial = name?.trim()?.[0]?.toUpperCase() ?? <User className="h-4 w-4" />;
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className="flex h-10 items-center gap-2 rounded-full border border-ink-200 ps-1.5 pe-3 text-sm font-medium text-ink-700 transition-colors hover:border-gold-300"
+      >
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gold-gradient text-xs font-bold text-ink-950">
+          {initial}
+        </span>
+        <span className="max-w-[8rem] truncate">{name || t.auth.myInvitations}</span>
+      </button>
+
+      {open && (
+        <div
+          role="menu"
+          className="absolute end-0 z-50 mt-2 w-52 overflow-hidden rounded-xl border border-ink-100 bg-white py-1 shadow-card animate-scale-in"
+        >
+          <Link
+            href="/my-invitations"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50"
+          >
+            <LayoutGrid className="h-4 w-4" />
+            {t.auth.myInvitations}
+          </Link>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              setOpen(false);
+              onSignOut();
+            }}
+            className="flex w-full items-center gap-2.5 px-4 py-2.5 text-start text-sm text-destructive hover:bg-destructive/5"
+          >
+            <LogOut className="h-4 w-4" />
+            {t.auth.signOut}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

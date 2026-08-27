@@ -4,6 +4,8 @@ import Script from "next/script";
 
 import "./globals.css";
 import { LanguageProvider, NO_FLASH_LOCALE_SCRIPT } from "@/lib/i18n/provider";
+import { AuthProvider } from "@/lib/auth/provider";
+import { getCurrentUserAndProfile } from "@/lib/auth/get-current-user";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
@@ -65,7 +67,9 @@ export const viewport: Viewport = {
   themeColor: "#0b0a09",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { user, profile } = await getCurrentUserAndProfile();
+
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <head>
@@ -78,11 +82,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         suppressHydrationWarning
       >
         <LanguageProvider>
-          <div className="flex min-h-screen flex-col">
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
-          </div>
+          <AuthProvider initialUser={user} initialProfile={profile}>
+            <div className="flex min-h-screen flex-col">
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </div>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

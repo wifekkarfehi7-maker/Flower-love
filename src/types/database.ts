@@ -1,0 +1,209 @@
+/**
+ * Hand-written types mirroring supabase/migrations/0001_init.sql.
+ * Once a real Supabase project exists, these can be regenerated with:
+ *   npx supabase gen types typescript --project-id <ref> > src/types/database.ts
+ * Keep this file in sync with the migration until then.
+ */
+
+export type UserRole = "customer" | "admin";
+export type PreferredLanguage = "ar" | "fr" | "en";
+export type InvitationStatus =
+  | "draft"
+  | "pending_payment"
+  | "payment_review"
+  | "paid"
+  | "active"
+  | "cancelled"
+  | "expired";
+export type OrderStatus = InvitationStatus;
+export type TemplateStatus = "active" | "draft" | "disabled";
+export type RsvpAttendance = "attending" | "not_attending";
+export type GuestStatus = "pending" | "attending" | "not_attending";
+export type EventType = "aqd" | "wedding" | "dinner" | "reception" | "other";
+export type PageType =
+  | "cover"
+  | "invitation"
+  | "families"
+  | "countdown"
+  | "event_details"
+  | "location"
+  | "calendar"
+  | "gallery"
+  | "rsvp"
+  | "final_message";
+
+export type ProfileRow = {
+  id: string;
+  full_name: string | null;
+  email: string | null;
+  whatsapp: string | null;
+  country: string;
+  preferred_language: PreferredLanguage;
+  role: UserRole;
+  created_at: string;
+  updated_at: string;
+};
+
+export type InvitationRow = {
+  id: string;
+  user_id: string;
+  template_id: string | null;
+  slug: string | null;
+  groom_name: string | null;
+  bride_name: string | null;
+  groom_father: string | null;
+  bride_father: string | null;
+  groom_mother: string | null;
+  bride_mother: string | null;
+  invitation_text: string | null;
+  wedding_date: string | null;
+  wedding_time: string | null;
+  status: InvitationStatus;
+  is_watermarked: boolean;
+  view_count: number;
+  data: Record<string, unknown>;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type TemplateRow = {
+  id: string;
+  slug: string;
+  name: string;
+  name_ar: string;
+  category: string;
+  description: string | null;
+  preview_image_url: string | null;
+  status: TemplateStatus;
+  theme: Record<string, unknown>;
+  supported_pages: PageType[];
+  fonts: Record<string, unknown>;
+  animation_settings: Record<string, unknown>;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type PricingPlanRow = {
+  id: string;
+  slug: string;
+  name: string;
+  name_ar: string;
+  price: number;
+  currency: string;
+  period: string;
+  description: string | null;
+  features: string[];
+  is_watermarked: boolean;
+  is_active: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type OrderRow = {
+  id: string;
+  order_number: string;
+  user_id: string;
+  invitation_id: string;
+  plan_id: string | null;
+  customer_name: string;
+  customer_whatsapp: string;
+  plan_name: string;
+  price: number;
+  currency: string;
+  status: OrderStatus;
+  admin_notes: string | null;
+  paid_at: string | null;
+  activated_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type GuestRow = {
+  id: string;
+  invitation_id: string;
+  name: string;
+  phone: string | null;
+  status: GuestStatus;
+  guest_count: number;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type RsvpRow = {
+  id: string;
+  invitation_id: string;
+  guest_name: string;
+  phone: string | null;
+  attendance: RsvpAttendance;
+  guest_count: number;
+  message: string | null;
+  created_at: string;
+};
+
+export type Database = {
+  public: {
+    Tables: {
+      profiles: {
+        Row: ProfileRow;
+        Insert: Partial<ProfileRow> & { id: string };
+        Update: Partial<ProfileRow>;
+        Relationships: [];
+      };
+      invitations: {
+        Row: InvitationRow;
+        Insert: Partial<InvitationRow> & { user_id: string };
+        Update: Partial<InvitationRow>;
+        Relationships: [];
+      };
+      templates: {
+        Row: TemplateRow;
+        Insert: Partial<TemplateRow> & { slug: string; name: string; name_ar: string };
+        Update: Partial<TemplateRow>;
+        Relationships: [];
+      };
+      pricing_plans: {
+        Row: PricingPlanRow;
+        Insert: Partial<PricingPlanRow> & { slug: string; name: string; name_ar: string };
+        Update: Partial<PricingPlanRow>;
+        Relationships: [];
+      };
+      orders: {
+        Row: OrderRow;
+        Insert: Partial<OrderRow> & {
+          user_id: string;
+          invitation_id: string;
+          customer_name: string;
+          customer_whatsapp: string;
+          plan_name: string;
+          price: number;
+        };
+        Update: Partial<OrderRow>;
+        Relationships: [];
+      };
+      guests: {
+        Row: GuestRow;
+        Insert: Partial<GuestRow> & { invitation_id: string; name: string };
+        Update: Partial<GuestRow>;
+        Relationships: [];
+      };
+      rsvps: {
+        Row: RsvpRow;
+        Insert: Partial<RsvpRow> & {
+          invitation_id: string;
+          guest_name: string;
+          attendance: RsvpAttendance;
+        };
+        Update: Partial<RsvpRow>;
+        Relationships: [];
+      };
+    };
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
+  };
+};
