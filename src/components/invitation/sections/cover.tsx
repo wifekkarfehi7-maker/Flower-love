@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useTranslation } from "@/lib/i18n/use-translation";
 import { Reveal } from "@/components/ui/reveal";
 import { MotifIcon } from "../motif-icon";
@@ -30,13 +32,22 @@ export function CoverSection({
   isOpen: boolean;
 }) {
   const { locale } = useTranslation();
+  const hasCoverImage = Boolean(invitation.coverImageUrl);
+  const nameColor = hasCoverImage ? "#ffffff" : "var(--inv-text)";
 
   return (
     <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]">
-        <MotifIcon motif={theme.motif} className="absolute -end-10 -top-10 h-64 w-64" style={{ color: "var(--inv-primary)" }} />
-        <MotifIcon motif={theme.motif} className="absolute -bottom-16 -start-16 h-72 w-72" style={{ color: "var(--inv-primary)" }} />
-      </div>
+      {hasCoverImage ? (
+        <div aria-hidden="true" className="absolute inset-0">
+          <Image src={invitation.coverImageUrl!} alt="" fill priority sizes="100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/60" />
+        </div>
+      ) : (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]">
+          <MotifIcon motif={theme.motif} className="absolute -end-10 -top-10 h-64 w-64" style={{ color: "var(--inv-primary)" }} />
+          <MotifIcon motif={theme.motif} className="absolute -bottom-16 -start-16 h-72 w-72" style={{ color: "var(--inv-primary)" }} />
+        </div>
+      )}
 
       <Reveal animation="scale-in" className="relative z-10 flex flex-col items-center">
         <span
@@ -48,7 +59,7 @@ export function CoverSection({
 
         <p
           className="mt-8 text-4xl font-bold sm:text-5xl"
-          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
+          style={{ fontFamily: "var(--inv-font-heading)", color: nameColor }}
         >
           {invitation.groomName}
         </p>
@@ -57,7 +68,7 @@ export function CoverSection({
         </span>
         <p
           className="text-4xl font-bold sm:text-5xl"
-          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
+          style={{ fontFamily: "var(--inv-font-heading)", color: nameColor }}
         >
           {invitation.brideName}
         </p>

@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/types/database";
 import { getSupabaseAnonKey, getSupabaseUrl, isSupabaseConfigured } from "./config";
 
-const PROTECTED_PATHS = ["/my-invitations", "/invitations", "/complete-profile", "/reset-password"];
+const PROTECTED_PATHS = ["/my-invitations", "/invitations", "/complete-profile", "/reset-password", "/admin"];
 const AUTH_ONLY_WHEN_LOGGED_OUT_PATHS = ["/login", "/register"];
 
 /**

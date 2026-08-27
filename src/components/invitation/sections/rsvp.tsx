@@ -73,11 +73,18 @@ export function RsvpSection({
   const [phone, setPhone] = React.useState("");
   const [guestCount, setGuestCount] = React.useState(1);
   const [message, setMessage] = React.useState("");
+  const [website, setWebsite] = React.useState(""); // honeypot — real guests never see or fill this field
   const [status, setStatus] = React.useState<"idle" | "submitting" | "done" | "error">("idle");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (isPreview || !attendance || !name.trim()) return;
+
+    if (website.trim()) {
+      // Honeypot tripped — silently pretend to succeed, no DB write.
+      setStatus("done");
+      return;
+    }
 
     setStatus("submitting");
     const supabase = getSupabaseBrowserClient();
@@ -156,6 +163,15 @@ export function RsvpSection({
 
         {attendance && (
           <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 text-start">
+            <input
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            />
             <input
               required
               value={name}
