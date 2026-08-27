@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "Flower & Love — Premium digital wedding invitations for the Tunisian & Arabic-speaking market",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
