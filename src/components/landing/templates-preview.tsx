@@ -61,6 +61,17 @@ const TEMPLATE_STYLES = [
   },
 ] as const;
 
+const TEMPLATE_SLUGS = [
+  "luxury-gold",
+  "elegant-white",
+  "floral",
+  "romantic",
+  "modern",
+  "black-gold",
+  "traditional-arabic",
+  "minimal",
+] as const;
+
 export function TemplatesPreview() {
   const { t } = useTranslation();
 
@@ -81,7 +92,8 @@ export function TemplatesPreview() {
             const Icon = style.icon;
             return (
               <Reveal key={item.name} delay={index * 60} animation="scale-in">
-                <div
+                <Link
+                  href={`/templates/${TEMPLATE_SLUGS[index % TEMPLATE_SLUGS.length]}/preview`}
                   className={cn(
                     "group relative flex aspect-[3/4] flex-col justify-between overflow-hidden rounded-2xl p-5 shadow-card ring-1 transition-transform duration-500 hover:-translate-y-1",
                     style.card,
@@ -98,7 +110,7 @@ export function TemplatesPreview() {
                     <p className={cn("text-lg leading-snug", style.heading)}>{item.name}</p>
                     <p className="mt-1 text-xs opacity-70">{item.nameAr}</p>
                   </div>
-                </div>
+                </Link>
               </Reveal>
             );
           })}
@@ -106,7 +118,7 @@ export function TemplatesPreview() {
 
         <div className="mt-12 flex justify-center">
           <Button asChild variant="outline">
-            <Link href="/register">{t.templates.viewAll}</Link>
+            <Link href="/templates">{t.templates.viewAll}</Link>
           </Button>
         </div>
       </Container>

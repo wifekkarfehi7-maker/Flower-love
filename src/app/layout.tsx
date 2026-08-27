@@ -6,8 +6,6 @@ import "./globals.css";
 import { LanguageProvider, NO_FLASH_LOCALE_SCRIPT } from "@/lib/i18n/provider";
 import { AuthProvider } from "@/lib/auth/provider";
 import { getCurrentUserAndProfile } from "@/lib/auth/get-current-user";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 
 const playfair = Playfair_Display({
@@ -82,13 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         suppressHydrationWarning
       >
         <LanguageProvider>
-          <AuthProvider initialUser={user} initialProfile={profile}>
-            <div className="flex min-h-screen flex-col">
-              <SiteHeader />
-              <main className="flex-1">{children}</main>
-              <SiteFooter />
-            </div>
-          </AuthProvider>
+          <AuthProvider initialUser={user} initialProfile={profile}>{children}</AuthProvider>
         </LanguageProvider>
       </body>
     </html>
