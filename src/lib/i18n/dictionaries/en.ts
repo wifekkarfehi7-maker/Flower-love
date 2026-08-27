@@ -200,8 +200,6 @@ const en: Dictionary = {
     builderWhatsappMessage: "Hello, I'd like to create a new wedding invitation. Can you help me?",
   },
   auth: {
-    orDivider: "or",
-    continueWithGoogle: "Continue with Google",
     backToHome: "Back to home",
     notConfiguredTitle: "Service being configured",
     notConfiguredDescription:

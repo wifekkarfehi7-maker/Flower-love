@@ -106,8 +106,6 @@ export interface Dictionary {
     builderWhatsappMessage: string;
   };
   auth: {
-    orDivider: string;
-    continueWithGoogle: string;
     backToHome: string;
     notConfiguredTitle: string;
     notConfiguredDescription: string;
