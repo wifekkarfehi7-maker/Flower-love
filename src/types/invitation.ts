@@ -52,6 +52,7 @@ export interface InvitationData {
   brideMother?: string;
   invitationText?: string;
   finalMessage?: string;
+  rsvpQuestion?: string;
   weddingDate: string | null;
   weddingTime: string | null;
   coverImageUrl?: string;
@@ -86,6 +87,17 @@ export interface TemplateTheme {
 export interface TemplateFonts {
   heading: "amiri" | "playfair" | "inter" | "cairo";
   body: "cairo" | "inter";
+}
+
+/**
+ * Shape of `invitations.data` jsonb — builder settings that don't need
+ * their own column. Kept small and additive so new builder features never
+ * require a migration.
+ */
+export interface InvitationDataExtra {
+  coverImageUrl?: string;
+  fontsOverride?: Partial<TemplateFonts>;
+  rsvpQuestion?: string;
 }
 
 export interface TemplateRecord {

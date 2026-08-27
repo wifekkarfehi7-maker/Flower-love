@@ -1,14 +1,19 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
-import { Eye, Heart, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Copy, Eye, Heart, Loader2, MoreVertical, Pencil, Plus, Trash2 } from "lucide-react";
 
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
 import { Badge, type BadgeProps } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth/provider";
+import { deleteInvitation, duplicateInvitation } from "@/lib/invitations/client";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import type { InvitationRow, InvitationStatus, ProfileRow } from "@/types/database";
+import { cn } from "@/lib/utils";
 
 const STATUS_BADGE_VARIANT: Record<InvitationStatus, BadgeProps["variant"]> = {
   draft: "soft",
@@ -22,12 +27,18 @@ const STATUS_BADGE_VARIANT: Record<InvitationStatus, BadgeProps["variant"]> = {
 
 export function MyInvitationsView({
   profile,
-  invitations,
+  invitations: initialInvitations,
 }: {
   profile: ProfileRow | null;
   invitations: InvitationRow[];
 }) {
   const { t, locale } = useTranslation();
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const [invitations, setInvitations] = React.useState(initialInvitations);
+  const [busyId, setBusyId] = React.useState<string | null>(null);
+  const [menuId, setMenuId] = React.useState<string | null>(null);
 
   const statusLabel: Record<InvitationStatus, string> = {
     draft: t.dashboard.statusDraft,
@@ -38,6 +49,28 @@ export function MyInvitationsView({
     cancelled: t.dashboard.statusCancelled,
     expired: t.dashboard.statusExpired,
   };
+
+  async function handleDuplicate(invitation: InvitationRow) {
+    if (!user) return;
+    setMenuId(null);
+    setBusyId(invitation.id);
+    const result = await duplicateInvitation(invitation, user.id);
+    setBusyId(null);
+    if (result.data) {
+      router.push(`/invitations/${result.data.id}/builder`);
+    }
+  }
+
+  async function handleDelete(invitation: InvitationRow) {
+    setMenuId(null);
+    if (!window.confirm(t.dashboard.deleteConfirm)) return;
+    setBusyId(invitation.id);
+    const result = await deleteInvitation(invitation.id);
+    setBusyId(null);
+    if (!result.error) {
+      setInvitations((prev) => prev.filter((i) => i.id !== invitation.id));
+    }
+  }
 
   return (
     <section className="bg-ink-50/60 py-12 sm:py-16">
@@ -79,7 +112,7 @@ export function MyInvitationsView({
 
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {invitations.map((invitation) => (
-                <Card key={invitation.id} className="flex flex-col p-6">
+                <Card key={invitation.id} className="relative flex flex-col p-6">
                   <div className="flex items-start justify-between gap-3">
                     <p className="font-heading text-lg font-semibold text-ink-900">
                       {invitation.groom_name || "—"} &amp; {invitation.bride_name || "—"}
@@ -95,9 +128,53 @@ export function MyInvitationsView({
                     <Eye className="h-3.5 w-3.5" />
                     {invitation.view_count}
                   </div>
-                  <Button asChild variant="outline" size="sm" className="mt-5">
-                    <Link href={`/invitations/${invitation.id}`}>{t.dashboard.createCta}</Link>
-                  </Button>
+
+                  <div className="mt-5 flex items-center gap-2">
+                    <Button asChild variant="outline" size="sm" className="flex-1">
+                      <Link href={`/invitations/${invitation.id}/builder`}>
+                        <Pencil className="h-3.5 w-3.5" />
+                        {t.dashboard.edit}
+                      </Link>
+                    </Button>
+
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setMenuId(menuId === invitation.id ? null : invitation.id)}
+                        disabled={busyId === invitation.id}
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-ink-200 text-ink-500 hover:bg-ink-50"
+                      >
+                        {busyId === invitation.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <MoreVertical className="h-4 w-4" />
+                        )}
+                      </button>
+
+                      {menuId === invitation.id && (
+                        <div className="absolute end-0 z-20 mt-2 w-48 overflow-hidden rounded-xl border border-ink-100 bg-white py-1 shadow-card">
+                          <button
+                            type="button"
+                            onClick={() => handleDuplicate(invitation)}
+                            className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50"
+                          >
+                            <Copy className="h-4 w-4" />
+                            {t.dashboard.duplicate}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(invitation)}
+                            className={cn(
+                              "flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-destructive hover:bg-destructive/5"
+                            )}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                            {t.dashboard.delete}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </Card>
               ))}
             </div>

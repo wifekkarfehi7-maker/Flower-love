@@ -120,7 +120,7 @@ export function RsvpSection({
           className="text-2xl font-bold sm:text-3xl"
           style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
         >
-          {t.question}
+          {invitation.rsvpQuestion || t.question}
         </p>
         <Divider theme={theme} />
 

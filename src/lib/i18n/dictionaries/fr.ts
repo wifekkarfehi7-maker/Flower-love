@@ -294,6 +294,13 @@ const fr: Dictionary = {
     statusActive: "Active",
     statusCancelled: "Annulée",
     statusExpired: "Expirée",
+    edit: "Continuer l'édition",
+    preview: "Aperçu",
+    duplicate: "Dupliquer l'invitation",
+    duplicating: "Duplication...",
+    delete: "Supprimer",
+    deleting: "Suppression...",
+    deleteConfirm: "Voulez-vous vraiment supprimer cette invitation ? Cette action est irréversible.",
   },
   common: {
     langSwitcherLabel: "Langue",

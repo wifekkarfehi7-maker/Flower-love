@@ -196,6 +196,13 @@ export interface Dictionary {
     statusActive: string;
     statusCancelled: string;
     statusExpired: string;
+    edit: string;
+    preview: string;
+    duplicate: string;
+    duplicating: string;
+    delete: string;
+    deleting: string;
+    deleteConfirm: string;
   };
   common: {
     langSwitcherLabel: string;

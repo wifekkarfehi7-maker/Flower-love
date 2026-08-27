@@ -144,6 +144,50 @@ export type RsvpRow = {
   created_at: string;
 };
 
+export type InvitationPageRow = {
+  id: string;
+  invitation_id: string;
+  page_type: PageType;
+  is_enabled: boolean;
+  sort_order: number;
+  config: Record<string, unknown>;
+  created_at: string;
+  updated_at: string;
+};
+
+export type EventRow = {
+  id: string;
+  invitation_id: string;
+  event_type: EventType;
+  name: string;
+  event_date: string | null;
+  event_time: string | null;
+  location_name: string | null;
+  location_url: string | null;
+  sort_order: number;
+  created_at: string;
+};
+
+export type GalleryImageRow = {
+  id: string;
+  invitation_id: string;
+  storage_path: string;
+  url: string | null;
+  caption: string | null;
+  sort_order: number;
+  created_at: string;
+};
+
+export type MusicFileRow = {
+  id: string;
+  invitation_id: string;
+  storage_path: string;
+  url: string | null;
+  title: string | null;
+  autoplay_after_open: boolean;
+  created_at: string;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -198,6 +242,30 @@ export type Database = {
           attendance: RsvpAttendance;
         };
         Update: Partial<RsvpRow>;
+        Relationships: [];
+      };
+      invitation_pages: {
+        Row: InvitationPageRow;
+        Insert: Partial<InvitationPageRow> & { invitation_id: string; page_type: PageType };
+        Update: Partial<InvitationPageRow>;
+        Relationships: [];
+      };
+      events: {
+        Row: EventRow;
+        Insert: Partial<EventRow> & { invitation_id: string; name: string };
+        Update: Partial<EventRow>;
+        Relationships: [];
+      };
+      gallery_images: {
+        Row: GalleryImageRow;
+        Insert: Partial<GalleryImageRow> & { invitation_id: string; storage_path: string };
+        Update: Partial<GalleryImageRow>;
+        Relationships: [];
+      };
+      music_files: {
+        Row: MusicFileRow;
+        Insert: Partial<MusicFileRow> & { invitation_id: string; storage_path: string };
+        Update: Partial<MusicFileRow>;
         Relationships: [];
       };
     };
