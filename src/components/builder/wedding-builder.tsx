@@ -23,6 +23,7 @@ import { PhotosStep } from "./steps/photos-step";
 import { TypographyStep } from "./steps/typography-step";
 import { MusicStep } from "./steps/music-step";
 import { RsvpStep } from "./steps/rsvp-step";
+import { RulesStep } from "./steps/rules-step";
 import { PreviewStep } from "./steps/preview-step";
 import { PublishStep } from "./steps/publish-step";
 
@@ -36,6 +37,7 @@ const STEP_LABELS = {
     "الخطوط",
     "الموسيقى",
     "تأكيد الحضور",
+    "قواعد الحفلة",
     "المعاينة",
     "النشر",
   ],
@@ -48,6 +50,7 @@ const STEP_LABELS = {
     "Typographie",
     "Musique",
     "RSVP",
+    "Règles",
     "Aperçu",
     "Publication",
   ],
@@ -60,6 +63,7 @@ const STEP_LABELS = {
     "Typography",
     "Music",
     "RSVP",
+    "Rules",
     "Preview",
     "Publish",
   ],
@@ -144,6 +148,7 @@ export function WeddingBuilder({
       invitationText: invitation.invitation_text ?? undefined,
       finalMessage: undefined,
       rsvpQuestion: extra.rsvpQuestion,
+      partyRules: extra.partyRules,
       weddingDate: invitation.wedding_date,
       weddingTime: invitation.wedding_time,
       coverImageUrl: extra.coverImageUrl,
@@ -180,6 +185,7 @@ export function WeddingBuilder({
     <TypographyStep key="typography" invitation={invitation} template={selectedTemplate} onPatch={patchInvitation} />,
     <MusicStep key="music" invitationId={invitation.id} userId={userId} music={music} onMusicChange={setMusic} />,
     <RsvpStep key="rsvp" invitation={invitation} pages={pages} onPatch={patchInvitation} onPagesChange={setPages} />,
+    <RulesStep key="rules" invitation={invitation} pages={pages} onPatch={patchInvitation} onPagesChange={setPages} />,
     <PreviewStep key="preview" invitation={invitation} events={events} gallery={gallery} pages={pages} music={music} template={selectedTemplate} />,
     <PublishStep
       key="publish"

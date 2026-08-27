@@ -31,6 +31,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       countdownStyle: "ornate",
       dividerStyle: "ornament",
       motif: "gem",
+      openAnimation: "envelope",
     },
   },
   {
@@ -57,6 +58,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       countdownStyle: "minimal",
       dividerStyle: "line",
       motif: "sun",
+      openAnimation: "curtain",
     },
   },
   {
@@ -83,6 +85,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       countdownStyle: "circular",
       dividerStyle: "dots",
       motif: "flower",
+      openAnimation: "envelope",
     },
   },
   {
@@ -109,6 +112,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       countdownStyle: "circular",
       dividerStyle: "ornament",
       motif: "sparkle",
+      openAnimation: "curtain",
     },
   },
   {
@@ -161,6 +165,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       countdownStyle: "ornate",
       dividerStyle: "ornament",
       motif: "moon",
+      openAnimation: "envelope",
     },
   },
   {
@@ -187,6 +192,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       countdownStyle: "ornate",
       dividerStyle: "ornament",
       motif: "wave",
+      openAnimation: "curtain",
     },
   },
   {

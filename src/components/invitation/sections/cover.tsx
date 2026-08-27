@@ -6,6 +6,7 @@ import { useTranslation } from "@/lib/i18n/use-translation";
 import { Reveal } from "@/components/ui/reveal";
 import { MotifIcon } from "../motif-icon";
 import { buttonClass } from "../theme";
+import { EnvelopeOverlay, CurtainOverlay } from "./cover-open-overlay";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +49,9 @@ export function CoverSection({
           <MotifIcon motif={theme.motif} className="absolute -bottom-16 -start-16 h-72 w-72" style={{ color: "var(--inv-primary)" }} />
         </div>
       )}
+
+      {theme.openAnimation === "envelope" && <EnvelopeOverlay theme={theme} isOpen={isOpen} onOpen={onOpen} />}
+      {theme.openAnimation === "curtain" && <CurtainOverlay theme={theme} isOpen={isOpen} onOpen={onOpen} />}
 
       <Reveal animation="scale-in" className="relative z-10 flex flex-col items-center">
         <span

@@ -15,6 +15,7 @@ export const DEMO_PAGE_ORDER: PageConfig["pageType"][] = [
   "location",
   "calendar",
   "gallery",
+  "rules",
   "rsvp",
   "final_message",
 ];
@@ -49,6 +50,7 @@ export const DEMO_INVITATION: InvitationData = {
     brideFather: DEMO_BRIDE_FATHER,
   }),
   finalMessage: "شكراً لمشاركتكم أجمل لحظات حياتنا، حضوركم يعني لنا الكثير ❤️",
+  partyRules: ["جنة الأطفال بيوتهم 👶", "ممنوع التصوير أثناء الحفل 📵"],
   weddingDate: "2026-09-09",
   weddingTime: "20:00",
   events: [

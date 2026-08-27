@@ -11,6 +11,7 @@ import { EventDetailsSection } from "./sections/event-details";
 import { LocationSection } from "./sections/location";
 import { CalendarSection } from "./sections/calendar";
 import { GallerySection } from "./sections/gallery";
+import { RulesSection } from "./sections/rules";
 import { RsvpSection } from "./sections/rsvp";
 import { FinalMessageSection } from "./sections/final-message";
 import { MusicPlayer } from "./music-player";
@@ -27,6 +28,7 @@ const SECTION_COMPONENTS: Record<
   location: LocationSection,
   calendar: CalendarSection,
   gallery: GallerySection,
+  rules: RulesSection,
   rsvp: RsvpSection,
   final_message: FinalMessageSection,
 };

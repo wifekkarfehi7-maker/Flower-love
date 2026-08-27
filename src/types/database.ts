@@ -29,6 +29,7 @@ export type PageType =
   | "location"
   | "calendar"
   | "gallery"
+  | "rules"
   | "rsvp"
   | "final_message";
 

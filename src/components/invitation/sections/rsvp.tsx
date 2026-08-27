@@ -18,7 +18,9 @@ const STRINGS = {
     no: "للأسف لن أتمكن من الحضور",
     name: "الاسم",
     phone: "رقم الهاتف (اختياري)",
-    guests: "عدد الحضور",
+    companions: "عدد المرافقين (غيرك)",
+    totalLabel: "الإجمالي",
+    person: "شخص",
     message: "رسالة (اختياري)",
     submit: "إرسال",
     submitting: "جاري الإرسال...",
@@ -32,7 +34,9 @@ const STRINGS = {
     no: "Malheureusement, je ne pourrai pas venir",
     name: "Nom",
     phone: "Téléphone (optionnel)",
-    guests: "Nombre d'invités",
+    companions: "Personnes qui vous accompagnent",
+    totalLabel: "Total",
+    person: "personne(s)",
     message: "Message (optionnel)",
     submit: "Envoyer",
     submitting: "Envoi...",
@@ -46,7 +50,9 @@ const STRINGS = {
     no: "Sorry, I can't make it",
     name: "Name",
     phone: "Phone (optional)",
-    guests: "Number of guests",
+    companions: "People joining with you",
+    totalLabel: "Total",
+    person: "person(s)",
     message: "Message (optional)",
     submit: "Submit",
     submitting: "Submitting...",
@@ -71,7 +77,7 @@ export function RsvpSection({
   const [attendance, setAttendance] = React.useState<"attending" | "not_attending" | null>(null);
   const [name, setName] = React.useState("");
   const [phone, setPhone] = React.useState("");
-  const [guestCount, setGuestCount] = React.useState(1);
+  const [companions, setCompanions] = React.useState(0);
   const [message, setMessage] = React.useState("");
   const [website, setWebsite] = React.useState(""); // honeypot — real guests never see or fill this field
   const [status, setStatus] = React.useState<"idle" | "submitting" | "done" | "error">("idle");
@@ -100,7 +106,7 @@ export function RsvpSection({
       guest_name: name.trim(),
       phone: phone.trim() || null,
       attendance,
-      guest_count: guestCount,
+      guest_count: attendance === "attending" ? companions + 1 : 1,
       message: message.trim() || null,
     });
 
@@ -189,18 +195,23 @@ export function RsvpSection({
               style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
             />
             {attendance === "attending" && (
-              <label className="flex items-center justify-between text-sm" style={{ color: "var(--inv-text)" }}>
-                {t.guests}
-                <input
-                  type="number"
-                  min={1}
-                  max={20}
-                  value={guestCount}
-                  onChange={(e) => setGuestCount(Number(e.target.value) || 1)}
-                  className="w-16 rounded-lg border px-2 py-1 text-center outline-none"
-                  style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
-                />
-              </label>
+              <div>
+                <label className="flex items-center justify-between text-sm" style={{ color: "var(--inv-text)" }}>
+                  {t.companions}
+                  <input
+                    type="number"
+                    min={0}
+                    max={49}
+                    value={companions}
+                    onChange={(e) => setCompanions(Math.max(0, Number(e.target.value) || 0))}
+                    className="w-16 rounded-lg border px-2 py-1 text-center outline-none"
+                    style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
+                  />
+                </label>
+                <p className="mt-1 text-xs opacity-70" style={{ color: "var(--inv-text)" }}>
+                  {t.totalLabel}: {companions + 1} {t.person}
+                </p>
+              </div>
             )}
             <textarea
               value={message}

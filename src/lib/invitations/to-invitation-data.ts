@@ -24,6 +24,7 @@ export function toInvitationData(
     invitationText: invitation.invitation_text ?? undefined,
     finalMessage: undefined,
     rsvpQuestion: extra.rsvpQuestion,
+    partyRules: extra.partyRules,
     weddingDate: invitation.wedding_date,
     weddingTime: invitation.wedding_time,
     coverImageUrl: extra.coverImageUrl,

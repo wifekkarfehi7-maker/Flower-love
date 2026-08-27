@@ -14,6 +14,7 @@ export type PageType =
   | "location"
   | "calendar"
   | "gallery"
+  | "rules"
   | "rsvp"
   | "final_message";
 
@@ -53,6 +54,7 @@ export interface InvitationData {
   invitationText?: string;
   finalMessage?: string;
   rsvpQuestion?: string;
+  partyRules?: string[];
   weddingDate: string | null;
   weddingTime: string | null;
   coverImageUrl?: string;
@@ -84,6 +86,8 @@ export interface TemplateTheme {
   countdownStyle: "cards" | "minimal" | "circular" | "ornate";
   dividerStyle: "line" | "ornament" | "dots" | "none";
   motif: "gem" | "flower" | "moon" | "square" | "sparkle" | "wave" | "sun" | "sparkles";
+  /** How the cover opens on first tap. Defaults to "classic" (simple fade/scale) when absent, for backward compatibility. */
+  openAnimation?: "classic" | "envelope" | "curtain";
 }
 
 export interface TemplateFonts {
@@ -100,6 +104,7 @@ export interface InvitationDataExtra {
   coverImageUrl?: string;
   fontsOverride?: Partial<TemplateFonts>;
   rsvpQuestion?: string;
+  partyRules?: string[];
 }
 
 export interface TemplateRecord {
