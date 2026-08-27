@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth/provider";
 import { deleteInvitation, duplicateInvitation } from "@/lib/invitations/client";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import { formatShortDate } from "@/lib/i18n/format-date";
 import type { InvitationRow, InvitationStatus, ProfileRow } from "@/types/database";
 import { cn } from "@/lib/utils";
 
@@ -128,8 +129,8 @@ export function MyInvitationsView({
                       {statusLabel[invitation.status]}
                     </Badge>
                   </div>
-                  <p className="mt-2 text-xs text-ink-400">
-                    {new Date(invitation.created_at).toLocaleDateString(locale === "ar" ? "ar-TN" : locale)}
+                  <p className="mt-2 text-xs text-ink-400" dir="ltr">
+                    {formatShortDate(new Date(invitation.created_at), locale)}
                   </p>
                   <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-ink-400">
                     <span className="flex items-center gap-1.5">

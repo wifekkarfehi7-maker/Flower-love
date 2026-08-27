@@ -39,6 +39,17 @@ export async function getActivePricingPlans(): Promise<PricingPlanRecord[]> {
   return data.map(mapRow);
 }
 
+/** All pricing plans regardless of active status, for the admin dashboard. Empty (not the static fallback) when Supabase isn't configured. */
+export async function getAllPricingPlansForAdmin(): Promise<PricingPlanRecord[]> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase.from("pricing_plans").select("*").order("sort_order", { ascending: true });
+  if (error || !data) return [];
+
+  return data.map(mapRow);
+}
+
 /** A single pricing plan by id, falling back to static data. */
 export async function getPricingPlanById(id: string): Promise<PricingPlanRecord | null> {
   const supabase = getSupabaseServerClient();

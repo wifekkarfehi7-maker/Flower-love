@@ -5,6 +5,7 @@ import { Divider } from "../divider";
 import { radiusClass } from "../theme";
 import { downloadIcsEvent } from "@/lib/ics";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import { formatMonthYear } from "@/lib/i18n/format-date";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 
 const WEEKDAYS = {
@@ -31,7 +32,7 @@ export function CalendarSection({ invitation, theme }: { invitation: InvitationD
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
-  const monthLabel = date.toLocaleDateString(locale === "ar" ? "ar-TN" : locale, { month: "long", year: "numeric" });
+  const monthLabel = formatMonthYear(date, locale);
 
   return (
     <section className="px-6 py-16 text-center">

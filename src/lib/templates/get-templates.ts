@@ -38,6 +38,17 @@ export async function getActiveTemplates(): Promise<TemplateRecord[]> {
   return data.map(mapRow);
 }
 
+/** All templates regardless of status, for the admin dashboard. Empty (not the static fallback) when Supabase isn't configured. */
+export async function getAllTemplatesForAdmin(): Promise<TemplateRecord[]> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase.from("templates").select("*").order("sort_order", { ascending: true });
+  if (error || !data) return [];
+
+  return data.map(mapRow);
+}
+
 /** A single active template by slug, falling back to static data. */
 export async function getTemplateBySlug(slug: string): Promise<TemplateRecord | null> {
   const supabase = getSupabaseServerClient();

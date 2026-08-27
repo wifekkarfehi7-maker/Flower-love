@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Heart, LayoutGrid, LogOut, Menu, User, X } from "lucide-react";
+import { Heart, LayoutGrid, LogOut, Menu, ShieldCheck, User, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -11,8 +11,10 @@ import { useTranslation } from "@/lib/i18n/use-translation";
 import { useAuth } from "@/lib/auth/provider";
 import { cn } from "@/lib/utils";
 
+const ADMIN_LABEL = { ar: "لوحة الإدارة", fr: "Administration", en: "Admin" };
+
 export function SiteHeader() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const { user, profile, signOut } = useAuth();
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
@@ -64,7 +66,7 @@ export function SiteHeader() {
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
           {user ? (
-            <AccountMenu name={profile?.full_name} onSignOut={signOut} />
+            <AccountMenu name={profile?.full_name} isAdmin={profile?.role === "admin"} onSignOut={signOut} />
           ) : (
             <>
               <Button asChild variant="ghost" size="sm">
@@ -113,6 +115,14 @@ export function SiteHeader() {
                       {t.auth.myInvitations}
                     </Link>
                   </Button>
+                  {profile?.role === "admin" && (
+                    <Button asChild variant="outline" onClick={() => setOpen(false)}>
+                      <Link href="/admin">
+                        <ShieldCheck className="h-4 w-4" />
+                        {ADMIN_LABEL[locale]}
+                      </Link>
+                    </Button>
+                  )}
                   <Button variant="ghost" onClick={() => { setOpen(false); signOut(); }}>
                     <LogOut className="h-4 w-4" />
                     {t.auth.signOut}
@@ -136,8 +146,16 @@ export function SiteHeader() {
   );
 }
 
-function AccountMenu({ name, onSignOut }: { name?: string | null; onSignOut: () => void }) {
-  const { t } = useTranslation();
+function AccountMenu({
+  name,
+  isAdmin,
+  onSignOut,
+}: {
+  name?: string | null;
+  isAdmin?: boolean;
+  onSignOut: () => void;
+}) {
+  const { t, locale } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const rootRef = React.useRef<HTMLDivElement>(null);
 
@@ -180,6 +198,17 @@ function AccountMenu({ name, onSignOut }: { name?: string | null; onSignOut: () 
             <LayoutGrid className="h-4 w-4" />
             {t.auth.myInvitations}
           </Link>
+          {isAdmin && (
+            <Link
+              href="/admin"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              {ADMIN_LABEL[locale]}
+            </Link>
+          )}
           <button
             type="button"
             role="menuitem"

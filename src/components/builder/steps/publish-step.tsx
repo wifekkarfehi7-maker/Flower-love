@@ -12,6 +12,7 @@ import { fontFamilyFor } from "@/components/invitation/theme";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import { buildOrderMessage } from "@/lib/whatsapp";
 import { createOrder, getOrderForInvitation } from "@/lib/orders/client";
+import { statusLabel } from "@/lib/i18n/status-labels";
 import { SITE_URL } from "@/lib/config";
 import type { InvitationRow, OrderRow, ProfileRow } from "@/types/database";
 import type { PricingPlanRecord, TemplateRecord } from "@/types/invitation";
@@ -92,36 +93,6 @@ const STRINGS = {
   },
 };
 
-const STATUS_LABELS = {
-  ar: {
-    draft: "مسودة",
-    pending_payment: "بانتظار الدفع",
-    payment_review: "قيد المراجعة",
-    paid: "تم الدفع",
-    active: "منشورة",
-    cancelled: "ملغاة",
-    expired: "منتهية",
-  },
-  fr: {
-    draft: "Brouillon",
-    pending_payment: "En attente de paiement",
-    payment_review: "En vérification",
-    paid: "Payée",
-    active: "Publiée",
-    cancelled: "Annulée",
-    expired: "Expirée",
-  },
-  en: {
-    draft: "Draft",
-    pending_payment: "Pending payment",
-    payment_review: "Under review",
-    paid: "Paid",
-    active: "Published",
-    cancelled: "Cancelled",
-    expired: "Expired",
-  },
-};
-
 export function PublishStep({
   invitation,
   template,
@@ -195,7 +166,7 @@ export function PublishStep({
     );
   }
 
-  if (order) {
+  if (order && order.status !== "cancelled" && order.status !== "expired") {
     const previewUrl = `${SITE_URL}/invitations/${invitation.id}/preview`;
     const message = buildOrderMessage({
       customerName: order.customer_name,
@@ -233,7 +204,7 @@ export function PublishStep({
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-ink-500">{t.status}</span>
-            <Badge variant="outline">{STATUS_LABELS[locale][order.status]}</Badge>
+            <Badge variant="outline">{statusLabel(order.status, locale)}</Badge>
           </div>
         </div>
 

@@ -5,13 +5,13 @@ import { getPublicInvitationBySlug } from "@/lib/invitations/get-public-invitati
 import { InvitationRenderer } from "@/components/invitation/invitation-renderer";
 import { ViewTracker } from "@/components/invitation/view-tracker";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
+import { formatLongDate } from "@/lib/i18n/format-date";
 
 export const dynamic = "force-dynamic";
 
 function formatDate(date: string | null) {
   if (!date) return null;
-  const d = new Date(`${date}T00:00:00`);
-  return d.toLocaleDateString("ar-TN", { day: "numeric", month: "long", year: "numeric" });
+  return formatLongDate(new Date(`${date}T00:00:00`), "ar");
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {

@@ -121,6 +121,33 @@ export type OrderRow = {
   updated_at: string;
 };
 
+export type PaymentStatus = "pending" | "confirmed" | "failed" | "refunded";
+
+export type PaymentRow = {
+  id: string;
+  order_id: string;
+  amount: number;
+  currency: string;
+  method: string;
+  status: PaymentStatus;
+  confirmed_by: string | null;
+  confirmed_at: string | null;
+  notes: string | null;
+  created_at: string;
+};
+
+export type AuditLogRow = {
+  id: string;
+  admin_id: string | null;
+  action: string;
+  target_type: string;
+  target_id: string | null;
+  previous_status: string | null;
+  new_status: string | null;
+  metadata: Record<string, unknown>;
+  created_at: string;
+};
+
 export type GuestRow = {
   id: string;
   invitation_id: string;
@@ -228,6 +255,18 @@ export type Database = {
         Update: Partial<OrderRow>;
         Relationships: [];
       };
+      payments: {
+        Row: PaymentRow;
+        Insert: Partial<PaymentRow> & { order_id: string; amount: number };
+        Update: Partial<PaymentRow>;
+        Relationships: [];
+      };
+      audit_logs: {
+        Row: AuditLogRow;
+        Insert: Partial<AuditLogRow> & { action: string; target_type: string };
+        Update: Partial<AuditLogRow>;
+        Relationships: [];
+      };
       guests: {
         Row: GuestRow;
         Insert: Partial<GuestRow> & { invitation_id: string; name: string };
@@ -274,6 +313,17 @@ export type Database = {
       increment_invitation_views: {
         Args: { target_id: string };
         Returns: void;
+      };
+      log_admin_action: {
+        Args: {
+          p_action: string;
+          p_target_type: string;
+          p_target_id?: string | null;
+          p_previous_status?: string | null;
+          p_new_status?: string | null;
+          p_metadata?: Record<string, unknown>;
+        };
+        Returns: string;
       };
     };
     Enums: Record<string, never>;

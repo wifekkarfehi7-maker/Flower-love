@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { deleteRsvp } from "@/lib/guests/client";
 import { exportToCsv, exportToExcel } from "@/lib/export";
+import { formatShortDate } from "@/lib/i18n/format-date";
 import type { RsvpRow } from "@/types/database";
 
 const STRINGS = {
@@ -72,7 +73,7 @@ export function RsvpResponsesTable({ rsvps: initial, locale }: { rsvps: RsvpRow[
     { header: t.status, value: (r: RsvpRow) => (r.attendance === "attending" ? t.attending : t.notAttending) },
     { header: t.guests, value: (r: RsvpRow) => r.guest_count },
     { header: t.message, value: (r: RsvpRow) => r.message ?? "" },
-    { header: t.date, value: (r: RsvpRow) => new Date(r.created_at).toLocaleDateString(locale === "ar" ? "ar-TN" : locale) },
+    { header: t.date, value: (r: RsvpRow) => formatShortDate(new Date(r.created_at), locale) },
   ];
 
   return (
@@ -121,8 +122,8 @@ export function RsvpResponsesTable({ rsvps: initial, locale }: { rsvps: RsvpRow[
                   </td>
                   <td className="px-4 py-2.5 text-ink-500">{r.guest_count}</td>
                   <td className="max-w-[200px] truncate px-4 py-2.5 text-ink-500">{r.message ?? "—"}</td>
-                  <td className="px-4 py-2.5 text-ink-400">
-                    {new Date(r.created_at).toLocaleDateString(locale === "ar" ? "ar-TN" : locale)}
+                  <td className="px-4 py-2.5 text-ink-400" dir="ltr">
+                    {formatShortDate(new Date(r.created_at), locale)}
                   </td>
                   <td className="px-4 py-2.5">
                     <button

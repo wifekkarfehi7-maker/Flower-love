@@ -4,14 +4,14 @@ import { Reveal } from "@/components/ui/reveal";
 import { Divider } from "../divider";
 import { radiusClass } from "../theme";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import { formatLongDate } from "@/lib/i18n/format-date";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 
 const TITLES = { ar: "تفاصيل المناسبة", fr: "Détails de la fête", en: "Event details" };
 
 function formatDate(date: string | null, locale: "ar" | "fr" | "en") {
   if (!date) return "";
-  const d = new Date(`${date}T00:00:00`);
-  return d.toLocaleDateString(locale === "ar" ? "ar-TN" : locale, { day: "numeric", month: "long", year: "numeric" });
+  return formatLongDate(new Date(`${date}T00:00:00`), locale);
 }
 
 export function EventDetailsSection({ invitation, theme }: { invitation: InvitationData; theme: TemplateTheme }) {
