@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 98%;
+    --foreground: 30 12% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 12% 10%;
+
+    --primary: 30 12% 10%;
+    --primary-foreground: 40 33% 98%;
+
+    --secondary: 38 45% 92%;
+    --secondary-foreground: 30 12% 10%;
+
+    --muted: 36 25% 95%;
+    --muted-foreground: 30 8% 40%;
+
+    --accent: 38 60% 55%;
+    --accent-foreground: 30 12% 10%;
+
+    --destructive: 4 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 34 20% 89%;
+    --input: 34 20% 89%;
+    --ring: 38 60% 55%;
+
+    --radius: 0.9rem;
+
+    /* Latin type — reassigned for lang="ar" below */
+    --font-heading: var(--font-playfair);
+    --font-body: var(--font-inter);
+    --font-arabic-display: var(--font-amiri);
+  }
+
+  :root:lang(ar),
+  [lang="ar"] {
+    --font-heading: var(--font-amiri);
+    --font-body: var(--font-cairo);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-feature-settings: "kern", "liga", "calt";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  ::selection {
+    @apply bg-gold-200 text-ink-900;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
