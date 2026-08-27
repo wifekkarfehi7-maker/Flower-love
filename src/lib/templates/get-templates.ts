@@ -51,3 +51,17 @@ export async function getTemplateBySlug(slug: string): Promise<TemplateRecord | 
 
   return mapRow(data);
 }
+
+/** A single template by id (any status — used when rendering a specific invitation's chosen template). */
+export async function getTemplateById(id: string): Promise<TemplateRecord | null> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return STATIC_TEMPLATES.find((t) => t.id === id) ?? null;
+
+  const { data, error } = await supabase.from("templates").select("*").eq("id", id).single();
+
+  if (error || !data) {
+    return STATIC_TEMPLATES.find((t) => t.id === id) ?? null;
+  }
+
+  return mapRow(data);
+}

@@ -2,7 +2,7 @@
 
 import { InvitationRenderer } from "@/components/invitation/invitation-renderer";
 import { useTranslation } from "@/lib/i18n/use-translation";
-import type { GalleryImageRow, InvitationRow } from "@/types/database";
+import type { GalleryImageRow, InvitationRow, MusicFileRow } from "@/types/database";
 import type { EventItem, InvitationData, PageConfig, TemplateRecord } from "@/types/invitation";
 import { getInvitationExtra } from "@/lib/invitations/data-extra";
 
@@ -17,12 +17,14 @@ export function PreviewStep({
   events,
   gallery,
   pages,
+  music,
   template,
 }: {
   invitation: InvitationRow;
   events: EventItem[];
   gallery: GalleryImageRow[];
   pages: PageConfig[];
+  music: MusicFileRow | null;
   template: TemplateRecord | null;
 }) {
   const { locale } = useTranslation();
@@ -45,6 +47,7 @@ export function PreviewStep({
     weddingDate: invitation.wedding_date,
     weddingTime: invitation.wedding_time,
     coverImageUrl: extra.coverImageUrl,
+    music: music?.url ? { url: music.url, autoplayAfterOpen: music.autoplay_after_open } : undefined,
     events,
     gallery: gallery.map((g) => ({ id: g.id, url: g.url ?? "", caption: g.caption ?? undefined })),
     pages,

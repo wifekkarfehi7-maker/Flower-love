@@ -144,11 +144,12 @@ export function WeddingBuilder({
       weddingDate: invitation.wedding_date,
       weddingTime: invitation.wedding_time,
       coverImageUrl: extra.coverImageUrl,
+      music: music?.url ? { url: music.url, autoplayAfterOpen: music.autoplay_after_open } : undefined,
       events,
       gallery: gallery.map((g) => ({ id: g.id, url: g.url ?? "", caption: g.caption ?? undefined })),
       pages,
     };
-  }, [invitation, events, gallery, pages]);
+  }, [invitation, events, gallery, pages, music]);
 
   async function goTo(index: number) {
     await flushNow();
@@ -176,7 +177,7 @@ export function WeddingBuilder({
     <TypographyStep key="typography" invitation={invitation} template={selectedTemplate} onPatch={patchInvitation} />,
     <MusicStep key="music" invitationId={invitation.id} userId={userId} music={music} onMusicChange={setMusic} />,
     <RsvpStep key="rsvp" invitation={invitation} pages={pages} onPatch={patchInvitation} onPagesChange={setPages} />,
-    <PreviewStep key="preview" invitation={invitation} events={events} gallery={gallery} pages={pages} template={selectedTemplate} />,
+    <PreviewStep key="preview" invitation={invitation} events={events} gallery={gallery} pages={pages} music={music} template={selectedTemplate} />,
     <PublishStep key="publish" invitation={invitation} template={selectedTemplate} onPublish={handlePublishStep} />,
   ];
 

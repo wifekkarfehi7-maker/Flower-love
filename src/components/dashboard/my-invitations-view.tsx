@@ -136,6 +136,11 @@ export function MyInvitationsView({
                         {t.dashboard.edit}
                       </Link>
                     </Button>
+                    <Button asChild variant="ghost" size="sm" className="px-3">
+                      <Link href={`/invitations/${invitation.id}/preview`} aria-label={t.dashboard.preview}>
+                        <Eye className="h-3.5 w-3.5" />
+                      </Link>
+                    </Button>
 
                     <div className="relative">
                       <button

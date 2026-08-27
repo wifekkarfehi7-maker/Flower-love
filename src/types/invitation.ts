@@ -56,6 +56,7 @@ export interface InvitationData {
   weddingDate: string | null;
   weddingTime: string | null;
   coverImageUrl?: string;
+  music?: { url: string; autoplayAfterOpen: boolean };
   events: EventItem[];
   gallery: GalleryImageItem[];
   pages: PageConfig[];

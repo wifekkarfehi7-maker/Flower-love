@@ -13,6 +13,7 @@ import { CalendarSection } from "./sections/calendar";
 import { GallerySection } from "./sections/gallery";
 import { RsvpSection } from "./sections/rsvp";
 import { FinalMessageSection } from "./sections/final-message";
+import { MusicPlayer } from "./music-player";
 import type { InvitationData, PageType, TemplateFonts, TemplateTheme } from "@/types/invitation";
 
 const SECTION_COMPONENTS: Record<
@@ -65,6 +66,15 @@ export function InvitationRenderer({
           if (!Section) return null;
           return <Section key={page.pageType} invitation={invitation} theme={theme} isPreview={isPreview} />;
         })}
+
+      {invitation.music && (
+        <MusicPlayer
+          url={invitation.music.url}
+          autoplayAfterOpen={invitation.music.autoplayAfterOpen}
+          show={isOpen || !coverEnabled}
+          triggerAutoplay={isOpen}
+        />
+      )}
     </div>
   );
 }

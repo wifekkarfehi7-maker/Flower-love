@@ -4,6 +4,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Divider } from "../divider";
 import { buttonClass } from "../theme";
 import { useTranslation } from "@/lib/i18n/use-translation";
+import { resolveLocationUrl } from "@/lib/maps";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 import { cn } from "@/lib/utils";
 
@@ -12,8 +13,9 @@ const CTA = { ar: "فتح الموقع 📍", fr: "Ouvrir la carte 📍", en: "O
 
 export function LocationSection({ invitation, theme }: { invitation: InvitationData; theme: TemplateTheme }) {
   const { locale } = useTranslation();
-  const event = invitation.events.find((e) => e.locationUrl) ?? invitation.events[0];
-  if (!event?.locationUrl) return null;
+  const event = invitation.events.find((e) => e.locationUrl || e.locationName) ?? invitation.events[0];
+  const mapsUrl = event ? resolveLocationUrl(event) : null;
+  if (!event || !mapsUrl) return null;
 
   return (
     <section className="px-6 py-16 text-center">
@@ -37,7 +39,7 @@ export function LocationSection({ invitation, theme }: { invitation: InvitationD
         )}
         <Divider theme={theme} />
         <a
-          href={event.locationUrl}
+          href={mapsUrl}
           target="_blank"
           rel="noopener noreferrer"
           className={cn(buttonClass(theme.buttonStyle), "mt-4 inline-block")}

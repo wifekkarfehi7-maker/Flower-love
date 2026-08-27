@@ -1,5 +1,5 @@
 import { getInvitationExtra } from "./data-extra";
-import type { EventRow, GalleryImageRow, InvitationPageRow, InvitationRow } from "@/types/database";
+import type { EventRow, GalleryImageRow, InvitationPageRow, InvitationRow, MusicFileRow } from "@/types/database";
 import type { InvitationData } from "@/types/invitation";
 
 /** Maps real DB rows into the renderer's view model — the same shape demo data uses. */
@@ -7,7 +7,8 @@ export function toInvitationData(
   invitation: InvitationRow,
   events: EventRow[],
   gallery: GalleryImageRow[],
-  pages: InvitationPageRow[]
+  pages: InvitationPageRow[],
+  music?: MusicFileRow | null
 ): InvitationData {
   const extra = getInvitationExtra(invitation);
 
@@ -26,6 +27,7 @@ export function toInvitationData(
     weddingDate: invitation.wedding_date,
     weddingTime: invitation.wedding_time,
     coverImageUrl: extra.coverImageUrl,
+    music: music?.url ? { url: music.url, autoplayAfterOpen: music.autoplay_after_open } : undefined,
     events: events.map((e) => ({
       id: e.id,
       type: e.event_type,
