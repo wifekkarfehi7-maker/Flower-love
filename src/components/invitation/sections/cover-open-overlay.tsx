@@ -26,7 +26,7 @@ export function EnvelopeOverlay({
       onClick={onOpen}
       disabled={isOpen}
       aria-label={TAP_LABEL[locale]}
-      className="absolute inset-0 z-20 flex flex-col items-center justify-center overflow-hidden transition-opacity duration-500"
+      className="absolute inset-0 z-20 flex flex-col items-center justify-center overflow-hidden transition-opacity duration-500 active:scale-[0.97]"
       style={{
         backgroundColor: theme.surface,
         backgroundImage: `radial-gradient(${theme.primary}2e 1.5px, transparent 1.5px)`,
@@ -35,38 +35,60 @@ export function EnvelopeOverlay({
         opacity: isOpen ? 0 : 1,
         pointerEvents: isOpen ? "none" : "auto",
         transitionDelay: isOpen ? "700ms" : "0ms",
+        transitionProperty: "opacity, transform",
+        transitionDuration: "500ms, 150ms",
       }}
     >
-      {/* top flap — hinges open like a real envelope lid, with a fold-line sheen and a shadow that lifts off the page */}
+      {/* top flap — hinges open like a real lid and vanishes past vertical (backface hidden), with a fold-line sheen and a soft overshoot-settle */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-[58%] transition-[transform,opacity,box-shadow] duration-[900ms] ease-[cubic-bezier(0.6,0.05,0.3,1)]"
+        className="absolute inset-x-0 top-0 h-[58%]"
         style={{
           backgroundColor: theme.primary,
-          backgroundImage: `linear-gradient(165deg, ${theme.accent}40 0%, transparent 45%, rgba(0,0,0,0.12) 100%)`,
+          backgroundImage: `linear-gradient(165deg, ${theme.accent}45 0%, transparent 45%, rgba(0,0,0,0.14) 100%)`,
           clipPath: "polygon(0 0, 100% 0, 50% 78%)",
           transformOrigin: "top center",
-          transform: isOpen ? "perspective(700px) rotateX(-148deg) translateY(-2%)" : "perspective(700px) rotateX(0deg)",
+          backfaceVisibility: "hidden",
+          transitionProperty: "transform",
+          transitionDuration: "850ms",
+          transitionTimingFunction: "cubic-bezier(0.34,1.56,0.64,1)",
+          transform: isOpen ? "perspective(2200px) rotateX(-150deg)" : "perspective(2200px) rotateX(0deg)",
           boxShadow: isOpen ? "none" : "0 12px 20px -8px rgba(0,0,0,0.4)",
-          opacity: isOpen ? 0 : 1,
         }}
       />
 
-      {/* wax seal — organic blob edge instead of a perfect circle, with a slow "breathe" to invite the tap */}
-      <span
-        className="relative z-10 flex h-16 w-16 items-center justify-center transition-all duration-700"
-        style={{
-          borderRadius: "46% 54% 51% 49% / 55% 47% 53% 45%",
-          backgroundImage: `radial-gradient(circle at 32% 26%, ${theme.accent}, ${theme.primary} 72%)`,
-          boxShadow: `inset 0 -3px 5px rgba(0,0,0,0.35), inset 0 2px 3px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.35)`,
-          border: `1px solid ${theme.primary}`,
-          transform: isOpen ? "scale(0.4) rotate(35deg)" : "scale(1) rotate(0deg)",
-          opacity: isOpen ? 0 : 1,
-          animation: isOpen ? undefined : "seal-breathe 3.2s ease-in-out infinite",
-        }}
-      >
-        <MotifIcon motif={theme.motif} className="h-7 w-7" style={{ color: theme.background, opacity: 0.9 }} />
-      </span>
+      {/* wax seal — organic poured-wax blob that breathes while idle, then cracks in half and falls away on tap */}
+      <div className="relative z-10 flex h-16 w-16 items-center justify-center">
+        {(["left", "right"] as const).map((side) => (
+          <span
+            key={side}
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              clipPath: side === "left" ? "inset(0 50% 0 0)" : "inset(0 0 0 50%)",
+              borderRadius: "46% 54% 51% 49% / 55% 47% 53% 45%",
+              backgroundImage: `radial-gradient(circle at 32% 26%, ${theme.accent}, ${theme.primary} 72%)`,
+              boxShadow: `inset 0 -3px 5px rgba(0,0,0,0.35), inset 0 2px 3px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.35)`,
+              border: `1px solid ${theme.primary}`,
+              transformOrigin: side === "left" ? "85% 50%" : "15% 50%",
+              transform: isOpen
+                ? `translate(${side === "left" ? "-65%" : "65%"}, 70%) rotate(${side === "left" ? "-55deg" : "55deg"}) scale(0.8)`
+                : "translate(0, 0) rotate(0deg) scale(1)",
+              opacity: isOpen ? 0 : 1,
+              transitionProperty: "transform, opacity",
+              transitionDuration: "750ms",
+              transitionTimingFunction: "cubic-bezier(0.55,0,0.85,0.35)",
+              transitionDelay: side === "right" ? "35ms" : "0ms",
+              animation: isOpen ? undefined : "seal-breathe 3.2s ease-in-out infinite",
+            }}
+          />
+        ))}
+        <MotifIcon
+          motif={theme.motif}
+          className="relative z-10 h-7 w-7 transition-opacity duration-300"
+          style={{ color: theme.background, opacity: isOpen ? 0 : 0.9 }}
+        />
+      </div>
 
       <span
         className="relative z-10 mt-4 text-xs font-medium tracking-wide transition-opacity duration-500"
