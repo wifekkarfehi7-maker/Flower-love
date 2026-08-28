@@ -52,14 +52,16 @@ export function EnvelopeOverlay({
 
       {/* wax seal */}
       <span
-        className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full shadow-lg transition-all duration-700"
+        className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full transition-all duration-700"
         style={{
-          backgroundColor: theme.accent,
+          backgroundImage: `radial-gradient(circle at 33% 28%, ${theme.accent}, ${theme.primary} 70%)`,
+          boxShadow: `inset 0 -3px 5px rgba(0,0,0,0.35), inset 0 2px 3px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.35)`,
+          border: `1px solid ${theme.primary}`,
           transform: isOpen ? "scale(0.4) rotate(35deg)" : "scale(1) rotate(0deg)",
           opacity: isOpen ? 0 : 1,
         }}
       >
-        <MotifIcon motif={theme.motif} className="h-7 w-7" style={{ color: theme.background }} />
+        <MotifIcon motif={theme.motif} className="h-7 w-7" style={{ color: theme.background, opacity: 0.9 }} />
       </span>
 
       <span

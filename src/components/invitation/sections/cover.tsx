@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import { Reveal } from "@/components/ui/reveal";
 import { MotifIcon } from "../motif-icon";
+import { CornerFlourish } from "../ornament";
 import { buttonClass } from "../theme";
 import { EnvelopeOverlay, CurtainOverlay } from "./cover-open-overlay";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
@@ -47,6 +48,15 @@ export function CoverSection({
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]">
           <MotifIcon motif={theme.motif} className="absolute -end-10 -top-10 h-64 w-64" style={{ color: "var(--inv-primary)" }} />
           <MotifIcon motif={theme.motif} className="absolute -bottom-16 -start-16 h-72 w-72" style={{ color: "var(--inv-primary)" }} />
+        </div>
+      )}
+
+      {theme.dividerStyle === "ornament" && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-4 opacity-40">
+          <CornerFlourish className="absolute top-0 start-0 h-16 w-16" style={{ color: "var(--inv-primary)" }} />
+          <CornerFlourish className="absolute top-0 end-0 h-16 w-16 -scale-x-100" style={{ color: "var(--inv-primary)" }} />
+          <CornerFlourish className="absolute bottom-0 start-0 h-16 w-16 -scale-y-100" style={{ color: "var(--inv-primary)" }} />
+          <CornerFlourish className="absolute bottom-0 end-0 h-16 w-16 -scale-x-100 -scale-y-100" style={{ color: "var(--inv-primary)" }} />
         </div>
       )}
 

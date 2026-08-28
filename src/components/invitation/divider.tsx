@@ -1,4 +1,4 @@
-import { MotifIcon } from "./motif-icon";
+import { OrnamentFlourish } from "./ornament";
 import type { TemplateTheme } from "@/types/invitation";
 
 export function Divider({ theme }: { theme: TemplateTheme }) {
@@ -20,10 +20,8 @@ export function Divider({ theme }: { theme: TemplateTheme }) {
 
   if (theme.dividerStyle === "ornament") {
     return (
-      <div className="flex items-center justify-center gap-3 py-2" aria-hidden="true">
-        <span className="h-px w-10" style={{ backgroundColor: "var(--inv-primary)", opacity: 0.5 }} />
-        <MotifIcon motif={theme.motif} className="h-4 w-4" style={{ color: "var(--inv-primary)" }} />
-        <span className="h-px w-10" style={{ backgroundColor: "var(--inv-primary)", opacity: 0.5 }} />
+      <div className="flex justify-center py-2" aria-hidden="true">
+        <OrnamentFlourish className="h-5 w-40" style={{ color: "var(--inv-primary)" }} />
       </div>
     );
   }
