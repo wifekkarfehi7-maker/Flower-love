@@ -32,6 +32,68 @@ export function OrnamentFlourish({ className, style }: { className?: string; sty
   );
 }
 
+/**
+ * A quarter-corner floral cluster — curling vine with two small five-petal
+ * blooms and leaves. Used on "romantic"-category templates (floral,
+ * romantic) instead of the gold scrollwork CornerFlourish. Two colors:
+ * the vine/leaves take `currentColor`, the petals take `accent`.
+ */
+export function FloralCorner({
+  className,
+  style,
+  accent,
+}: {
+  className?: string;
+  style?: CSSProperties;
+  accent: string;
+}) {
+  function Bloom({ cx, cy, r }: { cx: number; cy: number; r: number }) {
+    const petals = [0, 72, 144, 216, 288];
+    return (
+      <g>
+        {petals.map((angle) => (
+          <ellipse
+            key={angle}
+            cx={cx}
+            cy={cy - r}
+            rx={r * 0.62}
+            ry={r}
+            fill={accent}
+            opacity="0.85"
+            transform={`rotate(${angle} ${cx} ${cy})`}
+          />
+        ))}
+        <circle cx={cx} cy={cy} r={r * 0.4} fill="currentColor" opacity="0.9" />
+      </g>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 120 120" className={className} style={style} fill="none" aria-hidden="true">
+      <path
+        d="M2 30c20 0 26 10 24 26-2 18 8 26 26 24"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        opacity="0.6"
+      />
+      <path d="M14 12c14 4 18 14 12 24" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
+      <path
+        d="M18 46c6-3 9-8 6-14s-11-8-16-3c4 1 8 5 8 10s-3 6-7 7Z"
+        fill="currentColor"
+        opacity="0.55"
+      />
+      <path
+        d="M42 66c-3 6-8 9-14 6s-8-11-3-16c1 4 5 8 10 8s6-3 7-7Z"
+        fill="currentColor"
+        opacity="0.5"
+      />
+      <Bloom cx={16} cy={16} r={9} />
+      <Bloom cx={46} cy={44} r={6} />
+    </svg>
+  );
+}
+
 /** A quarter-corner leaf-and-vine flourish. Rotate 90/180/270deg to place on any corner. */
 export function CornerFlourish({ className, style }: { className?: string; style?: CSSProperties }) {
   return (

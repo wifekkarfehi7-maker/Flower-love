@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import { Reveal } from "@/components/ui/reveal";
 import { MotifIcon } from "../motif-icon";
-import { CornerFlourish } from "../ornament";
+import { CornerFlourish, FloralCorner } from "../ornament";
 import { buttonClass } from "../theme";
 import { EnvelopeOverlay, CurtainOverlay } from "./cover-open-overlay";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
@@ -57,6 +57,21 @@ export function CoverSection({
           <CornerFlourish className="absolute top-0 end-0 h-16 w-16 -scale-x-100" style={{ color: "var(--inv-primary)" }} />
           <CornerFlourish className="absolute bottom-0 start-0 h-16 w-16 -scale-y-100" style={{ color: "var(--inv-primary)" }} />
           <CornerFlourish className="absolute bottom-0 end-0 h-16 w-16 -scale-x-100 -scale-y-100" style={{ color: "var(--inv-primary)" }} />
+        </div>
+      )}
+
+      {theme.decorativeStyle === "floral" && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-3 opacity-70">
+          <FloralCorner
+            className="absolute top-0 start-0 h-20 w-20"
+            style={{ color: "var(--inv-primary)" }}
+            accent={theme.accent}
+          />
+          <FloralCorner
+            className="absolute bottom-0 end-0 h-20 w-20 -scale-x-100 -scale-y-100"
+            style={{ color: "var(--inv-primary)" }}
+            accent={theme.accent}
+          />
         </div>
       )}
 

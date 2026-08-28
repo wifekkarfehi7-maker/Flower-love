@@ -134,6 +134,10 @@ const config: Config = {
           "0%": { backgroundPosition: "0% 50%" },
           "100%": { backgroundPosition: "200% 50%" },
         },
+        "seal-breathe": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.035)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -142,6 +146,7 @@ const config: Config = {
         "fade-in": "fade-in 0.6s ease-out forwards",
         "scale-in": "scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         shimmer: "shimmer 3s linear infinite",
+        "seal-breathe": "seal-breathe 3.2s ease-in-out infinite",
       },
     },
   },

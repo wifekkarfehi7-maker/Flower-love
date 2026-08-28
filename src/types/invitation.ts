@@ -88,6 +88,8 @@ export interface TemplateTheme {
   motif: "gem" | "flower" | "moon" | "square" | "sparkle" | "wave" | "sun" | "sparkles";
   /** How the cover opens on first tap. Defaults to "classic" (simple fade/scale) when absent, for backward compatibility. */
   openAnimation?: "classic" | "envelope" | "curtain";
+  /** Extra corner ornamentation on the cover, layered independently of dividerStyle. */
+  decorativeStyle?: "floral";
 }
 
 export interface TemplateFonts {

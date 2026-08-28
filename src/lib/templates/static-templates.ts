@@ -86,6 +86,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       dividerStyle: "dots",
       motif: "flower",
       openAnimation: "envelope",
+      decorativeStyle: "floral",
     },
   },
   {
@@ -113,6 +114,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       dividerStyle: "ornament",
       motif: "sparkle",
       openAnimation: "curtain",
+      decorativeStyle: "floral",
     },
   },
   {

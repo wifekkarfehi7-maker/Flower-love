@@ -20,13 +20,13 @@ values
   ('floral', 'Floral', 'زهري', 'romantic',
    'Blush pink gradients with a hand-drawn floral motif and italic display type.',
    'active',
-   '{"background":"#fbeef0","surface":"#f6dfe4","primary":"#c85566","accent":"#eda3ac","text":"#5c2230","textMuted":"#a8636f","backgroundStyle":"radial","cardRadius":"round","buttonStyle":"pill","galleryLayout":"romantic","countdownStyle":"circular","dividerStyle":"dots","motif":"flower","openAnimation":"envelope"}',
+   '{"background":"#fbeef0","surface":"#f6dfe4","primary":"#c85566","accent":"#eda3ac","text":"#5c2230","textMuted":"#a8636f","backgroundStyle":"radial","cardRadius":"round","buttonStyle":"pill","galleryLayout":"romantic","countdownStyle":"circular","dividerStyle":"dots","motif":"flower","openAnimation":"envelope","decorativeStyle":"floral"}',
    '{"heading":"amiri","body":"cairo"}', 3),
 
   ('romantic', 'Romantic', 'رومانسي', 'romantic',
    'Deep burgundy and rose tones with soft glow accents for an intimate feel.',
    'active',
-   '{"background":"#26101a","surface":"#3c1620","primary":"#e17685","accent":"#f6c9cf","text":"#fbe4e6","textMuted":"#e0aab3","backgroundStyle":"gradient","cardRadius":"round","buttonStyle":"pill","galleryLayout":"polaroid","countdownStyle":"circular","dividerStyle":"ornament","motif":"sparkle","openAnimation":"curtain"}',
+   '{"background":"#26101a","surface":"#3c1620","primary":"#e17685","accent":"#f6c9cf","text":"#fbe4e6","textMuted":"#e0aab3","backgroundStyle":"gradient","cardRadius":"round","buttonStyle":"pill","galleryLayout":"polaroid","countdownStyle":"circular","dividerStyle":"ornament","motif":"sparkle","openAnimation":"curtain","decorativeStyle":"floral"}',
    '{"heading":"amiri","body":"cairo"}', 4),
 
   ('modern', 'Modern', 'عصري', 'contemporary',
