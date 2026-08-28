@@ -264,7 +264,7 @@ export function WeddingBuilder({
             {STEPS[stepIndex]}
           </div>
 
-          <div className="mt-6 flex items-center justify-between">
+          <div className="mt-6 flex items-center justify-between pb-20 xl:pb-0">
             <Button variant="outline" onClick={() => goTo(stepIndex - 1)} disabled={stepIndex === 0}>
               <BackIcon className="h-4 w-4" />
               {t.back}
