@@ -106,7 +106,7 @@ function SortableRow({
         type="button"
         {...attributes}
         {...listeners}
-        className="flex h-8 w-8 shrink-0 cursor-grab items-center justify-center text-ink-300 active:cursor-grabbing"
+        className="flex h-8 w-8 shrink-0 cursor-grab touch-none items-center justify-center text-ink-300 active:cursor-grabbing"
         aria-label="drag"
       >
         <GripVertical className="h-4 w-4" />
