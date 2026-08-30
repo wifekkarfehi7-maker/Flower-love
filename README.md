@@ -8,18 +8,41 @@ Ce projet est initialisé avec Next.js (App Router) + Supabase (base de
 données PostgreSQL, authentification). Voir le cahier des charges pour le
 contexte produit complet.
 
-## État actuel (Phase 1 — étape 1)
+## État actuel (Phase 1)
 
-- Modèle de données (section 5 du cahier des charges) : `supabase/migrations/0001_init.sql`
-- Back-office gérant :
-  - création de compte (`/signup`) et connexion (`/login`)
-  - création de l'établissement (`/dashboard`)
-  - gestion du menu : catégories et plats, prix, description, disponibilité
-    / rupture (`/dashboard/menu`)
+Modèle de données (section 5 du cahier des charges) :
+`supabase/migrations/`.
 
-Reste à construire (prochaines étapes) : page client par table (QR code),
-vue cuisine/caisse en temps réel, génération des QR codes, paiement en
-ligne, interface arabe.
+**Back-office gérant**
+
+- création de compte (`/signup`) et connexion (`/login`)
+- création de l'établissement (`/dashboard`)
+- menu : catégories et plats, prix, description, disponibilité / rupture
+  (`/dashboard/menu`)
+- tables et QR codes, un QR par table (`/dashboard/tables`)
+
+**Parcours client** (`/[etablissement]/table/[numero]`)
+
+- aucun compte requis : le client scanne le QR de sa table
+- menu de l'établissement, plats en rupture affichés mais non commandables
+- panier avec quantités et total, envoi de la commande
+- interface en français et en arabe (avec RTL), selon la langue par défaut
+  de l'établissement
+
+Reste à construire : vue cuisine/caisse temps réel, paiement en ligne
+(Phase 3), statistiques.
+
+### Sécurité des commandes
+
+Les prix et le total ne sont jamais lus depuis le navigateur. Le client
+envoie des identifiants de plats et des quantités ; le serveur relit les
+prix en base, vérifie que chaque plat appartient bien à l'établissement et
+qu'il est disponible, puis calcule le total
+(`src/app/[etablissement]/actions.ts`).
+
+Le RLS interdit toute écriture de commande depuis la clé publique : seul
+le serveur, avec `SUPABASE_SERVICE_ROLE_KEY`, enregistre les commandes. Un
+client ne peut pas non plus lire les commandes des autres tables.
 
 ## Configuration
 

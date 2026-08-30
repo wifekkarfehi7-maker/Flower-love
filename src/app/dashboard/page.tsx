@@ -98,12 +98,20 @@ export default async function DashboardPage({
         {" · "}Langue par défaut : {tenant.langue_defaut === "fr" ? "Français" : "Arabe"}
       </p>
 
-      <Link
-        href="/dashboard/menu"
-        className="mt-6 inline-block rounded-full bg-coral px-6 py-3 font-medium text-white transition hover:brightness-105"
-      >
-        Gérer le menu
-      </Link>
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Link
+          href="/dashboard/menu"
+          className="rounded-full bg-coral px-6 py-3 font-medium text-white transition hover:brightness-105"
+        >
+          Gérer le menu
+        </Link>
+        <Link
+          href="/dashboard/tables"
+          className="rounded-full bg-navy px-6 py-3 font-medium text-white transition hover:brightness-110"
+        >
+          Tables &amp; QR codes
+        </Link>
+      </div>
     </div>
   );
 }

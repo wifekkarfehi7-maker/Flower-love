@@ -33,9 +33,12 @@ export default async function DashboardLayout({
         <div className="flex items-center gap-4 text-sm text-navy/70">
           {tenant && (
             <>
-              <span>{tenant.nom}</span>
+              <span className="hidden sm:inline">{tenant.nom}</span>
               <Link href="/dashboard/menu" className="font-medium text-navy hover:underline">
                 Menu
+              </Link>
+              <Link href="/dashboard/tables" className="font-medium text-navy hover:underline">
+                Tables
               </Link>
             </>
           )}
