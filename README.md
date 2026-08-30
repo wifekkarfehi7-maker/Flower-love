@@ -20,6 +20,9 @@ Modèle de données (section 5 du cahier des charges) :
 - menu : catégories et plats, prix, description, disponibilité / rupture
   (`/dashboard/menu`)
 - tables et QR codes, un QR par table (`/dashboard/tables`)
+- vue cuisine / caisse en temps réel (`/dashboard/cuisine`) : les commandes
+  arrivent sans rafraîchir la page, et passent de « en attente » à « en
+  préparation » puis « servie »
 
 **Parcours client** (`/[etablissement]/table/[numero]`)
 
@@ -29,8 +32,9 @@ Modèle de données (section 5 du cahier des charges) :
 - interface en français et en arabe (avec RTL), selon la langue par défaut
   de l'établissement
 
-Reste à construire : vue cuisine/caisse temps réel, paiement en ligne
-(Phase 3), statistiques.
+Le périmètre de la Phase 1 du cahier des charges est couvert. Reste à
+construire : paiement en ligne (Phase 3), statistiques, multi-établissements
+pour un même gérant.
 
 ### Sécurité des commandes
 

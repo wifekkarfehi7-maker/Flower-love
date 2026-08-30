@@ -34,6 +34,9 @@ export default async function DashboardLayout({
           {tenant && (
             <>
               <span className="hidden sm:inline">{tenant.nom}</span>
+              <Link href="/dashboard/cuisine" className="font-medium text-navy hover:underline">
+                Cuisine
+              </Link>
               <Link href="/dashboard/menu" className="font-medium text-navy hover:underline">
                 Menu
               </Link>

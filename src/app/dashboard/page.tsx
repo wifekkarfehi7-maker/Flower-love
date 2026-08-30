@@ -100,6 +100,12 @@ export default async function DashboardPage({
 
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
+          href="/dashboard/cuisine"
+          className="rounded-full bg-gold px-6 py-3 font-medium text-white transition hover:brightness-105"
+        >
+          Vue cuisine
+        </Link>
+        <Link
           href="/dashboard/menu"
           className="rounded-full bg-coral px-6 py-3 font-medium text-white transition hover:brightness-105"
         >
