@@ -23,6 +23,24 @@ ligne, interface arabe.
 
 ## Configuration
 
+Deux options : un Supabase local (rien à créer, tout tourne sur la
+machine — pratique pour développer) ou un projet Supabase hébergé
+(nécessaire pour déployer).
+
+### Option A — Supabase local (Docker requis)
+
+```bash
+npm install
+npx supabase start          # démarre Postgres + Auth + API, applique les migrations
+```
+
+La commande affiche `API_URL` et `ANON_KEY` : les reporter dans
+`.env.local` (voir `.env.local.example`). Les migrations de
+`supabase/migrations/` sont appliquées automatiquement au démarrage.
+`npx supabase stop` arrête le tout.
+
+### Option B — projet Supabase hébergé
+
 1. Créer un projet sur [Supabase](https://supabase.com).
 2. Copier `.env.local.example` vers `.env.local` et renseigner :
 

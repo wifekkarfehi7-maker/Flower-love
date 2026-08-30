@@ -76,13 +76,13 @@ export default async function MenuPage() {
 
       {categories?.map((category) => (
         <section key={category.id} className="rounded-2xl bg-white p-6 shadow-sm">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
             <h2 className="font-serif text-xl text-navy">{category.nom}</h2>
             <form action={deleteCategory}>
               <input type="hidden" name="category_id" value={category.id} />
               <button
                 type="submit"
-                className="text-sm text-coral hover:underline"
+                className="whitespace-nowrap text-sm text-coral hover:underline"
               >
                 Supprimer la catégorie
               </button>
@@ -91,19 +91,22 @@ export default async function MenuPage() {
 
           <ul className="mt-4 flex flex-col divide-y divide-navy/10">
             {category.menu_items.map((item) => (
-              <li key={item.id} className="flex items-center justify-between gap-4 py-3">
-                <div>
-                  <p className="font-medium text-navy">
-                    {item.nom}{" "}
-                    <span className="font-normal text-navy/60">
-                      — {item.prix.toFixed(2)} DT
+              <li
+                key={item.id}
+                className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+              >
+                <div className="min-w-0">
+                  <p className="flex flex-wrap items-baseline gap-x-2 font-medium text-navy">
+                    <span>{item.nom}</span>
+                    <span className="whitespace-nowrap font-normal text-navy/60">
+                      {item.prix.toFixed(2)} DT
                     </span>
                   </p>
                   {item.description && (
                     <p className="text-sm text-navy/60">{item.description}</p>
                   )}
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex shrink-0 items-center gap-3">
                   <form action={toggleDisponible}>
                     <input type="hidden" name="item_id" value={item.id} />
                     <input
