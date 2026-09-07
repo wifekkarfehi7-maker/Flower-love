@@ -19,6 +19,7 @@ import { useToast } from "@/components/ui/toast";
 import { translateDataError } from "@/lib/auth/error-map";
 import { localized } from "@/lib/i18n/format";
 import { useTranslation } from "@/lib/i18n/provider";
+import { notifyMenuChanged } from "@/lib/menu/revalidate";
 import { useRestaurant } from "@/lib/restaurants/provider";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { Category } from "@/types/database";
@@ -59,6 +60,7 @@ export function CategoriesView({
       const exists = current.some((item) => item.id === saved.id);
       return exists ? current.map((item) => (item.id === saved.id ? saved : item)) : [...current, saved];
     });
+    notifyMenuChanged(restaurant.slug);
   };
 
   const persistOrder = async (ordered: Category[]) => {
@@ -85,6 +87,7 @@ export function CategoriesView({
     }
 
     setCategories(ordered.map((category, index) => ({ ...category, sort_order: index + 1 })));
+    notifyMenuChanged(restaurant.slug);
   };
 
   const toggleVisibility = async (category: Category) => {
@@ -102,7 +105,10 @@ export function CategoriesView({
         current.map((item) => (item.id === category.id ? { ...item, is_active: category.is_active } : item))
       );
       toast({ title: translateDataError(error.message, t), variant: "error" });
+      return;
     }
+
+    notifyMenuChanged(restaurant.slug);
   };
 
   const confirmDelete = async () => {
@@ -125,6 +131,7 @@ export function CategoriesView({
 
     setCategories((current) => current.filter((item) => item.id !== deleting.id));
     setDeleting(null);
+    notifyMenuChanged(restaurant.slug);
     toast({ title: t.common.success, variant: "success" });
   };
 

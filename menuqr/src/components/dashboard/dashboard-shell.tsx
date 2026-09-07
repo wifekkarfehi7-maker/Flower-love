@@ -155,7 +155,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-dvh bg-muted/40">
-      <aside className="fixed inset-y-0 start-0 z-30 hidden w-64 flex-col border-e border-border bg-card lg:flex">
+      <aside className="no-print fixed inset-y-0 start-0 z-30 hidden w-64 flex-col border-e border-border bg-card lg:flex">
         <div className="flex h-16 items-center gap-2 border-b border-border px-5">
           <Link href="/dashboard" className="rounded-md focus-visible:ring-2 focus-visible:ring-ring">
             <Logo />
@@ -177,8 +177,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      <div className="lg:ps-64">
-        <header className="sticky top-0 z-20 flex h-16 items-center gap-2 border-b border-border bg-card/85 px-4 backdrop-blur sm:px-6">
+      <div className="lg:ps-64 print:ps-0">
+        <header className="no-print sticky top-0 z-20 flex h-16 items-center gap-2 border-b border-border bg-card/85 px-4 backdrop-blur sm:px-6">
           <Button
             variant="ghost"
             size="icon"

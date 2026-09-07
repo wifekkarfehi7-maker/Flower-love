@@ -22,6 +22,7 @@ import { useToast } from "@/components/ui/toast";
 import { translateDataError } from "@/lib/auth/error-map";
 import { formatPrice, localized } from "@/lib/i18n/format";
 import { useTranslation } from "@/lib/i18n/provider";
+import { notifyMenuChanged } from "@/lib/menu/revalidate";
 import { useRestaurant } from "@/lib/restaurants/provider";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -76,6 +77,7 @@ export function ProductsView({
       const exists = current.some((item) => item.id === saved.id);
       return exists ? current.map((item) => (item.id === saved.id ? saved : item)) : [...current, saved];
     });
+    notifyMenuChanged(restaurant.slug);
   };
 
   const persistOrder = async (ordered: Product[]) => {
@@ -102,6 +104,7 @@ export function ProductsView({
     }
 
     setProducts(ordered.map((product, index) => ({ ...product, sort_order: index + 1 })));
+    notifyMenuChanged(restaurant.slug);
   };
 
   const toggleAvailability = async (product: Product) => {
@@ -119,7 +122,10 @@ export function ProductsView({
         current.map((item) => (item.id === product.id ? { ...item, is_available: product.is_available } : item))
       );
       toast({ title: translateDataError(error.message, t), variant: "error" });
+      return;
     }
+
+    notifyMenuChanged(restaurant.slug);
   };
 
   const duplicate = async (product: Product) => {
@@ -143,6 +149,7 @@ export function ProductsView({
     }
 
     setProducts((current) => [...current, data]);
+    notifyMenuChanged(restaurant.slug);
     toast({ title: t.products.duplicated, variant: "success" });
   };
 
@@ -165,6 +172,7 @@ export function ProductsView({
 
     setProducts((current) => current.filter((item) => item.id !== deleting.id));
     setDeleting(null);
+    notifyMenuChanged(restaurant.slug);
     toast({ title: t.common.success, variant: "success" });
   };
 

@@ -6,7 +6,7 @@ import * as React from "react";
 import { can, type Capability } from "@/lib/permissions";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import type { Restaurant, RestaurantRole, RestaurantSettings } from "@/types/database";
-import { ACTIVE_RESTAURANT_COOKIE, type RestaurantMembership } from "./get-restaurant-context";
+import { ACTIVE_RESTAURANT_COOKIE, type RestaurantMembership } from "./shared";
 
 interface RestaurantContextValue {
   restaurant: Restaurant;

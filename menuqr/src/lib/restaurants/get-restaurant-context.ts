@@ -2,13 +2,7 @@ import { cookies } from "next/headers";
 
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { Restaurant, RestaurantRole, RestaurantSettings } from "@/types/database";
-
-export const ACTIVE_RESTAURANT_COOKIE = "menuqr-restaurant";
-
-export interface RestaurantMembership {
-  restaurant: Restaurant;
-  role: RestaurantRole;
-}
+import { ACTIVE_RESTAURANT_COOKIE, type RestaurantMembership } from "./shared";
 
 export interface RestaurantContext {
   memberships: RestaurantMembership[];

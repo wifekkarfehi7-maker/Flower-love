@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { EmptyState, PageHeader } from "@/components/ui/misc";
 import { formatPrice, localized } from "@/lib/i18n/format";
 import { useTranslation } from "@/lib/i18n/provider";
+import { notifyMenuChanged } from "@/lib/menu/revalidate";
 import { useRestaurant } from "@/lib/restaurants/provider";
 import type { Category, Product } from "@/types/database";
 import { ProductDialog } from "./product-dialog";
@@ -56,6 +57,7 @@ export function MenuOverviewView({
       const exists = current.some((item) => item.id === saved.id);
       return exists ? current.map((item) => (item.id === saved.id ? saved : item)) : [...current, saved];
     });
+    notifyMenuChanged(restaurant.slug);
   };
 
   const renderProduct = (product: Product) => (
