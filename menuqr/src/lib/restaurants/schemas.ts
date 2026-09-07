@@ -1,27 +1,23 @@
 import { z } from "zod";
 
-import type { Dictionary } from "@/lib/i18n/types";
 import { locales } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n/types";
 
 const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
 const SLUG = /^[a-z0-9][a-z0-9-]*[a-z0-9]$/;
 
+/**
+ * Transform-free like the menu schemas: forms hold strings, and the submit
+ * handlers convert empty strings to NULL columns.
+ */
 export function restaurantSchemas(t: Dictionary) {
-  const optionalText = (max = 400) =>
-    z
-      .string()
-      .trim()
-      .max(max, t.validation.maxLength)
-      .optional()
-      .transform((value) => (value ? value : null));
+  const optionalText = (max = 400) => z.string().trim().max(max, t.validation.maxLength);
 
   const optionalUrl = z
     .string()
     .trim()
     .max(300, t.validation.maxLength)
-    .optional()
-    .refine((value) => !value || /^https?:\/\/\S+$/.test(value), t.validation.invalidUrl)
-    .transform((value) => (value ? value : null));
+    .refine((value) => value === "" || /^https?:\/\/\S+$/.test(value), t.validation.invalidUrl);
 
   const slug = z
     .string()
@@ -67,10 +63,8 @@ export function restaurantSchemas(t: Dictionary) {
     email: z
       .string()
       .trim()
-      .max(120)
-      .optional()
-      .refine((value) => !value || z.string().email().safeParse(value).success, t.validation.invalidEmail)
-      .transform((value) => (value ? value : null)),
+      .max(120, t.validation.maxLength)
+      .refine((value) => value === "" || z.string().email().safeParse(value).success, t.validation.invalidEmail),
     address: optionalText(200),
     google_maps_url: optionalUrl,
     facebook: optionalUrl,
@@ -79,31 +73,18 @@ export function restaurantSchemas(t: Dictionary) {
     website: optionalUrl,
   });
 
-  return { create, general, branding, contact, slug };
+  const account = z.object({
+    full_name: z.string().trim().min(2, t.validation.nameMin).max(80, t.validation.nameMax),
+    phone: optionalText(30),
+  });
+
+  return { create, general, branding, contact, account };
 }
 
-export type CreateRestaurantValues = z.infer<ReturnType<typeof restaurantSchemas>["create"]>;
-export type RestaurantGeneralValues = z.infer<ReturnType<typeof restaurantSchemas>["general"]>;
-export type RestaurantBrandingValues = z.infer<ReturnType<typeof restaurantSchemas>["branding"]>;
-export type RestaurantContactValues = z.infer<ReturnType<typeof restaurantSchemas>["contact"]>;
+type Schemas = ReturnType<typeof restaurantSchemas>;
+export type CreateRestaurantValues = z.infer<Schemas["create"]>;
+export type RestaurantGeneralValues = z.infer<Schemas["general"]>;
+export type RestaurantBrandingValues = z.infer<Schemas["branding"]>;
+export type RestaurantContactValues = z.infer<Schemas["contact"]>;
+export type AccountValues = z.infer<Schemas["account"]>;
 
-export interface OpeningHoursEntry {
-  day: number;
-  open: string;
-  close: string;
-  closed: boolean;
-}
-
-export const DEFAULT_OPENING_HOURS: OpeningHoursEntry[] = Array.from({ length: 7 }, (_, day) => ({
-  day,
-  open: "08:00",
-  close: "23:00",
-  closed: false,
-}));
-
-export interface SocialLinks {
-  facebook?: string | null;
-  instagram?: string | null;
-  tiktok?: string | null;
-  website?: string | null;
-}

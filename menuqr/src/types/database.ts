@@ -461,6 +461,10 @@ export interface Database {
         Args: { p_product: string; p_available: boolean };
         Returns: undefined;
       };
+      add_restaurant_member_by_email: {
+        Args: { p_restaurant: string; p_email: string; p_role?: RestaurantRole };
+        Returns: string;
+      };
       admin_platform_stats: {
         Args: Record<string, never>;
         Returns: {

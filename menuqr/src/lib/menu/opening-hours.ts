@@ -1,11 +1,20 @@
 import type { JsonValue } from "@/types/database";
 
-export interface OpeningHoursEntry {
+// A type alias, not an interface: these rows are written straight into a jsonb
+// column, and only aliases satisfy the JSON index-signature constraint.
+export type OpeningHoursEntry = {
   day: number;
   open: string;
   close: string;
   closed: boolean;
-}
+};
+
+export const DEFAULT_OPENING_HOURS: OpeningHoursEntry[] = Array.from({ length: 7 }, (_, day) => ({
+  day,
+  open: "08:00",
+  close: "23:00",
+  closed: false,
+}));
 
 const TIME = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
