@@ -50,6 +50,13 @@ declare
   v_limit integer;
   v_count integer;
 begin
+  -- BEFORE triggers run ahead of the RLS WITH CHECK, so a caller with no
+  -- rights to this venue would otherwise learn its quota from the error.
+  -- Leave those rows to RLS, which rejects them outright.
+  if not public.can_manage_restaurant(new.restaurant_id) then
+    return new;
+  end if;
+
   v_limit := public.plan_limit_for(new.restaurant_id, 'categories');
   if v_limit is null then
     return new;
@@ -82,6 +89,13 @@ declare
   v_limit integer;
   v_count integer;
 begin
+  -- BEFORE triggers run ahead of the RLS WITH CHECK, so a caller with no
+  -- rights to this venue would otherwise learn its quota from the error.
+  -- Leave those rows to RLS, which rejects them outright.
+  if not public.can_manage_restaurant(new.restaurant_id) then
+    return new;
+  end if;
+
   v_limit := public.plan_limit_for(new.restaurant_id, 'products');
   if v_limit is null then
     return new;
@@ -114,6 +128,13 @@ declare
   v_limit integer;
   v_count integer;
 begin
+  -- BEFORE triggers run ahead of the RLS WITH CHECK, so a caller with no
+  -- rights to this venue would otherwise learn its quota from the error.
+  -- Leave those rows to RLS, which rejects them outright.
+  if not public.can_manage_restaurant(new.restaurant_id) then
+    return new;
+  end if;
+
   v_limit := public.plan_limit_for(new.restaurant_id, 'tables');
   if v_limit is null then
     return new;
@@ -146,6 +167,13 @@ declare
   v_limit integer;
   v_count integer;
 begin
+  -- BEFORE triggers run ahead of the RLS WITH CHECK, so a caller with no
+  -- rights to this venue would otherwise learn its quota from the error.
+  -- Leave those rows to RLS, which rejects them outright.
+  if not public.can_manage_restaurant(new.restaurant_id) then
+    return new;
+  end if;
+
   v_limit := public.plan_limit_for(new.restaurant_id, 'members');
   if v_limit is null then
     return new;

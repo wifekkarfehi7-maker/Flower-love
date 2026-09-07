@@ -120,84 +120,6 @@ create trigger on_auth_user_created
   for each row execute function public.handle_new_user();
 
 -- ---------------------------------------------------------------------------
--- Authorization helpers (SECURITY DEFINER so policies never recurse)
--- ---------------------------------------------------------------------------
-
-create or replace function public.is_super_admin()
-returns boolean
-language sql
-stable
-security definer
-set search_path = public, pg_temp
-as $$
-  select exists (
-    select 1 from public.profiles p
-    where p.id = auth.uid()
-      and p.platform_role = 'super_admin'
-      and p.is_suspended = false
-  );
-$$;
-
-create or replace function public.is_restaurant_member(p_restaurant uuid)
-returns boolean
-language sql
-stable
-security definer
-set search_path = public, pg_temp
-as $$
-  select exists (
-    select 1 from public.restaurant_members m
-    where m.restaurant_id = p_restaurant
-      and m.user_id = auth.uid()
-  );
-$$;
-
-create or replace function public.restaurant_role_of(p_restaurant uuid)
-returns public.restaurant_role
-language sql
-stable
-security definer
-set search_path = public, pg_temp
-as $$
-  select m.role from public.restaurant_members m
-  where m.restaurant_id = p_restaurant
-    and m.user_id = auth.uid()
-  limit 1;
-$$;
-
--- Owner or manager: full menu / table / QR management.
-create or replace function public.can_manage_restaurant(p_restaurant uuid)
-returns boolean
-language sql
-stable
-security definer
-set search_path = public, pg_temp
-as $$
-  select public.is_super_admin() or exists (
-    select 1 from public.restaurant_members m
-    where m.restaurant_id = p_restaurant
-      and m.user_id = auth.uid()
-      and m.role in ('owner', 'manager')
-  );
-$$;
-
--- Owner only: restaurant profile, team, subscription, deletion.
-create or replace function public.can_administer_restaurant(p_restaurant uuid)
-returns boolean
-language sql
-stable
-security definer
-set search_path = public, pg_temp
-as $$
-  select public.is_super_admin() or exists (
-    select 1 from public.restaurant_members m
-    where m.restaurant_id = p_restaurant
-      and m.user_id = auth.uid()
-      and m.role = 'owner'
-  );
-$$;
-
--- ---------------------------------------------------------------------------
 -- restaurants
 -- ---------------------------------------------------------------------------
 
@@ -289,6 +211,84 @@ drop trigger if exists restaurant_members_touch_updated_at on public.restaurant_
 create trigger restaurant_members_touch_updated_at
   before update on public.restaurant_members
   for each row execute function public.touch_updated_at();
+
+-- ---------------------------------------------------------------------------
+-- Authorization helpers (SECURITY DEFINER so policies never recurse)
+-- ---------------------------------------------------------------------------
+
+create or replace function public.is_super_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+  select exists (
+    select 1 from public.profiles p
+    where p.id = auth.uid()
+      and p.platform_role = 'super_admin'
+      and p.is_suspended = false
+  );
+$$;
+
+create or replace function public.is_restaurant_member(p_restaurant uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+  select exists (
+    select 1 from public.restaurant_members m
+    where m.restaurant_id = p_restaurant
+      and m.user_id = auth.uid()
+  );
+$$;
+
+create or replace function public.restaurant_role_of(p_restaurant uuid)
+returns public.restaurant_role
+language sql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+  select m.role from public.restaurant_members m
+  where m.restaurant_id = p_restaurant
+    and m.user_id = auth.uid()
+  limit 1;
+$$;
+
+-- Owner or manager: full menu / table / QR management.
+create or replace function public.can_manage_restaurant(p_restaurant uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+  select public.is_super_admin() or exists (
+    select 1 from public.restaurant_members m
+    where m.restaurant_id = p_restaurant
+      and m.user_id = auth.uid()
+      and m.role in ('owner', 'manager')
+  );
+$$;
+
+-- Owner only: restaurant profile, team, subscription, deletion.
+create or replace function public.can_administer_restaurant(p_restaurant uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public, pg_temp
+as $$
+  select public.is_super_admin() or exists (
+    select 1 from public.restaurant_members m
+    where m.restaurant_id = p_restaurant
+      and m.user_id = auth.uid()
+      and m.role = 'owner'
+  );
+$$;
 
 -- ---------------------------------------------------------------------------
 -- restaurant_settings — behaviour toggles, kept apart from branding
@@ -805,7 +805,10 @@ security definer
 set search_path = public, pg_temp
 as $$
 begin
-  if public.is_super_admin() then
+  -- auth.uid() is NULL in trusted server contexts (the SQL editor, service
+  -- role), which is how the very first administrator is bootstrapped. Signed-in
+  -- users never get past this, so nobody can promote themselves.
+  if auth.uid() is null or public.is_super_admin() then
     return new;
   end if;
   new.platform_role = old.platform_role;
@@ -827,11 +830,15 @@ create policy "restaurants: public reads published"
   to anon, authenticated
   using (deleted_at is null and status = 'active' and is_published = true);
 
+-- owner_id is checked directly as well as through membership: INSERT ... RETURNING
+-- also applies SELECT policies, and the owner's membership row is only created
+-- by the AFTER INSERT trigger, so an unpublished venue would otherwise be
+-- unreadable by the person who just created it.
 drop policy if exists "restaurants: members read own" on public.restaurants;
 create policy "restaurants: members read own"
   on public.restaurants for select
   to authenticated
-  using (public.is_restaurant_member(id) or public.is_super_admin());
+  using (owner_id = auth.uid() or public.is_restaurant_member(id) or public.is_super_admin());
 
 drop policy if exists "restaurants: owner creates" on public.restaurants;
 create policy "restaurants: owner creates"
@@ -865,7 +872,7 @@ security definer
 set search_path = public, pg_temp
 as $$
 begin
-  if public.is_super_admin() then
+  if auth.uid() is null or public.is_super_admin() then
     return new;
   end if;
   new.status = old.status;
