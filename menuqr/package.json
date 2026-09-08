@@ -2,7 +2,7 @@
   "name": "menuqr",
   "version": "0.1.0",
   "private": true,
-  "description": "MenuQR — Digital QR menu SaaS platform for restaurants and cafés (Tunisia-first, Arabic/French/English)",
+  "description": "MenuQR \u2014 Digital QR menu SaaS platform for restaurants and caf\u00e9s (Tunisia-first, Arabic/French/English)",
   "engines": {
     "node": ">=18.18.0"
   },
@@ -11,7 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "e2e": "node e2e/flow.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -56,6 +57,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.1",
     "eslint-config-next": "14.2.35",
+    "playwright-core": "^1.63.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2"

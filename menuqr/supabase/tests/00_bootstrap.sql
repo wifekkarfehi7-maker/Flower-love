@@ -15,6 +15,12 @@ grant anon, authenticated, service_role to postgres;
 create schema if not exists auth;
 create schema if not exists storage;
 
+-- Supabase keeps extensions out of `public`. Mirroring that here matters: a
+-- SECURITY DEFINER function with a locked search_path cannot reach them, and
+-- installing pgcrypto into `public` locally would hide exactly that failure.
+create schema if not exists extensions;
+create extension if not exists "pgcrypto" schema extensions;
+
 create table if not exists auth.users (
   id uuid primary key default gen_random_uuid(),
   email text unique,

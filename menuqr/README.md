@@ -71,7 +71,19 @@ fully functional.
 
 ### Database
 
-Run the migrations in order against your Supabase project (SQL Editor or CLI),
+**Fastest path — a full local Supabase stack.** With Docker running:
+
+```bash
+supabase start          # Postgres, Auth, Storage, PostgREST, mail catcher
+```
+
+The CLI applies `supabase/migrations/*.sql` in order and then `supabase/seed.sql`,
+and prints the API URL and anon key to put in `.env.local`. `supabase status`
+reprints them; `supabase db reset` reapplies everything from scratch. Email is
+captured locally (nothing is sent), so the password-reset link is readable at
+<http://127.0.0.1:54324>.
+
+**Against a hosted project**, run the migrations in order (SQL Editor or CLI),
 then the seed:
 
 ```
@@ -129,8 +141,30 @@ npm run dev        # http://localhost:3000
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm run e2e` | Full end-to-end run in a real browser (see below) |
 
 ## Tests
+
+### End-to-end
+
+`e2e/flow.mjs` drives a real browser through the whole product against a
+running stack, asserting against the database rather than against what the UI
+claims: register, log in, create a venue, build a menu, upload an image, open
+the public menu, scan a table QR, read the analytics that scan produced, reset
+a password through the emailed link, and exercise the admin surface and the
+demo venue.
+
+```bash
+supabase start
+npm run dev
+npm run e2e            # 52 checks; exits non-zero on the first failure
+```
+
+It needs a Chromium build; point `E2E_CHROME` at one if Playwright's default
+lookup doesn't find yours. `E2E_BASE` targets a different origin (for example a
+`next start` build on another port), and screenshots land in `/tmp/menuqr-e2e`.
+
+### Authorization
 
 The authorization model is verified against a real Postgres instance, driving
 the database as the actual `anon` and `authenticated` roles rather than as the
@@ -214,6 +248,12 @@ Standard Next.js App Router project — deploy to Vercel or any Node host.
 | `NEXT_PUBLIC_SUPABASE_URL` | Production Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Production anon/public key |
 | `NEXT_PUBLIC_SITE_URL` | Public origin, no trailing slash — QR targets, canonical URLs, sitemap |
+
+Those three are the whole list — there is no service-role key to configure.
+The image allow-list and the Content-Security-Policy are derived from
+`NEXT_PUBLIC_SUPABASE_URL` at build time, so a self-hosted Supabase on a custom
+domain (or a local stack) works without editing `next.config.mjs`. Because they
+are baked in at build time, changing that variable means rebuilding.
 
 1. Create a production Supabase project and apply the migrations and seed.
 2. Storage is created by `0002_storage.sql`; no manual bucket setup.

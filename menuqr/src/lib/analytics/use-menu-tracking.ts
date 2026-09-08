@@ -79,12 +79,22 @@ export function useMenuTracking(restaurantId: string, locale: Locale) {
     (kind: "product" | "category", targetId: string) => {
       const supabase = getSupabaseBrowserClient();
       if (!supabase) return;
-      void supabase.rpc("track_menu_interaction", {
-        p_restaurant: restaurantId,
-        p_session: getVisitorSession(),
-        p_kind: kind,
-        p_target: targetId,
-      });
+
+      // supabase-js builders are lazy: the request is only issued when the
+      // builder is awaited or `.then()`-ed. Discarding it with `void` would
+      // build the query and never send it. Failures are ignored on purpose —
+      // a dropped analytics ping must never disrupt a guest reading the menu.
+      supabase
+        .rpc("track_menu_interaction", {
+          p_restaurant: restaurantId,
+          p_session: getVisitorSession(),
+          p_kind: kind,
+          p_target: targetId,
+        })
+        .then(
+          () => undefined,
+          () => undefined
+        );
     },
     [restaurantId]
   );

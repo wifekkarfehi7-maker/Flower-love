@@ -518,12 +518,23 @@ create trigger qr_codes_touch_updated_at
   before update on public.qr_codes
   for each row execute function public.touch_updated_at();
 
+-- 16 random bytes from a v4 UUID, base64 with a URL-safe alphabet.
+--
+-- Deliberately avoids pgcrypto's gen_random_bytes(): Supabase installs
+-- extensions into their own `extensions` schema, which the locked search_path
+-- of the SECURITY DEFINER callers cannot see, so a venue could not be created
+-- at all. gen_random_uuid() is core Postgres and always reachable.
 create or replace function public.generate_qr_token()
 returns text
 language sql
 volatile
+set search_path = public, pg_temp
 as $$
-  select translate(encode(gen_random_bytes(12), 'base64'), '+/=', '-_x');
+  select translate(
+    encode(decode(replace(gen_random_uuid()::text, '-', ''), 'hex'), 'base64'),
+    '+/=',
+    '-_x'
+  );
 $$;
 
 -- Every table gets its QR the moment it is created.
