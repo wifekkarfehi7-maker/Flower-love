@@ -71,6 +71,9 @@ grant execute on function storage.foldername(text) to anon, authenticated;
 grant select, insert, update, delete on storage.objects to authenticated;
 grant select on storage.objects to anon;
 
-alter default privileges in schema public grant select, insert, update, delete on tables to authenticated;
-alter default privileges in schema public grant select on tables to anon;
+-- A real Supabase project hands every role full DML on anything created in
+-- `public`, so the harness does the same rather than something tidier: it is
+-- the permissive default that 0007_grants.sql exists to claw back, and the
+-- suite can only prove that if it starts from the same place production does.
+alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
 alter default privileges in schema public grant execute on functions to anon, authenticated;

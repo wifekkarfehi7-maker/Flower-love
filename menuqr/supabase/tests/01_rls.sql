@@ -218,14 +218,31 @@ begin
     (select count(*) from public.restaurants where slug = 'cafe-b') = 0,
     'an unpublished venue is invisible to the public'
   );
-  perform public.test_assert(
-    (select count(*) from public.restaurant_tables) = 0,
-    'the public cannot enumerate tables'
-  );
-  perform public.test_assert(
-    (select count(*) from public.qr_codes) = 0,
-    'the public cannot enumerate QR tokens'
-  );
+end $$;
+
+-- Tables and QR tokens are not merely filtered to nothing for a guest: since
+-- 0007_grants `anon` holds no SELECT on them at all, so the read is refused
+-- before any policy is consulted. Assert the refusal itself — a version that
+-- only counted rows would still pass if the grant came back.
+do $$
+declare
+  v_denied boolean;
+begin
+  begin
+    perform count(*) from public.restaurant_tables;
+    v_denied := false;
+  exception when insufficient_privilege then
+    v_denied := true;
+  end;
+  perform public.test_assert(v_denied, 'the public cannot enumerate tables');
+
+  begin
+    perform count(*) from public.qr_codes;
+    v_denied := false;
+  exception when insufficient_privilege then
+    v_denied := true;
+  end;
+  perform public.test_assert(v_denied, 'the public cannot enumerate QR tokens');
 end $$;
 
 -- View tracking: allowed, de-duplicated, and only for public venues.
@@ -464,6 +481,80 @@ end $$;
 
 reset role;
 select set_config('request.jwt.claim.sub', '', false);
+
+-- ---------------------------------------------------------------------------
+-- Table privileges (0007_grants)
+--
+-- RLS decides which rows a caller reaches; these grants decide which commands
+-- exist for them at all. The suite checks both so that neither layer is
+-- silently carrying the other — in particular, `anon` must hold no write
+-- anywhere, so a mistaken policy cannot by itself expose a write to the
+-- internet.
+-- ---------------------------------------------------------------------------
+
+do $$
+declare
+  r record;
+  -- Everything a guest reads to render a published menu.
+  v_public_read text[] := array[
+    'restaurants', 'restaurant_settings', 'categories',
+    'products', 'product_option_groups', 'product_options',
+    'subscription_plans'
+  ];
+begin
+  for r in
+    select tablename from pg_tables where schemaname = 'public'
+  loop
+    -- No write reaches an anonymous visitor, on any table.
+    perform public.test_assert(
+      not has_table_privilege('anon', 'public.' || quote_ident(r.tablename), 'INSERT')
+      and not has_table_privilege('anon', 'public.' || quote_ident(r.tablename), 'UPDATE')
+      and not has_table_privilege('anon', 'public.' || quote_ident(r.tablename), 'DELETE'),
+      format('anon holds no write grant on %s', r.tablename)
+    );
+
+    -- And it reads only what the public menu needs.
+    perform public.test_assert(
+      has_table_privilege('anon', 'public.' || quote_ident(r.tablename), 'SELECT')
+        = (r.tablename = any(v_public_read)),
+      format('anon read grant on %s matches the public-menu set', r.tablename)
+    );
+  end loop;
+end $$;
+
+do $$
+begin
+  -- Profiles are created by the auth trigger and deleted with the user.
+  perform public.test_assert(
+    not has_table_privilege('authenticated', 'public.profiles', 'INSERT')
+    and not has_table_privilege('authenticated', 'public.profiles', 'DELETE'),
+    'a signed-in user cannot insert or delete profile rows'
+  );
+
+  -- Analytics rows arrive through the tracking functions, which are the only
+  -- writers; the audit log is written only by the admin functions.
+  perform public.test_assert(
+    not has_table_privilege('authenticated', 'public.menu_views', 'INSERT')
+    and not has_table_privilege('authenticated', 'public.menu_interactions', 'INSERT')
+    and not has_table_privilege('authenticated', 'public.admin_audit_log', 'INSERT'),
+    'analytics and audit rows cannot be written directly by a client'
+  );
+
+  -- Settings live and die with their venue; nothing deletes one on its own.
+  perform public.test_assert(
+    not has_table_privilege('authenticated', 'public.restaurant_settings', 'DELETE'),
+    'settings rows cannot be deleted independently of their venue'
+  );
+
+  -- The dashboard still has the grants it actually needs.
+  perform public.test_assert(
+    has_table_privilege('authenticated', 'public.restaurants', 'INSERT')
+    and has_table_privilege('authenticated', 'public.categories', 'DELETE')
+    and has_table_privilege('authenticated', 'public.products', 'UPDATE')
+    and has_table_privilege('authenticated', 'public.qr_codes', 'INSERT'),
+    'the dashboard keeps the grants the product needs'
+  );
+end $$;
 
 \pset tuples_only off
 \echo 'ALL AUTHORIZATION TESTS PASSED'

@@ -51,6 +51,10 @@ Row Level Security is the authorization boundary, not a second line of defence:
 - Plan quotas, privilege columns (`platform_role`, venue `status`) and
   cross-tenant product/category consistency are enforced by triggers, so the
   rules hold even against direct API access.
+- Table grants are least-privilege and explicit (`0007_grants.sql`), rather
+  than the blanket DML a Supabase project grants every role by default. `anon`
+  holds no write anywhere and can read only what a published menu needs, so a
+  mistaken policy cannot by itself expose a write to the internet.
 
 All of this is covered by an executable test suite — see [Tests](#tests).
 
@@ -83,8 +87,18 @@ reprints them; `supabase db reset` reapplies everything from scratch. Email is
 captured locally (nothing is sent), so the password-reset link is readable at
 <http://127.0.0.1:54324>.
 
-**Against a hosted project**, run the migrations in order (SQL Editor or CLI),
-then the seed:
+**Against a hosted project — one paste.** `supabase/setup.sql` is every
+migration and the seed concatenated in order. Open the Supabase dashboard →
+**SQL Editor** → **New query**, paste the whole file, and run it. It ends by
+printing the plan catalogue and a count of tables, policies, functions and the
+image bucket, so a successful run is visible rather than assumed.
+
+It is safe to run again: tables use `IF NOT EXISTS`, every policy is dropped
+before it is recreated, and the plan rows upsert on their code. The file is
+generated — after editing anything under `migrations/` or `seed.sql`, run
+`supabase/build-setup.sh` and commit the result.
+
+**Or apply the pieces individually**, in this order:
 
 ```
 supabase/migrations/0001_init.sql         core schema, enums, RLS policies
@@ -93,6 +107,7 @@ supabase/migrations/0003_analytics.sql    QR resolution, view tracking, reportin
 supabase/migrations/0004_admin.sql        super-admin RPCs + audit log
 supabase/migrations/0005_plan_limits.sql  plan quota enforcement
 supabase/migrations/0006_team.sql         add a teammate by email
+supabase/migrations/0007_grants.sql       least-privilege table grants
 supabase/seed.sql                         the three plans + demo-venue functions
 ```
 
@@ -168,19 +183,26 @@ lookup doesn't find yours. `E2E_BASE` targets a different origin (for example a
 
 The authorization model is verified against a real Postgres instance, driving
 the database as the actual `anon` and `authenticated` roles rather than as the
-table owner. Roughly forty assertions cover tenant isolation, role boundaries,
-plan quotas, privilege escalation, anonymous tracking, admin gating and storage
-path scoping.
+table owner. Roughly fifty assertions — two of them sweeping every table in the
+schema — cover tenant isolation, role boundaries, plan quotas, privilege
+escalation, anonymous tracking, admin gating, table grants and storage path
+scoping.
 
 ```bash
 PGHOST=/tmp PGPORT=5432 PGUSER=postgres ./supabase/tests/run.sh
 ```
 
+`MENUQR_TEST_SETUP=1` runs the same suite against the generated
+`supabase/setup.sql` instead of the migrations it is built from. Both must
+behave identically, so this catches a migration edited without regenerating the
+setup file.
+
 It creates its own scratch database (`menuqr_test`), applies the migrations and
 seed, and exits non-zero on the first failed expectation. It never touches your
 Supabase project. `supabase/tests/00_bootstrap.sql` stands in for the parts of a
 Supabase project the schema depends on (`auth.users`, `auth.uid()`, storage
-tables) so the suite runs on plain Postgres.
+tables, and the permissive default privileges a real project ships with) so the
+suite runs on plain Postgres.
 
 ## Routes
 
@@ -255,7 +277,8 @@ The image allow-list and the Content-Security-Policy are derived from
 domain (or a local stack) works without editing `next.config.mjs`. Because they
 are baked in at build time, changing that variable means rebuilding.
 
-1. Create a production Supabase project and apply the migrations and seed.
+1. Create a production Supabase project and run `supabase/setup.sql` in the
+   SQL Editor.
 2. Storage is created by `0002_storage.sql`; no manual bucket setup.
 3. Deploy with the variables above, then point your domain and update
    `NEXT_PUBLIC_SITE_URL` to match.
