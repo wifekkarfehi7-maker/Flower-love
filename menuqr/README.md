@@ -179,6 +179,27 @@ It needs a Chromium build; point `E2E_CHROME` at one if Playwright's default
 lookup doesn't find yours. `E2E_BASE` targets a different origin (for example a
 `next start` build on another port), and screenshots land in `/tmp/menuqr-e2e`.
 
+### Against a hosted project
+
+`e2e/flow.mjs` asserts through `docker exec psql` and reads confirmation mail
+out of the local Inbucket, so it needs the local stack. To check a hosted
+project instead, `e2e/hosted-api-check.mjs` performs the operations the
+application performs — the same inserts, the same RPCs, the same storage paths
+— as the real `authenticated` and `anon` roles over HTTPS, and asserts on what
+comes back: the bootstrap triggers, plan assignment, menu content, image upload
+and public serving, QR generation and resolution, view and interaction
+tracking, the scan counter, and the boundaries `anon` must not cross.
+
+```bash
+E2E_EMAIL=you@example.com E2E_PASSWORD=... node e2e/hosted-api-check.mjs
+```
+
+It reads the project from `.env.local` and needs an already-confirmed account
+(a hosted project mails its confirmation link to a real inbox). It leaves the
+venue it creates in place so you can look at it, and it is a check of the
+backend contract rather than of the interface — the interface is what
+`flow.mjs` covers.
+
 ### Authorization
 
 The authorization model is verified against a real Postgres instance, driving
