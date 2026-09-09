@@ -47,12 +47,15 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { tableName, trackInteraction } = useMenuTracking(restaurant.id, locale);
+  const { tableName, tableId, trackInteraction } = useMenuTracking(restaurant.id, locale);
 
   const showImages = settings?.show_product_images ?? true;
   const showPrices = settings?.show_prices ?? true;
   const searchEnabled = settings?.enable_search ?? true;
   const cartEnabled = settings?.enable_cart ?? false;
+  // Ordering rides on the basket: a venue cannot take orders through a list
+  // the guest was never shown.
+  const orderingEnabled = cartEnabled && (settings?.enable_ordering ?? false);
   const showUnavailable = settings?.show_unavailable_products ?? true;
 
   const visibleProducts = React.useMemo(
@@ -175,6 +178,7 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
           product: selection.product,
           quantity: selection.quantity,
           optionLabels,
+          optionIds: selection.optionIds,
           unitPrice: selection.unitPrice,
         },
       ];
@@ -572,6 +576,10 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
         fallbackLocale={fallbackLocale}
         currency={restaurant.currency}
         t={t}
+        onOrderPlaced={() => setCart([])}
+        orderingEnabled={orderingEnabled}
+        restaurantId={restaurant.id}
+        tableId={tableId}
       />
     </div>
   );

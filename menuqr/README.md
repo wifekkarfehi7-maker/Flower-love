@@ -21,6 +21,8 @@ opaque table token.
 - **Multilingual** — every category and product carries ar/fr/en, with fallback
 - **True RTL** — logical properties throughout, direction-aware menus and popovers
 - **QR system** — a code per table plus a venue code, print sheets included
+- **Ordering** — a guest sends an order from their phone and it lands on the
+  venue's screen; off by default, per venue
 - **Analytics** — scans, views, top products, table activity; nothing personal
 - **Roles** — owner / manager / staff per venue, plus platform administrators
 - **Plans** — free / pro / business with quotas enforced by the database
@@ -108,6 +110,7 @@ supabase/migrations/0004_admin.sql        super-admin RPCs + audit log
 supabase/migrations/0005_plan_limits.sql  plan quota enforcement
 supabase/migrations/0006_team.sql         add a teammate by email
 supabase/migrations/0007_grants.sql       least-privilege table grants
+supabase/migrations/0008_ordering.sql     guest ordering + live order status
 supabase/seed.sql                         the three plans + demo-venue functions
 ```
 
@@ -172,7 +175,7 @@ demo venue.
 ```bash
 supabase start
 npm run dev
-npm run e2e            # 52 checks; exits non-zero on the first failure
+npm run e2e            # 64 checks; exits non-zero on the first failure
 ```
 
 It needs a Chromium build; point `E2E_CHROME` at one if Playwright's default
@@ -204,10 +207,10 @@ backend contract rather than of the interface — the interface is what
 
 The authorization model is verified against a real Postgres instance, driving
 the database as the actual `anon` and `authenticated` roles rather than as the
-table owner. Roughly fifty assertions — two of them sweeping every table in the
+table owner. Roughly seventy assertions — two of them sweeping every table in the
 schema — cover tenant isolation, role boundaries, plan quotas, privilege
-escalation, anonymous tracking, admin gating, table grants and storage path
-scoping.
+escalation, anonymous tracking, ordering (including forged prices and
+cross-tenant products), admin gating, table grants and storage path scoping.
 
 ```bash
 PGHOST=/tmp PGPORT=5432 PGUSER=postgres ./supabase/tests/run.sh
@@ -239,6 +242,7 @@ suite runs on plain Postgres.
 /dashboard/menu           Menu structure, category by category
 /dashboard/categories     Categories with drag ordering
 /dashboard/products       Products, filters, options, availability
+/dashboard/orders         Live orders from the phone
 /dashboard/tables         Tables and zones, bulk creation
 /dashboard/qr             QR codes: download, print, regenerate
 /dashboard/qr/print       Printable QR cards
@@ -266,6 +270,30 @@ suite runs on plain Postgres.
 
 Staff hold no `UPDATE` grant on products at all; toggling availability goes
 through a dedicated function, so the boundary is enforced by the database.
+
+## Ordering
+
+Off by default, and switched on per venue under **Settings → Menu** (the basket
+has to be on too — a venue cannot take orders through a list its guests were
+never shown).
+
+An order is written by one `SECURITY DEFINER` function, because a guest is
+`anon` and `anon` holds no write on `orders` at all. That function is where the
+rules live: the venue must be published and accepting orders, the table and
+every product must belong to it, a sold-out dish is refused rather than quietly
+dropped, and **prices are read from the menu**, so a forged payload cannot buy a
+40 DT dish for one. A session is capped at ten orders an hour, which is more
+than a table needs and less than a flood.
+
+The venue's screen takes orders over Supabase Realtime with an opt-in chime,
+and re-reads on a timer regardless. That second path is the point: a café's
+wifi drops, a socket dies without saying so, and a screen that trusted the
+socket would stop showing orders with nothing to indicate it. Staff move an
+order along through `set_order_status`, which re-checks membership — they hold
+no `UPDATE` on the table itself.
+
+Payment is not part of this. An order tells the kitchen what a table wants; the
+bill is settled the way it already was.
 
 ## Performance notes
 
@@ -318,10 +346,6 @@ Honesty matters more here than a longer feature list:
   manual implementation, and the UI says plainly that upgrades are arranged
   directly. Adding Konnect, Flouci, Paymee or ClicToPay means implementing that
   interface — no schema or UI redesign.
-- **No table ordering.** The guest-side selection list is local to the browser
-  and clearly labelled as a reference for talking to the waiter. The `orders`
-  and `order_items` tables exist so ordering can be switched on later without a
-  data migration.
 - **No phone authentication yet.** Email and password only; the profile already
   carries a phone number for when it is added.
 

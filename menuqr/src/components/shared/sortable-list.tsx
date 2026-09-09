@@ -84,8 +84,15 @@ export function SortableList<T extends { id: string }>({
     onReorder(arrayMove(items, oldIndex, newIndex));
   };
 
+  // Without an explicit id, dnd-kit names its screen-reader announcement
+  // element from a module-level counter, which starts over on the server and
+  // keeps going in the browser — so the two renders disagree and React logs a
+  // hydration mismatch on every list. useId is stable across both.
+  const dndId = React.useId();
+
   return (
     <DndContext
+      id={dndId}
       sensors={sensors}
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}

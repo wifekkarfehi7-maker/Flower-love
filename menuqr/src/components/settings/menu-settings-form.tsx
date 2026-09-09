@@ -26,6 +26,7 @@ export function MenuSettingsForm() {
     enable_search: settings?.enable_search ?? true,
     show_product_images: settings?.show_product_images ?? true,
     enable_cart: settings?.enable_cart ?? false,
+    enable_ordering: settings?.enable_ordering ?? false,
     allow_search_indexing: settings?.allow_search_indexing ?? true,
     announcement_ar: settings?.announcement_ar ?? "",
     announcement_fr: settings?.announcement_fr ?? "",
@@ -40,6 +41,7 @@ export function MenuSettingsForm() {
     { key: "show_product_images", label: t.settings.showImages },
     { key: "enable_search", label: t.settings.enableSearch },
     { key: "enable_cart", label: t.menu.cart, help: t.menu.cartNote },
+    { key: "enable_ordering", label: t.settings.enableOrdering, help: t.settings.enableOrderingHelp },
     { key: "allow_search_indexing", label: t.settings.allowIndexing, help: t.settings.allowIndexingHelp },
   ] as const;
 
@@ -57,6 +59,9 @@ export function MenuSettingsForm() {
         enable_search: values.enable_search,
         show_product_images: values.show_product_images,
         enable_cart: values.enable_cart,
+        // Ordering without the basket would collect orders from a list no
+        // guest was shown, so it is stored off when the basket goes off.
+        enable_ordering: values.enable_cart && values.enable_ordering,
         allow_search_indexing: values.allow_search_indexing,
         announcement_ar: values.announcement_ar.trim() || null,
         announcement_fr: values.announcement_fr.trim() || null,

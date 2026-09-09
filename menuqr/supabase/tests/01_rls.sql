@@ -483,6 +483,294 @@ reset role;
 select set_config('request.jwt.claim.sub', '', false);
 
 -- ---------------------------------------------------------------------------
+-- Ordering (0008_ordering)
+--
+-- `anon` holds no write grant on orders, so everything below goes through
+-- place_order, and what is checked is that the function refuses what it should
+-- rather than that a policy happens to catch it afterwards.
+--
+-- The fixtures are handed over in session settings rather than psql variables:
+-- psql does not interpolate inside a dollar-quoted block, and a guest cannot
+-- look these ids up for itself — it holds no read on restaurant_tables at all,
+-- and none on an unpublished venue. In the product they arrive from
+-- resolve_qr_token.
+-- ---------------------------------------------------------------------------
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+
+-- An earlier test marks cafe-a's dish sold out, and a sold-out dish is refused
+-- further down on purpose. Put it back, for the same reason as the status
+-- above: this block sets up its own state rather than inheriting one.
+update public.products set is_available = true where restaurant_id = :'resta_id';
+
+-- cafe-b has no menu of its own in the fixtures above, and the cross-tenant
+-- checks need one to point at.
+insert into public.categories (restaurant_id, name_fr, sort_order)
+values (:'restb_id', 'Cafés', 1) returning id as id \gset catb_
+insert into public.products (restaurant_id, category_id, name_fr, price)
+values (:'restb_id', :'catb_id', 'Express', 2.0);
+insert into public.restaurant_tables (restaurant_id, name, identifier)
+values (:'restb_id', 'Table B1', 'table-b1');
+
+select set_config('menuqr.rest_a', :'resta_id', false);
+select set_config('menuqr.rest_b', :'restb_id', false);
+select set_config('menuqr.table_a', (select id::text from public.restaurant_tables where restaurant_id = :'resta_id' limit 1), false);
+select set_config('menuqr.table_b', (select id::text from public.restaurant_tables where restaurant_id = :'restb_id' limit 1), false);
+select set_config('menuqr.prod_a', (select id::text from public.products where restaurant_id = :'resta_id' limit 1), false);
+select set_config('menuqr.prod_b', (select id::text from public.products where restaurant_id = :'restb_id' limit 1), false);
+
+-- The admin tests above suspend cafe-a, and a suspended venue is not public.
+-- Put it back rather than depending on where in the file this block sits.
+select set_config('request.jwt.claim.sub', :'admin_id', false);
+set role authenticated;
+select public.admin_set_restaurant_status(:'resta_id', 'active', 'ordering tests');
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+set role anon;
+
+do $$
+declare
+  v_rest_a uuid := current_setting('menuqr.rest_a')::uuid;
+  v_prod_a uuid := current_setting('menuqr.prod_a')::uuid;
+  v_blocked boolean;
+begin
+  -- A venue that has not switched ordering on does not take orders.
+  begin
+    perform public.place_order(v_rest_a, 'guest-session-0001',
+      jsonb_build_array(jsonb_build_object('product_id', v_prod_a, 'quantity', 1)));
+    v_blocked := false;
+  exception when check_violation then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a venue with ordering switched off refuses orders');
+end $$;
+
+-- The owner switches ordering on.
+reset role;
+select set_config('request.jwt.claim.sub', :'ownera_id', false);
+set role authenticated;
+update public.restaurant_settings set enable_ordering = true where restaurant_id = :'resta_id';
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+set role anon;
+
+-- Placed as a guest; checked as the venue, because a guest cannot read the
+-- orders table at all — which is itself asserted further down.
+do $$
+declare
+  v_rest_a uuid := current_setting('menuqr.rest_a')::uuid;
+  v_rest_b uuid := current_setting('menuqr.rest_b')::uuid;
+  v_prod_a uuid := current_setting('menuqr.prod_a')::uuid;
+  v_prod_b uuid := current_setting('menuqr.prod_b')::uuid;
+  v_table_a uuid := current_setting('menuqr.table_a')::uuid;
+  v_table_b uuid := current_setting('menuqr.table_b')::uuid;
+  v_blocked boolean;
+begin
+  perform set_config('menuqr.order_plain',
+    public.place_order(
+      v_rest_a, 'guest-session-0002',
+      jsonb_build_array(jsonb_build_object('product_id', v_prod_a, 'quantity', 2)),
+      v_table_a, 'bla harissa'
+    )::text, false);
+
+  -- A forged unit price in the payload: place_order never reads one.
+  perform set_config('menuqr.order_forged',
+    public.place_order(
+      v_rest_a, 'guest-session-0003',
+      jsonb_build_array(jsonb_build_object(
+        'product_id', v_prod_a, 'quantity', 1, 'unit_price', 0.001, 'price', 0.001))
+    )::text, false);
+
+  -- A table belonging to someone else is dropped, not honoured.
+  perform set_config('menuqr.order_foreign_table',
+    public.place_order(
+      v_rest_a, 'guest-session-0007',
+      jsonb_build_array(jsonb_build_object('product_id', v_prod_a, 'quantity', 1)),
+      v_table_b
+    )::text, false);
+
+  -- Another venue's product cannot be put on this venue's bill.
+  begin
+    perform public.place_order(v_rest_a, 'guest-session-0004',
+      jsonb_build_array(jsonb_build_object('product_id', v_prod_b, 'quantity', 1)));
+    v_blocked := false;
+  exception when no_data_found then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a product from another venue cannot be ordered');
+
+  -- An unpublished venue is not open for orders.
+  begin
+    perform public.place_order(v_rest_b, 'guest-session-0005',
+      jsonb_build_array(jsonb_build_object('product_id', v_prod_b, 'quantity', 1)));
+    v_blocked := false;
+  exception when no_data_found then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'an unpublished venue refuses orders');
+
+  -- An empty order is rejected rather than stored as a zero-total row.
+  begin
+    perform public.place_order(v_rest_a, 'guest-session-0006', '[]'::jsonb);
+    v_blocked := false;
+  exception when check_violation then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'an empty order is refused');
+end $$;
+
+reset role;
+select set_config('request.jwt.claim.sub', :'ownera_id', false);
+set role authenticated;
+
+do $$
+declare
+  v_plain uuid := current_setting('menuqr.order_plain')::uuid;
+  v_forged uuid := current_setting('menuqr.order_forged')::uuid;
+  v_foreign uuid := current_setting('menuqr.order_foreign_table')::uuid;
+  v_price numeric := (select price from public.products where id = current_setting('menuqr.prod_a')::uuid);
+begin
+  perform public.test_assert(v_plain is not null, 'a guest can place an order');
+  perform public.test_assert(
+    (select o.total from public.orders o where o.id = v_plain) = v_price * 2,
+    'the order total is computed from the menu, not from the request'
+  );
+  perform public.test_assert(
+    (select o.table_id from public.orders o where o.id = v_plain) = current_setting('menuqr.table_a')::uuid,
+    'the order is attributed to the scanned table'
+  );
+  perform public.test_assert(
+    (select o.customer_note from public.orders o where o.id = v_plain) = 'bla harissa',
+    'the customer note is kept'
+  );
+  perform public.test_assert(
+    (select o.status from public.orders o where o.id = v_plain) = 'pending',
+    'a new order arrives as pending'
+  );
+  perform public.test_assert(
+    (select count(*) from public.order_items i where i.order_id = v_plain) = 1
+    and (select i.quantity from public.order_items i where i.order_id = v_plain) = 2,
+    'the order carries its line with the quantity asked for'
+  );
+  perform public.test_assert(
+    (select o.total from public.orders o where o.id = v_forged) = v_price,
+    'a forged price in the payload is ignored'
+  );
+  perform public.test_assert(
+    (select o.table_id from public.orders o where o.id = v_foreign) is null,
+    'a table from another venue is not attributed'
+  );
+end $$;
+
+-- A sold-out dish is refused, so the guest is told rather than served silence.
+reset role;
+select set_config('request.jwt.claim.sub', :'ownera_id', false);
+set role authenticated;
+update public.products set is_available = false where id = current_setting('menuqr.prod_a')::uuid;
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+set role anon;
+
+do $$
+declare
+  v_blocked boolean;
+begin
+  begin
+    perform public.place_order(current_setting('menuqr.rest_a')::uuid, 'guest-session-0008',
+      jsonb_build_array(jsonb_build_object('product_id', current_setting('menuqr.prod_a')::uuid, 'quantity', 1)));
+    v_blocked := false;
+  exception when check_violation then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a sold-out dish cannot be ordered');
+end $$;
+
+reset role;
+select set_config('request.jwt.claim.sub', :'ownera_id', false);
+set role authenticated;
+update public.products set is_available = true where id = current_setting('menuqr.prod_a')::uuid;
+
+-- Remember the order the waiter will work on, while a role that can read it
+-- is still current.
+select set_config('menuqr.order_1', (select id::text from public.orders where session_identifier = 'guest-session-0002'), false);
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+set role anon;
+
+do $$
+declare
+  v_order uuid := current_setting('menuqr.order_1')::uuid;
+  v_denied boolean;
+begin
+  -- Orders are not readable by the room at large.
+  begin
+    perform count(*) from public.orders;
+    v_denied := false;
+  exception when insufficient_privilege then
+    v_denied := true;
+  end;
+  perform public.test_assert(v_denied, 'a guest cannot read the orders table');
+
+  -- A guest follows their own order, and only with the session that placed it.
+  perform public.test_assert(
+    (select count(*) from public.order_status_for_session(v_order, 'guest-session-0002')) = 1,
+    'a guest can follow the order they placed'
+  );
+  perform public.test_assert(
+    (select count(*) from public.order_status_for_session(v_order, 'guest-session-9999')) = 0,
+    'knowing an order id is not enough to read it'
+  );
+end $$;
+
+-- Staff hold no UPDATE on orders; the function is the only way through.
+reset role;
+select set_config('request.jwt.claim.sub', :'staff_id', false);
+set role authenticated;
+
+do $$
+declare
+  v_order uuid := current_setting('menuqr.order_1')::uuid;
+begin
+  perform public.set_order_status(v_order, 'confirmed');
+  perform public.test_assert(
+    (select o.status from public.orders o where o.id = v_order) = 'confirmed',
+    'a waiter can move an order along'
+  );
+end $$;
+
+-- Someone from another venue cannot.
+reset role;
+select set_config('request.jwt.claim.sub', :'ownerb_id', false);
+set role authenticated;
+
+do $$
+declare
+  v_order uuid := current_setting('menuqr.order_1')::uuid;
+  v_blocked boolean;
+begin
+  begin
+    perform public.set_order_status(v_order, 'cancelled');
+    v_blocked := false;
+  exception when insufficient_privilege then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'another venue cannot touch these orders');
+
+  perform public.test_assert(
+    (select count(*) from public.orders) = 0,
+    'another venue cannot read these orders'
+  );
+end $$;
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+
+-- ---------------------------------------------------------------------------
 -- Table privileges (0007_grants)
 --
 -- RLS decides which rows a caller reaches; these grants decide which commands

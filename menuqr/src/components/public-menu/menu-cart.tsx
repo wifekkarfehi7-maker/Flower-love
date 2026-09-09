@@ -1,8 +1,10 @@
 "use client";
 
-import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import { CheckCircle2, Loader2, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import * as React from "react";
 
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import { orderErrorMessage, placeOrder, readOrderStatus, type OrderStatus } from "@/lib/orders/place-order";
 import type { Locale } from "@/lib/i18n/config";
 import { formatPrice, localized } from "@/lib/i18n/format";
 import type { Dictionary } from "@/lib/i18n/types";
@@ -13,13 +15,19 @@ export interface CartItem {
   product: Product;
   quantity: number;
   optionLabels: string[];
+  optionIds: string[];
   unitPrice: number;
 }
 
 /**
- * A local, browser-only selection list. Nothing is sent anywhere: guests use
- * it to add up what they want before telling the waiter, and the copy says so.
- * Real ordering is a later feature with its own tables already in the schema.
+ * Two things wear the same list. With ordering off it stays what it always
+ * was — a browser-only tally a guest shows the waiter, and the copy says so.
+ * With ordering on the same list is sent, and from then on this shows the
+ * order's status rather than a basket, because the guest's question changes
+ * from "what am I having" to "is it coming".
+ *
+ * The prices here are for the guest to read. The server prices the order
+ * again from its own menu, so what is sent is products and quantities.
  */
 export function MenuCart({
   open,
@@ -28,10 +36,14 @@ export function MenuCart({
   onChangeQuantity,
   onRemove,
   onClear,
+  onOrderPlaced,
   locale,
   fallbackLocale,
   currency,
   t,
+  orderingEnabled,
+  restaurantId,
+  tableId,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -39,20 +51,115 @@ export function MenuCart({
   onChangeQuantity: (key: string, quantity: number) => void;
   onRemove: (key: string) => void;
   onClear: () => void;
+  /** Empties the basket without closing: the confirmation replaces it. */
+  onOrderPlaced: () => void;
   locale: Locale;
   fallbackLocale: Locale;
   currency: string;
   t: Dictionary;
+  orderingEnabled: boolean;
+  restaurantId: string;
+  tableId: string | null;
 }) {
   const total = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+
+  const [note, setNote] = React.useState("");
+  const [sending, setSending] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const [orderId, setOrderId] = React.useState<string | null>(null);
+  const [status, setStatus] = React.useState<OrderStatus>("pending");
+
+  const statusLabel: Record<OrderStatus, string> = {
+    pending: t.menu.orderStatusPending,
+    confirmed: t.menu.orderStatusConfirmed,
+    preparing: t.menu.orderStatusPreparing,
+    served: t.menu.orderStatusServed,
+    cancelled: t.menu.orderStatusCancelled,
+  };
+
+  // While an order is open the guest wants to know where it is. Polling is
+  // enough here: a phone on a café's wifi that reconnects mid-meal would have
+  // to re-establish a socket anyway, and this survives that without code.
+  React.useEffect(() => {
+    if (!orderId) return;
+    let cancelled = false;
+
+    const tick = async () => {
+      const next = await readOrderStatus(orderId);
+      if (!cancelled && next) setStatus(next);
+    };
+
+    void tick();
+    const timer = window.setInterval(tick, 15000);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [orderId]);
+
+  const send = async () => {
+    setSending(true);
+    setError(null);
+
+    const result = await placeOrder({
+      restaurantId,
+      tableId,
+      lines: items.map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+        optionIds: item.optionIds,
+      })),
+      note,
+    });
+
+    setSending(false);
+
+    if ("error" in result) {
+      setError(orderErrorMessage(result.error, t));
+      return;
+    }
+
+    setOrderId(result.orderId);
+    setStatus("pending");
+    setNote("");
+    onOrderPlaced();
+  };
+
+  const startAnother = () => {
+    setOrderId(null);
+    setError(null);
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="border-[var(--menu-border)] bg-[var(--menu-surface)] text-[var(--menu-text)] sm:max-w-md">
         <div className="px-5 pb-2 pt-5">
-          <DialogTitle>{t.menu.cart}</DialogTitle>
-          <DialogDescription className="mt-1 text-[var(--menu-muted)]">{t.menu.cartNote}</DialogDescription>
+          <DialogTitle>{orderId ? t.menu.orderPlaced : t.menu.cart}</DialogTitle>
+          <DialogDescription className="mt-1 text-[var(--menu-muted)]">
+            {orderId ? t.menu.orderPlacedText : orderingEnabled ? t.menu.cartOrderNote : t.menu.cartNote}
+          </DialogDescription>
         </div>
+
+        {orderId ? (
+          <div className="flex flex-col items-center gap-4 px-5 py-8 text-center">
+            <CheckCircle2 className="size-10 text-[var(--menu-accent)]" aria-hidden />
+            <div
+              className="rounded-full border border-[var(--menu-border)] px-4 py-1.5 text-sm font-medium"
+              aria-live="polite"
+            >
+              {statusLabel[status]}
+            </div>
+            <button
+              type="button"
+              onClick={startAnother}
+              className="mt-2 w-full rounded-full border border-[var(--menu-border)] px-4 py-2 text-sm"
+            >
+              {t.menu.orderNewOne}
+            </button>
+          </div>
+        ) : (
+          <>
 
         <div className="flex-1 overflow-y-auto px-5">
           {items.length === 0 ? (
@@ -116,6 +223,39 @@ export function MenuCart({
               <span>{t.menu.cartTotal}</span>
               <span className="tabular-nums text-[var(--menu-accent)]">{formatPrice(total, currency, locale)}</span>
             </div>
+            {orderingEnabled ? (
+              <>
+                <label className="sr-only" htmlFor="orderNote">
+                  {t.menu.orderNotePlaceholder}
+                </label>
+                <textarea
+                  id="orderNote"
+                  value={note}
+                  onChange={(event) => setNote(event.target.value)}
+                  placeholder={t.menu.orderNotePlaceholder}
+                  rows={2}
+                  maxLength={500}
+                  className="mt-3 w-full resize-none rounded-2xl border border-[var(--menu-border)] bg-transparent px-3 py-2 text-sm outline-none placeholder:text-[var(--menu-muted)]"
+                />
+
+                {error ? (
+                  <p className="mt-2 text-sm text-red-500" role="alert">
+                    {error}
+                  </p>
+                ) : null}
+
+                <button
+                  type="button"
+                  onClick={send}
+                  disabled={sending}
+                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--menu-accent)] px-4 py-2.5 text-sm font-semibold text-[var(--menu-on-accent)] disabled:opacity-60"
+                >
+                  {sending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
+                  {sending ? t.menu.orderSending : t.menu.orderSend}
+                </button>
+              </>
+            ) : null}
+
             <button
               type="button"
               onClick={onClear}
@@ -124,7 +264,9 @@ export function MenuCart({
               {t.menu.clearCart}
             </button>
           </div>
-        ) : null}
+            ) : null}
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );

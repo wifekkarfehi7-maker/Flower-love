@@ -10,6 +10,8 @@ import { getVisitorSession } from "./session";
 
 interface TrackingState {
   tableName: string | null;
+  /** Ordering needs the id, not just the label, and this hook already has it. */
+  tableId: string | null;
 }
 
 /**
@@ -23,7 +25,7 @@ export function useMenuTracking(restaurantId: string, locale: Locale) {
   const searchParams = useSearchParams();
   const token = searchParams.get(QR_TOKEN_PARAM);
   const tableIdentifier = searchParams.get(TABLE_PARAM);
-  const [state, setState] = React.useState<TrackingState>({ tableName: null });
+  const [state, setState] = React.useState<TrackingState>({ tableName: null, tableId: null });
   const tracked = React.useRef(false);
 
   React.useEffect(() => {
@@ -47,7 +49,7 @@ export function useMenuTracking(restaurantId: string, locale: Locale) {
         if (resolved) {
           tableId = resolved.table_id;
           qrCodeId = resolved.qr_code_id;
-          if (resolved.table_name) setState({ tableName: resolved.table_name });
+          setState({ tableName: resolved.table_name ?? null, tableId: resolved.table_id ?? null });
         }
       } else if (tableIdentifier) {
         const { data } = await supabase
@@ -58,7 +60,7 @@ export function useMenuTracking(restaurantId: string, locale: Locale) {
           .maybeSingle();
         if (data) {
           tableId = data.id;
-          setState({ tableName: data.name });
+          setState({ tableName: data.name, tableId: data.id });
         }
       }
 
@@ -99,5 +101,5 @@ export function useMenuTracking(restaurantId: string, locale: Locale) {
     [restaurantId]
   );
 
-  return { tableName: state.tableName, trackInteraction };
+  return { tableName: state.tableName, tableId: state.tableId, trackInteraction };
 }

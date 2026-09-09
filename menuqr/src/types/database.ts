@@ -81,6 +81,7 @@ type RestaurantSettingsRow = {
   show_prices: boolean;
   enable_search: boolean;
   enable_cart: boolean;
+  enable_ordering: boolean;
   show_product_images: boolean;
   allow_search_indexing: boolean;
   price_decimals: number;
@@ -461,6 +462,26 @@ export interface Database {
         Args: { p_product: string; p_available: boolean };
         Returns: undefined;
       };
+      place_order: {
+        Args: {
+          p_restaurant: string;
+          p_session: string;
+          // [{ product_id, quantity, options: string[] }] — no prices: the
+          // function reads those from the menu and ignores anything sent.
+          p_items: { product_id: string; quantity: number; options: string[] }[];
+          p_table?: string | null;
+          p_note?: string | null;
+        };
+        Returns: string;
+      };
+      order_status_for_session: {
+        Args: { p_order: string; p_session: string };
+        Returns: { status: OrderStatus; total: number; created_at: string }[];
+      };
+      set_order_status: {
+        Args: { p_order: string; p_status: OrderStatus };
+        Returns: undefined;
+      };
       add_restaurant_member_by_email: {
         Args: { p_restaurant: string; p_email: string; p_role?: RestaurantRole };
         Returns: string;
@@ -572,6 +593,8 @@ export type ProductOptionGroup = Tables["product_option_groups"]["Row"];
 export type ProductOption = Tables["product_options"]["Row"];
 export type RestaurantTable = Tables["restaurant_tables"]["Row"];
 export type QrCode = Tables["qr_codes"]["Row"];
+export type Order = Tables["orders"]["Row"];
+export type OrderItem = Tables["order_items"]["Row"];
 export type SubscriptionPlan = Tables["subscription_plans"]["Row"];
 export type Subscription = Tables["subscriptions"]["Row"];
 export type AdminAuditLogEntry = Tables["admin_audit_log"]["Row"];

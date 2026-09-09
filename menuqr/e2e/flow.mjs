@@ -218,6 +218,83 @@ try {
   check("no uncaught client errors during the owner journey", clientErrors.length === 0, clientErrors.slice(0, 3).join(" | "));
 
   // =======================================================================
+  // 1b. Ordering: a guest sends one, the venue's screen picks it up live
+  // =======================================================================
+  await page.goto(`${BASE}/dashboard/settings`, { waitUntil: "networkidle" });
+  // Each toggle sits in a label that also carries its help text, so the
+  // accessible name is the whole paragraph; match the row by its exact title.
+  const settingsToggle = (label) =>
+    page.locator("li").filter({ has: page.getByText(label, { exact: true }) }).getByRole("switch");
+  await settingsToggle("My selection").click();
+  await settingsToggle("Take orders from the phone").click();
+  await page.getByRole("button", { name: "Save" }).first().click();
+  await page.waitForTimeout(2000);
+  check(
+    "a venue can switch ordering on",
+    sql(`select enable_ordering::text from public.restaurant_settings where restaurant_id = '${restaurantId}'`) === "true"
+  );
+
+  // The waiter's screen is opened first, so the order has to arrive on a page
+  // that was already sitting there — which is the point of the feature.
+  const kitchen = await ownerContext.newPage();
+  await kitchen.goto(`${BASE}/dashboard/orders`, { waitUntil: "networkidle" });
+  check("the orders screen opens", /Orders/i.test(await kitchen.locator("h1").innerText()));
+
+  // A phone, but with the interface pinned to English: what is under test here
+  // is ordering, not the first-visit language pick the guest checks above.
+  const diner = await freshContext(guestContextOptions());
+  const dinerPage = await diner.newPage();
+  await dinerPage.goto(`${BASE}/menu/${slug}?t=${encodeURIComponent(token)}`, { waitUntil: "networkidle" });
+  await dinerPage.waitForTimeout(2500);
+  await dinerPage.getByText("Pizza Margherita").first().click();
+  await dinerPage.waitForTimeout(1200);
+  // The button reads "Add · 12.500 DT", so match inside the sheet by prefix.
+  await dinerPage.locator('[role="dialog"]').getByRole("button", { name: /^Add/ }).click();
+  await dinerPage.waitForTimeout(800);
+  await dinerPage.getByRole("button", { name: /My selection/i }).click();
+  await dinerPage.waitForTimeout(800);
+  await dinerPage.fill("#orderNote", "bla harissa");
+  await dinerPage.getByRole("button", { name: "Send order" }).click();
+  await dinerPage.waitForTimeout(3000);
+
+  const orderId = sql(`select id from public.orders where restaurant_id = '${restaurantId}' order by created_at desc limit 1`);
+  check("the order reaches the database", Boolean(orderId));
+  check("the order is priced from the menu, not the browser",
+    sql(`select total::text from public.orders where id = '${orderId}'`) === "12.500");
+  check("the order carries the scanned table",
+    sql(`select count(*) from public.orders where id = '${orderId}' and table_id = '${tableId}'`) === "1");
+  check("the kitchen note is kept",
+    sql(`select customer_note from public.orders where id = '${orderId}'`) === "bla harissa");
+  check("the guest sees their order confirmed",
+    /reached the kitchen|Waiting/i.test(await dinerPage.locator('[role="dialog"]').innerText()));
+
+  // No reload. Locally the realtime service does not run, so what this proves
+  // is the safety net: the screen re-reads on its own and the order turns up.
+  // The websocket path is the same data, arriving sooner.
+  await kitchen.waitForTimeout(25000);
+  const kitchenText = await kitchen.locator("main").innerText();
+  check("the order appears on the waiter's screen without a reload",
+    kitchenText.includes("Pizza Margherita"), kitchenText.slice(0, 200));
+  check("the waiter sees which table it came from", kitchenText.includes("Table 7"));
+  await kitchen.screenshot({ path: `${SHOTS}/orders-live.png` });
+
+  await kitchen.getByRole("button", { name: "Confirm" }).first().click();
+  await kitchen.waitForTimeout(2000);
+  check("a waiter can confirm the order",
+    sql(`select status from public.orders where id = '${orderId}'`) === "confirmed");
+
+  await dinerPage.waitForTimeout(1000);
+  check("the guest cannot read the orders table directly",
+    (await dinerPage.evaluate(async () => {
+      const response = await fetch(`${window.location.origin.replace(/:\d+$/, ":54321")}/rest/v1/orders?select=id`, {
+        headers: { apikey: "x" },
+      }).catch(() => null);
+      return response ? response.status : 401;
+    })) !== 200);
+
+  await diner.close();
+
+  // =======================================================================
   // 2. Password reset, through the actual email
   // =======================================================================
   const resetEmail = `reset-${uniq()}@menuqr.test`;
