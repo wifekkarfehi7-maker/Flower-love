@@ -646,6 +646,7 @@ export const fr: Dictionary = {
     orderTooMany: "Trop de commandes coup sur coup. Patientez un instant.",
     orderNewOne: "Nouvelle commande",
     cartOrderNote: "Vérifiez votre commande avant de l'envoyer en cuisine.",
+    orderNumberLabel: "Numéro de commande",
   },
   errors: {
     notFoundTitle: "Page introuvable",

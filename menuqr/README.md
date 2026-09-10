@@ -111,6 +111,7 @@ supabase/migrations/0005_plan_limits.sql  plan quota enforcement
 supabase/migrations/0006_team.sql         add a teammate by email
 supabase/migrations/0007_grants.sql       least-privilege table grants
 supabase/migrations/0008_ordering.sql     guest ordering + live order status
+supabase/migrations/0009_order_numbers.sql per-venue daily order numbers
 supabase/seed.sql                         the three plans + demo-venue functions
 ```
 
@@ -175,7 +176,7 @@ demo venue.
 ```bash
 supabase start
 npm run dev
-npm run e2e            # 64 checks; exits non-zero on the first failure
+npm run e2e            # 71 checks; exits non-zero on the first failure
 ```
 
 It needs a Chromium build; point `E2E_CHROME` at one if Playwright's default
@@ -207,7 +208,7 @@ backend contract rather than of the interface — the interface is what
 
 The authorization model is verified against a real Postgres instance, driving
 the database as the actual `anon` and `authenticated` roles rather than as the
-table owner. Roughly seventy assertions — two of them sweeping every table in the
+table owner. Roughly seventy-five assertions — two of them sweeping every table in the
 schema — cover tenant isolation, role boundaries, plan quotas, privilege
 escalation, anonymous tracking, ordering (including forged prices and
 cross-tenant products), admin gating, table grants and storage path scoping.
@@ -284,6 +285,14 @@ every product must belong to it, a sold-out dish is refused rather than quietly
 dropped, and **prices are read from the menu**, so a forged payload cannot buy a
 40 DT dish for one. A session is capped at ten orders an hour, which is more
 than a table needs and less than a flood.
+
+Each order gets a small number, counted per venue and restarted daily, so the
+room talks in "order 12" rather than in identifiers. It is assigned inside
+`place_order` under a transaction advisory lock keyed on the venue, because two
+phones tapping send at the same moment is precisely when a read-then-insert
+would hand out the same number twice. The guest sees it on a receipt that also
+carries the table, the lines, the total and a trail showing how far the kitchen
+has got; the venue's screen shows the same number beside the order.
 
 The venue's screen takes orders over Supabase Realtime with an opt-in chime,
 and re-reads on a timer regardless. That second path is the point: a café's

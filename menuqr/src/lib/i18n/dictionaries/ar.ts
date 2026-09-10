@@ -648,6 +648,7 @@ export const ar = {
     orderTooMany: "طلبت برشا مرّات. استنّى شوية.",
     orderNewOne: "طلبية جديدة",
     cartOrderNote: "راجع طلبيتك قبل ما تبعثها للمطبخ.",
+    orderNumberLabel: "رقم الطلبية",
   },
   errors: {
     notFoundTitle: "الصفحة ما ثمّاش",

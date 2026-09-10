@@ -326,14 +326,21 @@ function OrderCard({
       )}
     >
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="font-medium">{order.tableName ?? t.orders.noTable}</p>
-          <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
-            <Clock className="size-3" aria-hidden />
-            <time dateTime={order.created_at}>
-              {placed.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" })}
-            </time>
-          </p>
+        <div className="flex items-start gap-3">
+          {/* The number the guest is holding, big enough to read across a
+              counter and match to what they say. */}
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-muted text-lg font-bold tabular-nums">
+            {order.order_number ?? "–"}
+          </span>
+          <div>
+            <p className="font-medium">{order.tableName ?? t.orders.noTable}</p>
+            <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
+              <Clock className="size-3" aria-hidden />
+              <time dateTime={order.created_at}>
+                {placed.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" })}
+              </time>
+            </p>
+          </div>
         </div>
         <span className="shrink-0 rounded-full border px-2.5 py-1 text-xs">{statusLabel[order.status]}</span>
       </div>

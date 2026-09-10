@@ -265,8 +265,15 @@ try {
     sql(`select count(*) from public.orders where id = '${orderId}' and table_id = '${tableId}'`) === "1");
   check("the kitchen note is kept",
     sql(`select customer_note from public.orders where id = '${orderId}'`) === "bla harissa");
-  check("the guest sees their order confirmed",
-    /reached the kitchen|Waiting/i.test(await dinerPage.locator('[role="dialog"]').innerText()));
+  const receipt = await dinerPage.locator('[role="dialog"]').innerText();
+  const orderNumber = sql(`select order_number::text from public.orders where id = '${orderId}'`);
+  check("the first order of the day is number 1", orderNumber === "1", orderNumber);
+  check("the guest is shown their order number", receipt.includes(orderNumber), receipt.slice(0, 200));
+  check("the receipt names the table", /Table 7/.test(receipt), receipt.slice(0, 200));
+  check("the receipt lists what was ordered", /Pizza Margherita/.test(receipt), receipt.slice(0, 200));
+  check("the receipt shows the total", /12\.500/.test(receipt), receipt.slice(0, 200));
+  check("the receipt shows how far along the order is", /Waiting|Confirmed|prepared|Served/i.test(receipt));
+  await dinerPage.screenshot({ path: `${SHOTS}/order-receipt.png` });
 
   // No reload. Locally the realtime service does not run, so what this proves
   // is the safety net: the screen re-reads on its own and the order turns up.
@@ -276,6 +283,7 @@ try {
   check("the order appears on the waiter's screen without a reload",
     kitchenText.includes("Pizza Margherita"), kitchenText.slice(0, 200));
   check("the waiter sees which table it came from", kitchenText.includes("Table 7"));
+  check("the waiter sees the same order number the guest has", kitchenText.includes(orderNumber));
   await kitchen.screenshot({ path: `${SHOTS}/orders-live.png` });
 
   await kitchen.getByRole("button", { name: "Confirm" }).first().click();
@@ -283,7 +291,11 @@ try {
   check("a waiter can confirm the order",
     sql(`select status from public.orders where id = '${orderId}'`) === "confirmed");
 
-  await dinerPage.waitForTimeout(1000);
+  await dinerPage.waitForTimeout(16000);
+  check("the guest's receipt follows the kitchen",
+    /Confirmed/i.test(await dinerPage.locator('[role="dialog"]').innerText()),
+    (await dinerPage.locator('[role="dialog"]').innerText()).slice(0, 200));
+
   check("the guest cannot read the orders table directly",
     (await dinerPage.evaluate(async () => {
       const response = await fetch(`${window.location.origin.replace(/:\d+$/, ":54321")}/rest/v1/orders?select=id`, {

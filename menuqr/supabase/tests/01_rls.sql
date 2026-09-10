@@ -727,6 +727,67 @@ begin
   );
 end $$;
 
+-- Numbering. A guest is told "order 12" and a waiter calls it out, so two
+-- orders sharing a number would be worse than no number at all. Read as the
+-- venue, since a guest holds no read on the table.
+reset role;
+select set_config('request.jwt.claim.sub', :'ownera_id', false);
+set role authenticated;
+
+do $$
+declare
+  v_rest_a uuid := current_setting('menuqr.rest_a')::uuid;
+  v_prod_a uuid := current_setting('menuqr.prod_a')::uuid;
+  v_numbers integer[];
+begin
+  -- Sorted by the number itself: created_at is the transaction timestamp, so
+  -- orders placed in one transaction share it and cannot be ordered by it.
+  select array_agg(o.order_number order by o.order_number)
+  into v_numbers
+  from public.orders o
+  where o.restaurant_id = v_rest_a
+    and o.created_at >= date_trunc('day', now());
+
+  perform public.test_assert(
+    array_length(v_numbers, 1) = cardinality(array(select distinct unnest(v_numbers))),
+    format('every order today carries its own number (%s)', v_numbers)
+  );
+  -- 1..n with nothing missing: the day reads as a sequence, and a refused
+  -- order does not burn a number on its way out.
+  perform public.test_assert(
+    v_numbers = array(select generate_series(1, array_length(v_numbers, 1))),
+    format('the day is numbered from 1 with no gaps (%s)', v_numbers)
+  );
+  perform public.test_assert(
+    not exists (
+      select 1 from public.orders o
+      where o.restaurant_id = v_rest_a and o.order_number is null
+    ),
+    'no order is left without a number'
+  );
+end $$;
+
+-- The receipt a guest reads back: their own order, with what to expect.
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+set role anon;
+
+do $$
+declare
+  v_order uuid := current_setting('menuqr.order_1')::uuid;
+  v_row record;
+begin
+  select * into v_row from public.order_status_for_session(v_order, 'guest-session-0002');
+
+  perform public.test_assert(v_row.order_number is not null, 'the receipt carries the order number');
+  perform public.test_assert(v_row.table_name is not null, 'the receipt names the table');
+  perform public.test_assert(
+    jsonb_array_length(v_row.items) = 1 and (v_row.items->0->>'quantity')::int = 2,
+    format('the receipt lists what was ordered (%s)', v_row.items)
+  );
+  perform public.test_assert(v_row.total > 0, 'the receipt carries the total');
+end $$;
+
 -- Staff hold no UPDATE on orders; the function is the only way through.
 reset role;
 select set_config('request.jwt.claim.sub', :'staff_id', false);

@@ -44,7 +44,19 @@ export async function placeOrder(options: {
   return { orderId: data as string };
 }
 
-export async function readOrderStatus(orderId: string): Promise<OrderStatus | null> {
+export interface OrderReceipt {
+  status: OrderStatus;
+  total: number;
+  orderNumber: number | null;
+  tableName: string | null;
+  items: { name: string; quantity: number; line_total: number }[];
+}
+
+/**
+ * The guest's own view of their order. It comes from a function keyed on the
+ * session that placed it, so an order id on its own opens nothing.
+ */
+export async function readOrderReceipt(orderId: string): Promise<OrderReceipt | null> {
   const supabase = getSupabaseBrowserClient();
   if (!supabase) return null;
 
@@ -53,7 +65,16 @@ export async function readOrderStatus(orderId: string): Promise<OrderStatus | nu
     p_session: getVisitorSession(),
   });
 
-  return (data?.[0]?.status as OrderStatus | undefined) ?? null;
+  const row = data?.[0];
+  if (!row) return null;
+
+  return {
+    status: row.status,
+    total: Number(row.total),
+    orderNumber: row.order_number,
+    tableName: row.table_name,
+    items: row.items ?? [],
+  };
 }
 
 /**

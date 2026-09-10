@@ -218,6 +218,7 @@ type OrderRow = {
   total: number;
   customer_note: string | null;
   session_identifier: string | null;
+  order_number: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -476,7 +477,14 @@ export interface Database {
       };
       order_status_for_session: {
         Args: { p_order: string; p_session: string };
-        Returns: { status: OrderStatus; total: number; created_at: string }[];
+        Returns: {
+          status: OrderStatus;
+          total: number;
+          created_at: string;
+          order_number: number | null;
+          table_name: string | null;
+          items: { name: string; quantity: number; line_total: number }[];
+        }[];
       };
       set_order_status: {
         Args: { p_order: string; p_status: OrderStatus };
