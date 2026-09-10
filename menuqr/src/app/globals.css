@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 25% 99%;
+    --foreground: 200 15% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 200 15% 12%;
+
+    --muted: 40 14% 96%;
+    --muted-foreground: 210 8% 45%;
+
+    --border: 40 12% 90%;
+    --input: 40 12% 88%;
+    --ring: 174 77% 26%;
+
+    --primary: 174 77% 26%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 40 14% 95%;
+    --secondary-foreground: 200 15% 18%;
+
+    --accent: 38 92% 50%;
+    --accent-foreground: 30 60% 12%;
+
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 60% 34%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 32 94% 44%;
+    --warning-foreground: 0 0% 100%;
+
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  /* Arabic needs its own face and a touch more line height to breathe. */
+  html[lang^="ar"] body {
+    @apply font-arabic;
+    line-height: 1.85;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-semibold tracking-tight;
+    text-wrap: balance;
+  }
+
+  /* Icons that point somewhere (arrows, chevrons) flip with the text
+     direction; logos, QR codes and images must not. */
+  [dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
+  }
+}
+
+@layer components {
+  .surface {
+    @apply rounded-lg border border-border bg-card text-card-foreground shadow-card;
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-muted;
+  }
+
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/60 to-transparent;
+    animation: shimmer 1.6s infinite;
+  }
+
+  [dir="rtl"] .skeleton::after {
+    @apply translate-x-full;
+    animation-direction: reverse;
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: only the QR cards survive, one per page block, no chrome. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .print-sheet {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  .print-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 1px dashed #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  @page {
+    margin: 12mm;
+  }
+}

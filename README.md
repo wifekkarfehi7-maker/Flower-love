@@ -2,6 +2,8 @@
 
 Premium digital wedding invitations for the Tunisian & Arabic-speaking market — built with Next.js (App Router) and Supabase (Postgres + Auth + Storage). Arabic (including Tunisian Darija) is the default, first-class language; French and English are also supported. Payment is coordinated manually over WhatsApp — there is no online payment gateway.
 
+> **Note:** this repository also hosts a second, unrelated application in [`menuqr/`](menuqr/README.md) — **MenuQR**, a QR digital-menu SaaS for restaurants and cafés. It is entirely self-contained (its own `package.json`, Supabase project and deployment) and shares nothing with the app documented below. Everything in this README refers to Flower & Love, which lives at the repository root.
+
 ## Tech stack
 
 - **Next.js 14** (App Router, TypeScript, strict mode)
