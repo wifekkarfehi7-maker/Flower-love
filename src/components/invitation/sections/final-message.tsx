@@ -1,25 +1,42 @@
-import { Heart } from "lucide-react";
+"use client";
 
 import { Reveal } from "@/components/ui/reveal";
+import { FoilSweep } from "../luxury";
+import { SectionShell } from "../section-heading";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 
-export function FinalMessageSection({ invitation }: { invitation: InvitationData; theme: TemplateTheme }) {
+export function FinalMessageSection({ invitation, theme }: { invitation: InvitationData; theme: TemplateTheme }) {
   if (!invitation.finalMessage) return null;
 
   return (
-    <section className="px-6 py-20 text-center">
+    <SectionShell className="pb-28">
       <Reveal className="flex flex-col items-center">
-        <Heart className="h-6 w-6" style={{ color: "var(--inv-primary)" }} fill="var(--inv-primary)" />
         <p
-          className="mx-auto mt-4 max-w-sm text-lg leading-relaxed"
-          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
+          className="max-w-[22rem] text-[1.05rem] italic leading-[2]"
+          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)", fontWeight: 400 }}
         >
           {invitation.finalMessage}
         </p>
-        <p className="mt-6 text-sm opacity-60" style={{ color: "var(--inv-text)" }}>
+
+        <span
+          aria-hidden="true"
+          className="relative mt-11 block h-px w-20"
+          style={{ backgroundColor: "var(--inv-primary)", opacity: 0.45 }}
+        >
+          <FoilSweep enabled={theme.foil !== false} />
+        </span>
+
+        <p
+          className="mt-9 text-[1.5rem]"
+          style={{
+            fontFamily: "var(--inv-font-display)",
+            fontStyle: "var(--inv-display-style)" as React.CSSProperties["fontStyle"],
+            color: "var(--inv-text)",
+          }}
+        >
           {invitation.groomName} &amp; {invitation.brideName}
         </p>
       </Reveal>
-    </section>
+    </SectionShell>
   );
 }

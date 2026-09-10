@@ -2,105 +2,86 @@
 
 import { useCountdown } from "@/hooks/use-countdown";
 import { useTranslation } from "@/lib/i18n/use-translation";
-import { Divider } from "../divider";
 import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading, SectionShell } from "../section-heading";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 
-const UNIT_LABELS_AR = { days: "يوم", hours: "ساعة", minutes: "دقيقة", seconds: "ثانية" };
+const STRINGS = {
+  ar: { title: "بقي على الفرح", eyebrow: "العد التنازلي", days: "يوم", hours: "ساعة", minutes: "دقيقة", seconds: "ثانية", past: "اليوم الموعود" },
+  fr: { title: "Plus que", eyebrow: "Compte à rebours", days: "Jours", hours: "Heures", minutes: "Minutes", seconds: "Secondes", past: "Le grand jour" },
+  en: { title: "Counting Down", eyebrow: "Until we celebrate", days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds", past: "The Big Day" },
+};
 
 export function CountdownSection({ invitation, theme }: { invitation: InvitationData; theme: TemplateTheme }) {
   const { locale } = useTranslation();
+  const t = STRINGS[locale];
   const countdown = useCountdown(invitation.weddingDate, invitation.weddingTime);
-
-  const unitLabel = (key: keyof typeof UNIT_LABELS_AR) => {
-    if (locale === "ar") return UNIT_LABELS_AR[key];
-    return key;
-  };
 
   if (countdown.isPast) {
     return (
-      <section className="px-6 py-16 text-center" style={{ color: "var(--inv-text)" }}>
-        <p className="text-2xl font-bold" style={{ fontFamily: "var(--inv-font-heading)" }}>
-          {locale === "ar" ? "اليوم الموعود ❤️" : "The Big Day ❤️"}
-        </p>
-      </section>
+      <SectionShell>
+        <SectionHeading title={t.past} eyebrow={t.eyebrow} theme={theme} />
+      </SectionShell>
     );
   }
 
-  const units: { key: keyof typeof UNIT_LABELS_AR; value: number }[] = [
-    { key: "days", value: countdown.days },
-    { key: "hours", value: countdown.hours },
-    { key: "minutes", value: countdown.minutes },
-    { key: "seconds", value: countdown.seconds },
+  const units = [
+    { key: "days", value: countdown.days, label: t.days },
+    { key: "hours", value: countdown.hours, label: t.hours },
+    { key: "minutes", value: countdown.minutes, label: t.minutes },
+    { key: "seconds", value: countdown.seconds, label: t.seconds },
   ];
 
+  const ornate = theme.countdownStyle === "ornate";
+  const circular = theme.countdownStyle === "circular";
+
   return (
-    <section className="px-6 py-16 text-center">
-      <Reveal>
-        <Divider theme={theme} />
-        {theme.countdownStyle === "circular" ? (
-          <div className="mt-6 flex justify-center gap-4">
-            {units.map((u) => (
+    <SectionShell>
+      <SectionHeading title={t.title} eyebrow={t.eyebrow} theme={theme} />
+
+      <Reveal delay={120}>
+        <div className="mt-12 flex items-start justify-center gap-3">
+          {units.map((u, i) => (
+            <div key={u.key} className="flex items-start gap-3">
+              {i > 0 && !circular && !ornate && (
+                <span
+                  aria-hidden="true"
+                  className="mt-3 block h-8 w-px"
+                  style={{ backgroundColor: "var(--inv-primary)", opacity: 0.22 }}
+                />
+              )}
               <div
-                key={u.key}
-                className="flex h-20 w-20 flex-col items-center justify-center rounded-full border-2 sm:h-24 sm:w-24"
-                style={{ borderColor: "var(--inv-primary)", color: "var(--inv-text)" }}
-              >
-                <span className="text-xl font-bold sm:text-2xl" style={{ fontFamily: "var(--inv-font-heading)" }}>
-                  {u.value}
-                </span>
-                <span className="text-[10px] opacity-70">{unitLabel(u.key)}</span>
-              </div>
-            ))}
-          </div>
-        ) : theme.countdownStyle === "ornate" ? (
-          <div className="mt-6 flex justify-center gap-3">
-            {units.map((u) => (
-              <div
-                key={u.key}
-                className="relative flex w-20 flex-col items-center justify-center border py-4 sm:w-24"
-                style={{ borderColor: "var(--inv-primary)", color: "var(--inv-text)", backgroundColor: "var(--inv-surface)" }}
+                className="flex min-w-[3.6rem] flex-col items-center justify-center py-3"
+                style={
+                  ornate
+                    ? { border: "1px solid var(--inv-primary)", minWidth: "4.1rem" }
+                    : circular
+                      ? {
+                          border: "1px solid var(--inv-primary)",
+                          borderRadius: "999px",
+                          width: "4.2rem",
+                          height: "4.2rem",
+                        }
+                      : undefined
+                }
               >
                 <span
-                  className="pointer-events-none absolute inset-1 border"
-                  style={{ borderColor: "var(--inv-accent)", opacity: 0.4 }}
-                  aria-hidden="true"
-                />
-                <span className="text-2xl font-bold" style={{ fontFamily: "var(--inv-font-heading)" }}>
-                  {u.value}
+                  className="inv-figures text-[1.9rem] leading-none"
+                  style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)", fontWeight: 400 }}
+                >
+                  {String(u.value).padStart(2, "0")}
                 </span>
-                <span className="mt-1 text-[10px] opacity-70">{unitLabel(u.key)}</span>
-              </div>
-            ))}
-          </div>
-        ) : theme.countdownStyle === "minimal" ? (
-          <div className="mt-6 flex justify-center gap-6 sm:gap-10" style={{ color: "var(--inv-text)" }}>
-            {units.map((u) => (
-              <div key={u.key} className="text-center">
-                <span className="block text-3xl font-light sm:text-4xl" style={{ fontFamily: "var(--inv-font-heading)" }}>
-                  {u.value}
+                <span
+                  className="mt-2 text-[0.5rem] uppercase"
+                  style={{ color: "var(--inv-text-muted)", letterSpacing: "var(--inv-track-label, 0.34em)" }}
+                >
+                  {u.label}
                 </span>
-                <span className="mt-1 block text-[11px] uppercase tracking-widest opacity-60">{unitLabel(u.key)}</span>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-6 flex justify-center gap-3">
-            {units.map((u) => (
-              <div
-                key={u.key}
-                className="flex w-20 flex-col items-center justify-center rounded-2xl py-4 shadow-md sm:w-24"
-                style={{ backgroundColor: "var(--inv-surface)", color: "var(--inv-text)" }}
-              >
-                <span className="text-2xl font-bold" style={{ fontFamily: "var(--inv-font-heading)" }}>
-                  {u.value}
-                </span>
-                <span className="mt-1 text-[10px] opacity-70">{unitLabel(u.key)}</span>
-              </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
       </Reveal>
-    </section>
+    </SectionShell>
   );
 }

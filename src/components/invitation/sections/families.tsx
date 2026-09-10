@@ -1,58 +1,59 @@
+"use client";
+
 import { Reveal } from "@/components/ui/reveal";
-import { Divider } from "../divider";
+import { SectionHeading, SectionShell } from "../section-heading";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 
-const TITLES = { ar: "العائلتان", fr: "Les familles", en: "The families" };
+const STRINGS = {
+  ar: { title: "العائلتان", eyebrow: "بمباركة", son: "نجل", daughter: "كريمة" },
+  fr: { title: "Les familles", eyebrow: "Avec la bénédiction de", son: "Fils de", daughter: "Fille de" },
+  en: { title: "The Families", eyebrow: "With the blessing of", son: "Son of", daughter: "Daughter of" },
+};
+
+function Parent({ relation, father, mother }: { relation: string; father?: string; mother?: string }) {
+  return (
+    <div className="flex flex-col items-center gap-1.5">
+      <span
+        className="text-[0.52rem] uppercase"
+        style={{ color: "var(--inv-primary)", letterSpacing: "var(--inv-track-label, 0.34em)", opacity: 0.85 }}
+      >
+        {relation}
+      </span>
+      {father && (
+        <span className="text-[1.05rem]" style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}>
+          {father}
+        </span>
+      )}
+      {mother && (
+        <span className="text-[0.95rem]" style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text-muted)" }}>
+          {mother}
+        </span>
+      )}
+    </div>
+  );
+}
 
 export function FamiliesSection({ invitation, theme }: { invitation: InvitationData; theme: TemplateTheme }) {
   const { locale } = useTranslation();
+  const t = STRINGS[locale];
   if (!invitation.groomFather && !invitation.brideFather) return null;
 
   return (
-    <section className="px-6 py-16 text-center">
-      <Reveal>
-        <p
-          className="text-2xl font-bold sm:text-3xl"
-          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
-        >
-          {TITLES[locale]}
-        </p>
-        <Divider theme={theme} />
+    <SectionShell>
+      <SectionHeading title={t.title} eyebrow={t.eyebrow} theme={theme} />
 
-        <div className="mx-auto mt-6 grid max-w-md grid-cols-2 gap-8">
-          <div>
-            <p className="text-sm opacity-60" style={{ color: "var(--inv-text)" }}>
-              {invitation.groomName}
-            </p>
-            {invitation.groomFather && (
-              <p className="mt-1 font-semibold" style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}>
-                {invitation.groomFather}
-              </p>
-            )}
-            {invitation.groomMother && (
-              <p className="text-sm opacity-70" style={{ color: "var(--inv-text)" }}>
-                {invitation.groomMother}
-              </p>
-            )}
-          </div>
-          <div>
-            <p className="text-sm opacity-60" style={{ color: "var(--inv-text)" }}>
-              {invitation.brideName}
-            </p>
-            {invitation.brideFather && (
-              <p className="mt-1 font-semibold" style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}>
-                {invitation.brideFather}
-              </p>
-            )}
-            {invitation.brideMother && (
-              <p className="text-sm opacity-70" style={{ color: "var(--inv-text)" }}>
-                {invitation.brideMother}
-              </p>
-            )}
-          </div>
+      <Reveal delay={120}>
+        <div className="mt-12 flex flex-col items-center gap-9">
+          <Parent relation={t.son} father={invitation.groomFather} mother={invitation.groomMother} />
+          <span
+            aria-hidden="true"
+            className="block h-8 w-px"
+            style={{ backgroundColor: "var(--inv-primary)", opacity: 0.3 }}
+          />
+          <Parent relation={t.daughter} father={invitation.brideFather} mother={invitation.brideMother} />
         </div>
       </Reveal>
-    </section>
+    </SectionShell>
   );
 }

@@ -89,3 +89,74 @@
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * Invitation chrome. Deliberately unlayered and written in plain CSS: these
+ * rules lean on the per-template custom properties and on color-mix(), which
+ * Tailwind's arbitrary-value syntax handles badly, and being unlayered lets
+ * the focus ring win over a utility like `outline-none`.
+ */
+/*
+ * Tracking is a Latin small-caps device. Arabic is cursive, so the same
+ * 0.4em that makes an engraved label look letterpressed just pulls the joins
+ * apart — every tracked element reads these tokens instead of hard-coding a
+ * value, and Arabic gets a much tighter set.
+ */
+[data-invitation] {
+  --inv-track-wide: 0.4em;
+  --inv-track-label: 0.36em;
+  --inv-track-button: 0.32em;
+}
+
+html[lang="ar"] [data-invitation] {
+  --inv-track-wide: 0.2em;
+  --inv-track-label: 0.16em;
+  --inv-track-button: 0.14em;
+}
+
+/* Letterpress controls: a hairline rule and wide tracking, never a slab. */
+[data-invitation] .inv-letterpress {
+  letter-spacing: var(--inv-track-button);
+}
+
+/*
+ * Display serifs like Cormorant ship old-style figures, which set "12" as
+ * something closer to "I2". Lovely in running text, unreadable in a date
+ * grid — so anything that is really a number asks for lining figures.
+ */
+[data-invitation] .inv-figures {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+[data-invitation] :focus-visible {
+  outline: 1px solid var(--inv-primary);
+  outline-offset: 3px;
+}
+
+/* Reply-card fields are ruled lines, the way a printed RSVP card is. */
+[data-invitation] .inv-field {
+  width: 100%;
+  padding-block: 0.15rem 0.5rem;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--inv-primary) 42%, transparent);
+  color: var(--inv-text);
+  font-family: var(--inv-font-heading);
+  font-size: 0.95rem;
+  text-align: center;
+  transition: border-color 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-invitation] .inv-field:focus {
+  border-bottom-color: var(--inv-primary);
+}
+
+[data-invitation] .inv-field::placeholder {
+  color: var(--inv-text-muted);
+  opacity: 0.5;
+}
+
+[data-invitation] textarea.inv-field {
+  resize: none;
+  line-height: 1.9;
+}

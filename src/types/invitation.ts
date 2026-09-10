@@ -87,14 +87,27 @@ export interface TemplateTheme {
   dividerStyle: "line" | "ornament" | "dots" | "none";
   motif: "gem" | "flower" | "moon" | "square" | "sparkle" | "wave" | "sun" | "sparkles";
   /** How the cover opens on first tap. Defaults to "classic" (simple fade/scale) when absent, for backward compatibility. */
-  openAnimation?: "classic" | "envelope" | "curtain";
-  /** Extra corner ornamentation on the cover, layered independently of dividerStyle. */
-  decorativeStyle?: "floral";
+  openAnimation?: "classic" | "envelope" | "curtain" | "paper-fold" | "wax-seal" | "minimal-fade";
+  /**
+   * Corner ornamentation drawn around the cover composition. Each value is a
+   * distinct hand-drawn botanical/geometric system, not a recolor of one shape.
+   */
+  decorativeStyle?: "floral" | "rose-burgundy" | "olive-branch" | "pearl-bloom" | "arabesque";
+  /** Simulated stationery stock. Rendered as a very low-opacity grain/weave overlay. */
+  texture?: "paper" | "linen" | "velvet" | "satin";
+  /** Printed border treatment framing the invitation content. */
+  frameStyle?: "double-rule" | "hairline" | "ornate-corner" | "arch";
+  /** Sealing-wax color for envelope/wax-seal openings. Falls back to `primary`. */
+  sealColor?: string;
+  /** When true, metallic elements catch a slow travelling highlight, like foil under light. */
+  foil?: boolean;
 }
 
 export interface TemplateFonts {
-  heading: "amiri" | "playfair" | "inter" | "cairo";
-  body: "cairo" | "inter";
+  heading: "amiri" | "playfair" | "inter" | "cairo" | "cormorant" | "cinzel" | "naskh" | "kufi";
+  body: "cairo" | "inter" | "cormorant" | "naskh";
+  /** Optional display face for the couple's names only — script/calligraphic. */
+  display?: "pinyon" | "cormorant-italic" | "cinzel" | "amiri" | "kufi" | "naskh";
 }
 
 /**

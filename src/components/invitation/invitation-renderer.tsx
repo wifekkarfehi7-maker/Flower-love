@@ -55,6 +55,9 @@ export function InvitationRenderer({
 
   return (
     <div
+      // `data-invitation` scopes the focus ring and ruled-field styles in
+      // globals.css to the couple's palette instead of the app's.
+      data-invitation=""
       className="min-h-screen w-full"
       style={{ ...themeCssVars(theme, fonts), ...sectionBackground(theme), fontFamily: "var(--inv-font-body)" }}
     >

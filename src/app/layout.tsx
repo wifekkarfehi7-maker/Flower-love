@@ -1,5 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Amiri, Cairo, Inter, Playfair_Display } from "next/font/google";
+import {
+  Amiri,
+  Cairo,
+  Cinzel,
+  Cormorant_Garamond,
+  Inter,
+  Noto_Kufi_Arabic,
+  Noto_Naskh_Arabic,
+  Pinyon_Script,
+  Playfair_Display,
+} from "next/font/google";
 import Script from "next/script";
 
 import "./globals.css";
@@ -33,6 +43,44 @@ const cairo = Cairo({
   subsets: ["arabic", "latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-cairo",
+  display: "swap",
+});
+
+/* Invitation typography: editorial serif, Roman display caps, copperplate script,
+   and two Arabic faces (Naskh for reading, Kufi for display). */
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
+const pinyon = Pinyon_Script({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-pinyon",
+  display: "swap",
+});
+
+const notoNaskh = Noto_Naskh_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-naskh",
+  display: "swap",
+});
+
+const notoKufi = Noto_Kufi_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600"],
+  variable: "--font-kufi",
   display: "swap",
 });
 
@@ -76,7 +124,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </Script>
       </head>
       <body
-        className={`${playfair.variable} ${inter.variable} ${amiri.variable} ${cairo.variable} font-body`}
+        className={`${playfair.variable} ${inter.variable} ${amiri.variable} ${cairo.variable} ${cormorant.variable} ${cinzel.variable} ${pinyon.variable} ${notoNaskh.variable} ${notoKufi.variable} font-body`}
         suppressHydrationWarning
       >
         <LanguageProvider>
