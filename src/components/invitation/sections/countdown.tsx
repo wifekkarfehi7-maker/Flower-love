@@ -66,14 +66,14 @@ export function CountdownSection({ invitation, theme }: { invitation: Invitation
                 }
               >
                 <span
-                  className="text-[1.9rem] leading-none tabular-nums"
+                  className="inv-figures text-[1.9rem] leading-none"
                   style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)", fontWeight: 400 }}
                 >
                   {String(u.value).padStart(2, "0")}
                 </span>
                 <span
                   className="mt-2 text-[0.5rem] uppercase"
-                  style={{ color: "var(--inv-text-muted)", letterSpacing: "0.24em" }}
+                  style={{ color: "var(--inv-text-muted)", letterSpacing: "var(--inv-track-label, 0.34em)" }}
                 >
                   {u.label}
                 </span>

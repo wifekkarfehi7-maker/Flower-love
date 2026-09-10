@@ -103,7 +103,7 @@ export function radiusClass(radius: TemplateTheme["cardRadius"]): string {
  */
 export function buttonClass(style: TemplateTheme["buttonStyle"]): string {
   const base =
-    "inline-flex items-center justify-center gap-2 border text-[0.7rem] font-medium uppercase tracking-[0.32em] transition-[background-color,color,letter-spacing] duration-500 active:scale-[0.99]";
+    "inv-letterpress inline-flex items-center justify-center gap-2 border text-[0.7rem] font-medium uppercase transition-[background-color,color,border-color] duration-500 active:scale-[0.99]";
   switch (style) {
     case "pill":
       return `${base} rounded-full px-9 py-3.5`;

@@ -16,7 +16,7 @@ function Parent({ relation, father, mother }: { relation: string; father?: strin
     <div className="flex flex-col items-center gap-1.5">
       <span
         className="text-[0.52rem] uppercase"
-        style={{ color: "var(--inv-primary)", letterSpacing: "0.34em", opacity: 0.85 }}
+        style={{ color: "var(--inv-primary)", letterSpacing: "var(--inv-track-label, 0.34em)", opacity: 0.85 }}
       >
         {relation}
       </span>

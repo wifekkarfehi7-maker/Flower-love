@@ -18,7 +18,7 @@ function Eyebrow({ theme, isOpen }: { theme: TemplateTheme; isOpen: boolean }) {
       style={{
         color: theme.primary,
         opacity: isOpen ? 0 : 0.72,
-        letterSpacing: "0.42em",
+        letterSpacing: "var(--inv-track-wide, 0.4em)",
         fontFamily: "var(--font-cinzel), var(--font-amiri), serif",
         transition: "opacity 400ms ease",
       }}
@@ -37,7 +37,7 @@ function OpenControl({ theme, isOpen, delay = 0 }: { theme: TemplateTheme; isOpe
       style={{
         borderColor: `${theme.primary}66`,
         color: theme.primary,
-        letterSpacing: "0.34em",
+        letterSpacing: "var(--inv-track-button, 0.3em)",
         fontFamily: "var(--font-cinzel), serif",
         opacity: isOpen ? 0 : 1,
         transform: isOpen ? "translateY(6px)" : "translateY(0)",

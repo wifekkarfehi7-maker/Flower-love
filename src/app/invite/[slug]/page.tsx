@@ -6,6 +6,7 @@ import { InvitationRenderer } from "@/components/invitation/invitation-renderer"
 import { ViewTracker } from "@/components/invitation/view-tracker";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 import { formatLongDate } from "@/lib/i18n/format-date";
+import { buildEventSchema, serializeJsonLd } from "@/lib/invitations/event-schema";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: `${names} — دعوة زفاف`,
     description,
+    alternates: { canonical: url },
     openGraph: {
       type: "website",
       title: `${names} 💍`,
@@ -52,8 +54,23 @@ export default async function PublicInvitationPage({ params }: { params: { slug:
 
   const { data, template } = result;
 
+  const date = formatDate(data.weddingDate);
+  const schema = buildEventSchema(
+    data,
+    `${SITE_URL}/invite/${params.slug}`,
+    date ? `ادعوكم لحضور حفل زفافنا يوم ${date} ❤️` : "ادعوكم لحضور حفل زفافنا ❤️",
+  );
+
   return (
     <>
+      {schema && (
+        <script
+          type="application/ld+json"
+          // Serialized through serializeJsonLd, which neutralizes any "</script>"
+          // a guest could smuggle in through a name field.
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
+        />
+      )}
       <ViewTracker invitationId={data.id} />
       <InvitationRenderer invitation={data} theme={template.theme} fonts={template.fonts} isPreview={false} />
     </>

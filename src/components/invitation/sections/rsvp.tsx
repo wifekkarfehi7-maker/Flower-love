@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { CheckCircle2, Loader2 } from "lucide-react";
 
 import { Reveal } from "@/components/ui/reveal";
-import { Divider } from "../divider";
-import { buttonClass, radiusClass } from "../theme";
+import { SectionHeading, SectionShell } from "../section-heading";
+import { OrnamentFlourish } from "../ornament";
+import { buttonClass } from "../theme";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
@@ -13,54 +13,89 @@ import { cn } from "@/lib/utils";
 
 const STRINGS = {
   ar: {
-    question: "هل ستشاركوننا فرحتنا؟ ❤️",
+    question: "هل ستشاركوننا فرحتنا؟",
+    eyebrow: "تأكيد الحضور",
     yes: "نعم، سأحضر",
-    no: "للأسف لن أتمكن من الحضور",
+    no: "لن أتمكن",
     name: "الاسم",
     phone: "رقم الهاتف (اختياري)",
-    companions: "عدد المرافقين (غيرك)",
+    companions: "عدد المرافقين",
     totalLabel: "الإجمالي",
     person: "شخص",
-    message: "رسالة (اختياري)",
-    submit: "إرسال",
-    submitting: "جاري الإرسال...",
-    success: "شكراً لكم! تم استلام ردكم ❤️",
-    error: "تعذر إرسال الرد، حاولوا مجدداً.",
-    previewNotice: "هذا عرض توضيحي للنموذج — الإرسال غير مفعّل هنا.",
+    message: "كلمة للعروسين (اختياري)",
+    submit: "إرسال الرد",
+    submitting: "جاري الإرسال…",
+    success: "شكراً لكم — وصلنا ردّكم",
+    successNote: "في انتظاركم لنفرح معاً",
+    error: "تعذّر إرسال الرد، حاولوا مجدداً.",
+    previewNotice: "هذا عرض توضيحي — الإرسال غير مفعّل هنا.",
   },
   fr: {
-    question: "Serez-vous des nôtres ? ❤️",
-    yes: "Oui, je serai présent(e)",
-    no: "Malheureusement, je ne pourrai pas venir",
+    question: "Serez-vous des nôtres ?",
+    eyebrow: "Confirmation",
+    yes: "Oui, je serai là",
+    no: "Je ne pourrai pas",
     name: "Nom",
     phone: "Téléphone (optionnel)",
-    companions: "Personnes qui vous accompagnent",
+    companions: "Personnes vous accompagnant",
     totalLabel: "Total",
     person: "personne(s)",
-    message: "Message (optionnel)",
+    message: "Un mot pour les mariés (optionnel)",
     submit: "Envoyer",
-    submitting: "Envoi...",
-    success: "Merci ! Votre réponse a bien été reçue ❤️",
+    submitting: "Envoi…",
+    success: "Merci — votre réponse est bien arrivée",
+    successNote: "Nous avons hâte de célébrer avec vous",
     error: "Échec de l'envoi, veuillez réessayer.",
-    previewNotice: "Ceci est un aperçu du modèle — l'envoi est désactivé ici.",
+    previewNotice: "Ceci est un aperçu — l'envoi est désactivé ici.",
   },
   en: {
-    question: "Will you share our joy? ❤️",
-    yes: "Yes, I'll attend",
-    no: "Sorry, I can't make it",
+    question: "Will you share our joy?",
+    eyebrow: "Kindly reply",
+    yes: "Joyfully accepts",
+    no: "Regretfully declines",
     name: "Name",
     phone: "Phone (optional)",
-    companions: "People joining with you",
+    companions: "Guests joining you",
     totalLabel: "Total",
-    person: "person(s)",
-    message: "Message (optional)",
-    submit: "Submit",
-    submitting: "Submitting...",
-    success: "Thank you! Your response has been received ❤️",
-    error: "Couldn't submit your response, please try again.",
-    previewNotice: "This is a template preview — submission is disabled here.",
+    person: "guest(s)",
+    message: "A word for the couple (optional)",
+    submit: "Send reply",
+    submitting: "Sending…",
+    success: "Thank you — your reply has reached us",
+    successNote: "We can't wait to celebrate with you",
+    error: "Couldn't send your reply, please try again.",
+    previewNotice: "This is a preview — sending is disabled here.",
   },
 };
+
+/** A ruled line with its label above it, the way a printed reply card is set. */
+function Field({
+  id,
+  label,
+  children,
+}: {
+  id: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col items-center gap-2.5">
+      <label
+        htmlFor={id}
+        className="text-[0.5rem] uppercase"
+        style={{
+          color: "var(--inv-primary)",
+          letterSpacing: "var(--inv-track-label, 0.34em)",
+          fontFamily: "var(--inv-font-body)",
+          opacity: 0.8,
+        }}
+      >
+        {label}
+      </label>
+      {children}
+    </div>
+  );
+}
 
 export function RsvpSection({
   invitation,
@@ -73,6 +108,7 @@ export function RsvpSection({
 }) {
   const { locale } = useTranslation();
   const t = STRINGS[locale];
+  const fieldId = React.useId();
 
   const [attendance, setAttendance] = React.useState<"attending" | "not_attending" | null>(null);
   const [name, setName] = React.useState("");
@@ -115,60 +151,70 @@ export function RsvpSection({
 
   if (status === "done") {
     return (
-      <section className="px-6 py-16 text-center">
+      <SectionShell>
         <Reveal className="flex flex-col items-center">
-          <CheckCircle2 className="h-8 w-8" style={{ color: "var(--inv-primary)" }} />
-          <p className="mt-3 font-semibold" style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}>
+          <span className="block w-32" style={{ color: "var(--inv-primary)", opacity: 0.7 }}>
+            <OrnamentFlourish className="h-4 w-full" />
+          </span>
+          <p
+            role="status"
+            className="mt-8 text-[1.25rem] leading-relaxed"
+            style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
+          >
             {t.success}
           </p>
+          <p className="mt-3 text-[0.85rem]" style={{ color: "var(--inv-text-muted)" }}>
+            {t.successNote}
+          </p>
         </Reveal>
-      </section>
+      </SectionShell>
     );
   }
 
-  return (
-    <section className="px-6 py-16 text-center">
-      <Reveal className="mx-auto max-w-sm">
-        <p
-          className="text-2xl font-bold sm:text-3xl"
-          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
-        >
-          {invitation.rsvpQuestion || t.question}
-        </p>
-        <Divider theme={theme} />
+  /**
+   * The chosen reply is marked the way a printed card is: the rule goes solid
+   * and the paper takes a wash of the house color. A saturated fill would put
+   * a UI button in the middle of the stationery.
+   */
+  const choiceStyle = (selected: boolean) => ({
+    borderColor: selected
+      ? "var(--inv-primary)"
+      : "color-mix(in srgb, var(--inv-primary) 45%, transparent)",
+    backgroundColor: selected
+      ? "color-mix(in srgb, var(--inv-primary) 14%, transparent)"
+      : "transparent",
+    color: "var(--inv-primary)",
+    opacity: selected ? 1 : 0.75,
+  });
 
-        <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+  return (
+    <SectionShell>
+      <SectionHeading title={invitation.rsvpQuestion || t.question} eyebrow={t.eyebrow} theme={theme} />
+
+      <Reveal delay={110} className="mt-11">
+        <div className="flex gap-3">
           <button
             type="button"
+            aria-pressed={attendance === "attending"}
             onClick={() => setAttendance("attending")}
-            className={cn(
-              buttonClass(theme.buttonStyle),
-              "flex-1 !py-3 text-sm",
-              attendance === "attending" ? "" : "opacity-60"
-            )}
-            style={{
-              backgroundColor: theme.buttonStyle === "outline-ornate" ? "transparent" : "var(--inv-primary)",
-              borderColor: "var(--inv-primary)",
-              color: theme.buttonStyle === "outline-ornate" ? "var(--inv-primary)" : theme.background,
-            }}
+            className={cn(buttonClass(theme.buttonStyle), "flex-1 !px-3 !py-3.5 text-center")}
+            style={choiceStyle(attendance === "attending")}
           >
             {t.yes}
           </button>
           <button
             type="button"
+            aria-pressed={attendance === "not_attending"}
             onClick={() => setAttendance("not_attending")}
-            className={cn(
-              "flex-1 rounded-full border px-6 py-3 text-sm font-semibold transition-opacity",
-              attendance === "not_attending" ? "" : "opacity-60"
-            )}
-            style={{ borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
+            className={cn(buttonClass(theme.buttonStyle), "flex-1 !px-3 !py-3.5 text-center")}
+            style={choiceStyle(attendance === "not_attending")}
           >
             {t.no}
           </button>
         </div>
 
         {attendance && (
-          <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 text-start">
+          <form onSubmit={handleSubmit} className="mt-11 flex flex-col gap-8">
             <input
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
@@ -178,73 +224,87 @@ export function RsvpSection({
               aria-hidden="true"
               className="absolute -left-[9999px] h-0 w-0 opacity-0"
             />
-            <input
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={t.name}
-              className={`border px-4 py-2.5 text-sm outline-none ${radiusClass(theme.cardRadius === "none" ? "none" : "soft")}`}
-              style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
-            />
-            <input
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder={t.phone}
-              type="tel"
-              className={`border px-4 py-2.5 text-sm outline-none ${radiusClass(theme.cardRadius === "none" ? "none" : "soft")}`}
-              style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
-            />
+
+            <Field id={`${fieldId}-name`} label={t.name}>
+              <input
+                id={`${fieldId}-name`}
+                required
+                maxLength={120}
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="inv-field"
+              />
+            </Field>
+
+            <Field id={`${fieldId}-phone`} label={t.phone}>
+              <input
+                id={`${fieldId}-phone`}
+                type="tel"
+                inputMode="tel"
+                maxLength={40}
+                autoComplete="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="inv-field"
+                dir="ltr"
+              />
+            </Field>
+
             {attendance === "attending" && (
-              <div>
-                <label className="flex items-center justify-between text-sm" style={{ color: "var(--inv-text)" }}>
-                  {t.companions}
-                  <input
-                    type="number"
-                    min={0}
-                    max={49}
-                    value={companions}
-                    onChange={(e) => setCompanions(Math.max(0, Number(e.target.value) || 0))}
-                    className="w-16 rounded-lg border px-2 py-1 text-center outline-none"
-                    style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
-                  />
-                </label>
-                <p className="mt-1 text-xs opacity-70" style={{ color: "var(--inv-text)" }}>
+              <Field id={`${fieldId}-companions`} label={t.companions}>
+                <input
+                  id={`${fieldId}-companions`}
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  max={49}
+                  value={companions}
+                  onChange={(e) => setCompanions(Math.min(49, Math.max(0, Number(e.target.value) || 0)))}
+                  className="inv-field mx-auto !w-20"
+                  aria-describedby={`${fieldId}-total`}
+                />
+                <p id={`${fieldId}-total`} className="text-[0.75rem]" style={{ color: "var(--inv-text-muted)" }}>
                   {t.totalLabel}: {companions + 1} {t.person}
                 </p>
-              </div>
+              </Field>
             )}
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder={t.message}
-              rows={2}
-              className={`border px-4 py-2.5 text-sm outline-none ${radiusClass(theme.cardRadius === "none" ? "none" : "soft")}`}
-              style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-text-muted)", color: "var(--inv-text)" }}
-            />
 
-            {isPreview && (
-              <p className="text-xs opacity-60" style={{ color: "var(--inv-text)" }}>
-                {t.previewNotice}
-              </p>
-            )}
-            {status === "error" && <p className="text-xs text-red-500">{t.error}</p>}
+            <Field id={`${fieldId}-message`} label={t.message}>
+              <textarea
+                id={`${fieldId}-message`}
+                rows={3}
+                maxLength={500}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="inv-field"
+              />
+            </Field>
+
+            <div aria-live="polite" className="min-h-[1rem]">
+              {isPreview && (
+                <p className="text-[0.72rem]" style={{ color: "var(--inv-text-muted)" }}>
+                  {t.previewNotice}
+                </p>
+              )}
+              {status === "error" && (
+                <p className="text-[0.78rem]" style={{ color: "var(--inv-primary)" }}>
+                  {t.error}
+                </p>
+              )}
+            </div>
 
             <button
               type="submit"
               disabled={isPreview || status === "submitting"}
-              className={cn(buttonClass(theme.buttonStyle), "mt-1 disabled:opacity-50")}
-              style={{
-                backgroundColor: theme.buttonStyle === "outline-ornate" ? "transparent" : "var(--inv-primary)",
-                borderColor: "var(--inv-primary)",
-                color: theme.buttonStyle === "outline-ornate" ? "var(--inv-primary)" : theme.background,
-              }}
+              className={cn(buttonClass(theme.buttonStyle), "mx-auto disabled:opacity-40")}
+              style={{ borderColor: "var(--inv-primary)", color: "var(--inv-primary)" }}
             >
-              {status === "submitting" && <Loader2 className="me-2 inline h-4 w-4 animate-spin" />}
               {status === "submitting" ? t.submitting : t.submit}
             </button>
           </form>
         )}
       </Reveal>
-    </section>
+    </SectionShell>
   );
 }

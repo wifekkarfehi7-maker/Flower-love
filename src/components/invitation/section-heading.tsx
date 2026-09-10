@@ -26,7 +26,7 @@ export function SectionHeading({
           className="text-[0.55rem] uppercase"
           style={{
             color: "var(--inv-primary)",
-            letterSpacing: "0.4em",
+            letterSpacing: "var(--inv-track-wide, 0.4em)",
             fontFamily: "var(--inv-font-body)",
             opacity: 0.8,
           }}
@@ -62,7 +62,7 @@ export function SectionShell({
   className?: string;
 }) {
   return (
-    <section className={`relative px-8 py-20 text-center ${className}`}>
+    <section className={`relative px-8 py-16 text-center ${className}`}>
       <div className="mx-auto w-full max-w-[26rem]">{children}</div>
     </section>
   );

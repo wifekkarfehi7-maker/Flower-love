@@ -3,60 +3,87 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/ui/reveal";
+import { SectionHeading, SectionShell } from "../section-heading";
+import { radiusClass } from "../theme";
 import { useTranslation } from "@/lib/i18n/use-translation";
-import { Divider } from "../divider";
-import type { InvitationData, TemplateTheme } from "@/types/invitation";
+import type { GalleryImageItem, InvitationData, TemplateTheme } from "@/types/invitation";
 import { cn } from "@/lib/utils";
 
-const TITLES = { ar: "لحظاتنا", fr: "Nos moments", en: "Our moments" };
+const STRINGS = {
+  ar: { title: "لحظاتنا", eyebrow: "من ألبومنا", scroll: "معرض الصور — مرّروا أفقياً" },
+  fr: { title: "Nos moments", eyebrow: "Notre album", scroll: "Galerie — faites défiler horizontalement" },
+  en: { title: "Our Moments", eyebrow: "From our album", scroll: "Gallery — scroll horizontally" },
+};
+
+/**
+ * Photographs are mounted, not floated: a hairline rule in the template's
+ * primary stands in for a print mat, so images sit inside the stationery
+ * instead of hovering over it on a drop shadow.
+ */
+function Plate({
+  image,
+  className,
+  sizes,
+  radius,
+  style,
+}: {
+  image: GalleryImageItem;
+  className?: string;
+  sizes: string;
+  radius: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div className={cn("relative overflow-hidden", radius, className)} style={style}>
+      <Image src={image.url} alt={image.caption ?? ""} fill className="object-cover" sizes={sizes} />
+      <span
+        aria-hidden="true"
+        className={cn("pointer-events-none absolute inset-0 border", radius)}
+        style={{ borderColor: "var(--inv-primary)", opacity: 0.35 }}
+      />
+    </div>
+  );
+}
 
 export function GallerySection({ invitation, theme }: { invitation: InvitationData; theme: TemplateTheme }) {
   const { locale } = useTranslation();
+  const t = STRINGS[locale];
   if (invitation.gallery.length === 0) return null;
 
-  return (
-    <section className="px-6 py-16">
-      <Reveal className="text-center">
-        <p
-          className="text-2xl font-bold sm:text-3xl"
-          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
-        >
-          {TITLES[locale]}
-        </p>
-        <Divider theme={theme} />
-      </Reveal>
+  const radius = radiusClass(theme.cardRadius);
 
-      <Reveal delay={100} className="mx-auto mt-8 max-w-3xl">
+  return (
+    <SectionShell>
+      <SectionHeading title={t.title} eyebrow={t.eyebrow} theme={theme} />
+
+      <Reveal delay={110} className="mt-11">
         {theme.galleryLayout === "grid" && (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-2.5">
             {invitation.gallery.map((img) => (
-              <div key={img.id} className="relative aspect-square overflow-hidden rounded-xl">
-                <Image src={img.url} alt={img.caption ?? ""} fill className="object-cover" sizes="33vw" />
-              </div>
+              <Plate key={img.id} image={img} className="aspect-square" sizes="50vw" radius={radius} />
             ))}
           </div>
         )}
 
         {theme.galleryLayout === "minimal" && (
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-2 gap-5">
             {invitation.gallery.map((img) => (
-              <div key={img.id} className="relative aspect-[4/5] overflow-hidden">
-                <Image src={img.url} alt={img.caption ?? ""} fill className="object-cover" sizes="50vw" />
-              </div>
+              <Plate key={img.id} image={img} className="aspect-[4/5]" sizes="50vw" radius="rounded-none" />
             ))}
           </div>
         )}
 
         {theme.galleryLayout === "masonry" && (
-          <div className="columns-2 gap-3 sm:columns-3 [&>*]:mb-3">
+          <div className="columns-2 gap-2.5 [&>*]:mb-2.5">
             {invitation.gallery.map((img, i) => (
-              <div
+              <Plate
                 key={img.id}
-                className="relative overflow-hidden rounded-xl break-inside-avoid"
+                image={img}
+                className="break-inside-avoid"
                 style={{ aspectRatio: i % 3 === 0 ? "3/4" : i % 3 === 1 ? "1/1" : "4/5" }}
-              >
-                <Image src={img.url} alt={img.caption ?? ""} fill className="object-cover" sizes="33vw" />
-              </div>
+                sizes="50vw"
+                radius={radius}
+              />
             ))}
           </div>
         )}
@@ -66,47 +93,52 @@ export function GallerySection({ invitation, theme }: { invitation: InvitationDa
             {invitation.gallery.map((img, i) => (
               <div
                 key={img.id}
-                className="w-36 rotate-[var(--r)] bg-white p-2 pb-5 shadow-lg sm:w-44"
-                style={{ "--r": `${(i % 2 === 0 ? -1 : 1) * (3 + (i % 3))}deg` } as React.CSSProperties}
+                className="w-36 p-2 pb-6 shadow-sm"
+                style={{
+                  transform: `rotate(${(i % 2 === 0 ? -1 : 1) * (2 + (i % 3))}deg)`,
+                  backgroundColor: "var(--inv-surface)",
+                }}
               >
-                <div className="relative aspect-square overflow-hidden">
-                  <Image src={img.url} alt={img.caption ?? ""} fill className="object-cover" sizes="200px" />
-                </div>
+                <Plate image={img} className="aspect-square" sizes="150px" radius="rounded-none" />
               </div>
             ))}
           </div>
         )}
 
         {theme.galleryLayout === "romantic" && (
-          <div className="relative flex flex-wrap justify-center gap-2 py-4">
+          <div className="flex flex-wrap items-start justify-center gap-3">
             {invitation.gallery.map((img, i) => (
-              <div
+              <Plate
                 key={img.id}
-                className={cn(
-                  "relative aspect-[3/4] w-28 overflow-hidden rounded-[1.5rem] border-4 shadow-xl sm:w-36",
-                  i % 2 === 0 ? "translate-y-0" : "translate-y-6"
-                )}
-                style={{ borderColor: "var(--inv-surface)" }}
-              >
-                <Image src={img.url} alt={img.caption ?? ""} fill className="object-cover" sizes="200px" />
-              </div>
+                image={img}
+                className={cn("aspect-[3/4] w-28", i % 2 === 0 ? "translate-y-0" : "translate-y-5")}
+                sizes="120px"
+                radius={radius}
+              />
             ))}
           </div>
         )}
 
         {theme.galleryLayout === "carousel" && (
-          <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2">
+          <div
+            // Focusable so a keyboard can reach and scroll the overflow region.
+            tabIndex={0}
+            role="group"
+            aria-label={t.scroll}
+            className="-mx-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-8 pb-2"
+          >
             {invitation.gallery.map((img) => (
-              <div
+              <Plate
                 key={img.id}
-                className="relative aspect-[3/4] w-56 shrink-0 snap-center overflow-hidden rounded-2xl"
-              >
-                <Image src={img.url} alt={img.caption ?? ""} fill className="object-cover" sizes="224px" />
-              </div>
+                image={img}
+                className="aspect-[3/4] w-48 shrink-0 snap-center"
+                sizes="200px"
+                radius={radius}
+              />
             ))}
           </div>
         )}
       </Reveal>
-    </section>
+    </SectionShell>
   );
 }

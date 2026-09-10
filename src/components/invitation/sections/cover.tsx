@@ -6,6 +6,7 @@ import { useTranslation } from "@/lib/i18n/use-translation";
 import { BotanicalCorner } from "../ornament";
 import { FoilSweep, FrameBorder, TextureOverlay } from "../luxury";
 import { OpeningExperience } from "../opening-experience";
+import { formatDateParts } from "../date-parts";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 
 const STRINGS = {
@@ -13,27 +14,6 @@ const STRINGS = {
   fr: { eyebrow: "Avec la bénédiction de leurs familles", invite: "Vous êtes conviés au mariage de", and: "&" },
   en: { eyebrow: "Together with their families", invite: "Invite you to celebrate the wedding of", and: "&" },
 };
-
-const MONTHS = {
-  ar: ["جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
-  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-};
-
-const WEEKDAYS = {
-  ar: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
-  fr: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-};
-
-/** Formatted from the raw Y-M-D parts so server and client never disagree over a timezone. */
-function formatDateParts(date: string | null, locale: "ar" | "fr" | "en") {
-  if (!date) return null;
-  const [y, m, d] = date.split("-").map(Number);
-  if (!y || !m || !d) return null;
-  const weekday = WEEKDAYS[locale][new Date(Date.UTC(y, m - 1, d)).getUTCDay()]!;
-  return { weekday, day: String(d).padStart(2, "0"), month: MONTHS[locale][m - 1]!, year: String(y) };
-}
 
 function initialsOf(a: string, b: string) {
   return `${(a.trim()[0] ?? "").toUpperCase()}${(b.trim()[0] ?? "").toUpperCase()}` || "&";
@@ -103,7 +83,7 @@ export function CoverSection({
           className="max-w-[19rem] text-[0.6rem] uppercase leading-relaxed"
           style={{
             color: hasCoverImage ? "rgba(255,255,255,0.78)" : "var(--inv-text-muted)",
-            letterSpacing: "0.3em",
+            letterSpacing: "var(--inv-track-label, 0.34em)",
             fontFamily: "var(--inv-font-body)",
           }}
         >
@@ -153,7 +133,7 @@ export function CoverSection({
           className="mt-9 max-w-[17rem] text-[0.58rem] uppercase leading-relaxed"
           style={{
             color: hasCoverImage ? "rgba(255,255,255,0.72)" : "var(--inv-text-muted)",
-            letterSpacing: "0.28em",
+            letterSpacing: "var(--inv-track-label, 0.34em)",
             fontFamily: "var(--inv-font-body)",
           }}
         >
@@ -166,7 +146,7 @@ export function CoverSection({
             <div className="flex flex-col items-center gap-1.5">
               <span
                 className="text-[0.58rem] uppercase"
-                style={{ color: ruleColor, letterSpacing: "0.26em", fontFamily: "var(--inv-font-body)" }}
+                style={{ color: ruleColor, letterSpacing: "var(--inv-track-label, 0.34em)", fontFamily: "var(--inv-font-body)" }}
               >
                 {date.weekday}
               </span>
@@ -178,7 +158,7 @@ export function CoverSection({
               </span>
               <span
                 className="text-[0.58rem] uppercase"
-                style={{ color: ruleColor, letterSpacing: "0.26em", fontFamily: "var(--inv-font-body)" }}
+                style={{ color: ruleColor, letterSpacing: "var(--inv-track-label, 0.34em)", fontFamily: "var(--inv-font-body)" }}
               >
                 {date.month} {date.year}
               </span>

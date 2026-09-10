@@ -1,77 +1,117 @@
 "use client";
 
 import { Reveal } from "@/components/ui/reveal";
-import { Divider } from "../divider";
-import { radiusClass } from "../theme";
+import { SectionShell } from "../section-heading";
+import { buttonClass } from "../theme";
+import { MONTHS, WEEKDAYS, WEEKDAYS_SHORT, formatDateParts } from "../date-parts";
 import { downloadIcsEvent } from "@/lib/ics";
 import { useTranslation } from "@/lib/i18n/use-translation";
-import { formatMonthYear } from "@/lib/i18n/format-date";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
+import { cn } from "@/lib/utils";
 
-const WEEKDAYS = {
-  ar: ["أحد", "إثن", "ثلا", "أرب", "خمي", "جمع", "سبت"],
-  fr: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-  en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+const STRINGS = {
+  ar: { eyebrow: "احفظوا التاريخ", cta: "أضيفوا الموعد لتقويمكم", weddingDay: "يوم الزفاف", caption: "تقويم شهر" },
+  fr: { eyebrow: "Réservez la date", cta: "Ajouter à mon calendrier", weddingDay: "jour du mariage", caption: "Calendrier de" },
+  en: { eyebrow: "Save the date", cta: "Add to my calendar", weddingDay: "wedding day", caption: "Calendar for" },
 };
-
-const ADD_TO_CALENDAR = { ar: "أضف إلى التقويم", fr: "Ajouter au calendrier", en: "Add to calendar" };
 
 export function CalendarSection({ invitation, theme }: { invitation: InvitationData; theme: TemplateTheme }) {
   const { locale } = useTranslation();
-  if (!invitation.weddingDate) return null;
+  const t = STRINGS[locale];
 
-  const date = new Date(`${invitation.weddingDate}T00:00:00`);
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
+  const parts = formatDateParts(invitation.weddingDate, locale);
+  if (!parts) return null;
 
-  const firstWeekday = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const { fullYear, monthIndex, dayOfMonth } = parts;
+  // Date.UTC keeps the grid identical on a UTC server and a UTC+1 phone.
+  const firstWeekday = new Date(Date.UTC(fullYear, monthIndex, 1)).getUTCDay();
+  const daysInMonth = new Date(Date.UTC(fullYear, monthIndex + 1, 0)).getUTCDate();
+
   const cells: (number | null)[] = [
-    ...Array(firstWeekday).fill(null),
+    ...Array<null>(firstWeekday).fill(null),
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
-
-  const monthLabel = formatMonthYear(date, locale);
+  const weeks = Array.from({ length: Math.ceil(cells.length / 7) }, (_, w) => cells.slice(w * 7, w * 7 + 7));
+  const monthLabel = `${MONTHS[locale][monthIndex]} ${fullYear}`;
 
   return (
-    <section className="px-6 py-16 text-center">
-      <Reveal className="mx-auto max-w-xs">
+    <SectionShell>
+      <Reveal className="flex flex-col items-center">
+        <span
+          className="text-[0.55rem] uppercase"
+          style={{ color: "var(--inv-primary)", letterSpacing: "var(--inv-track-wide, 0.4em)", fontFamily: "var(--inv-font-body)", opacity: 0.8 }}
+        >
+          {t.eyebrow}
+        </span>
         <p
-          className="text-xl font-bold capitalize"
-          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)" }}
+          className="mt-4 text-[1.4rem]"
+          style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-text)", letterSpacing: "0.08em" }}
         >
           {monthLabel}
         </p>
-        <Divider theme={theme} />
+      </Reveal>
 
-        <div
-          className={`mt-4 grid grid-cols-7 gap-y-2 border p-4 ${radiusClass(theme.cardRadius)}`}
-          style={{ backgroundColor: "var(--inv-surface)", borderColor: "var(--inv-primary)", opacity: 0.97 }}
-        >
-          {WEEKDAYS[locale].map((wd) => (
-            <span key={wd} className="text-[10px] font-medium opacity-60" style={{ color: "var(--inv-text)" }}>
-              {wd}
-            </span>
-          ))}
-          {cells.map((d, i) => (
-            <span key={i} className="flex items-center justify-center py-1">
-              {d && (
-                <span
-                  className="flex h-7 w-7 items-center justify-center rounded-full text-xs"
-                  style={
-                    d === day
-                      ? { backgroundColor: "var(--inv-primary)", color: theme.background, fontWeight: 700 }
-                      : { color: "var(--inv-text)", opacity: 0.75 }
-                  }
+      <Reveal delay={110} className="mt-9">
+        <table className="w-full border-collapse" style={{ fontFamily: "var(--inv-font-body)" }}>
+          <caption className="sr-only">{`${t.caption} ${monthLabel}`}</caption>
+          <thead>
+            <tr>
+              {WEEKDAYS_SHORT[locale].map((short, i) => (
+                <th
+                  key={short}
+                  scope="col"
+                  className="pb-3 text-[0.5rem] font-normal uppercase"
+                  style={{
+                    color: "var(--inv-primary)",
+                    letterSpacing: "var(--inv-track-label, 0.34em)",
+                    opacity: 0.75,
+                    borderBottom: "1px solid var(--inv-primary)",
+                  }}
                 >
-                  {d}
-                </span>
-              )}
-            </span>
-          ))}
-        </div>
+                  <abbr title={WEEKDAYS[locale][i]} className="no-underline">
+                    {short}
+                  </abbr>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {weeks.map((week, w) => (
+              <tr key={w}>
+                {week.map((d, i) => {
+                  const isWeddingDay = d === dayOfMonth;
+                  return (
+                    <td
+                      key={i}
+                      className="p-0 text-center align-middle"
+                      {...(isWeddingDay ? { "aria-current": "date" as const } : {})}
+                    >
+                      {d && (
+                        <span
+                          className={cn(
+                            "inv-figures mx-auto my-1 flex h-8 w-8 items-center justify-center text-[0.8rem]",
+                            isWeddingDay && "rounded-full"
+                          )}
+                          style={
+                            isWeddingDay
+                              ? { border: "1px solid var(--inv-primary)", color: "var(--inv-primary)" }
+                              : { color: "var(--inv-text)", opacity: 0.55 }
+                          }
+                        >
+                          {d}
+                          {isWeddingDay && <span className="sr-only"> — {t.weddingDay}</span>}
+                        </span>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Reveal>
 
+      <Reveal delay={200} className="mt-10 flex justify-center">
         <button
           type="button"
           onClick={() =>
@@ -82,12 +122,12 @@ export function CalendarSection({ invitation, theme }: { invitation: InvitationD
               startTime: invitation.weddingTime,
             })
           }
-          className="mt-5 text-sm font-semibold underline-offset-4 hover:underline"
-          style={{ color: "var(--inv-primary)" }}
+          className={buttonClass(theme.buttonStyle)}
+          style={{ borderColor: "var(--inv-primary)", color: "var(--inv-primary)" }}
         >
-          {ADD_TO_CALENDAR[locale]}
+          {t.cta}
         </button>
       </Reveal>
-    </section>
+    </SectionShell>
   );
 }

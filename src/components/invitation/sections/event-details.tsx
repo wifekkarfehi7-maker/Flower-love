@@ -18,7 +18,7 @@ function DetailLine({ label, value }: { label: string; value: string }) {
     <div className="flex flex-col items-center gap-1.5">
       <span
         className="text-[0.5rem] uppercase"
-        style={{ color: "var(--inv-primary)", letterSpacing: "0.36em", opacity: 0.8 }}
+        style={{ color: "var(--inv-primary)", letterSpacing: "var(--inv-track-label, 0.34em)", opacity: 0.8 }}
       >
         {label}
       </span>
