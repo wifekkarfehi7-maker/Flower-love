@@ -138,6 +138,18 @@ const config: Config = {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.035)" },
         },
+        "foil-travel": {
+          "0%": { backgroundPosition: "180% 0" },
+          "55%, 100%": { backgroundPosition: "-80% 0" },
+        },
+        "rise-in": {
+          from: { opacity: "0", transform: "translateY(14px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "rule-draw": {
+          from: { transform: "scaleX(0)" },
+          to: { transform: "scaleX(1)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -147,6 +159,9 @@ const config: Config = {
         "scale-in": "scale-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards",
         shimmer: "shimmer 3s linear infinite",
         "seal-breathe": "seal-breathe 3.2s ease-in-out infinite",
+        "foil-travel": "foil-travel 7.5s cubic-bezier(0.45,0,0.55,1) infinite",
+        "rise-in": "rise-in 1.1s cubic-bezier(0.22,1,0.36,1) forwards",
+        "rule-draw": "rule-draw 1.4s cubic-bezier(0.22,1,0.36,1) forwards",
       },
     },
   },

@@ -3,24 +3,41 @@
 import Image from "next/image";
 
 import { useTranslation } from "@/lib/i18n/use-translation";
-import { Reveal } from "@/components/ui/reveal";
-import { MotifIcon } from "../motif-icon";
-import { CornerFlourish, FloralCorner } from "../ornament";
-import { buttonClass } from "../theme";
-import { EnvelopeOverlay, CurtainOverlay } from "./cover-open-overlay";
+import { BotanicalCorner } from "../ornament";
+import { FoilSweep, FrameBorder, TextureOverlay } from "../luxury";
+import { OpeningExperience } from "../opening-experience";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
-import { cn } from "@/lib/utils";
 
-function formatDate(date: string | null, locale: "ar" | "fr" | "en") {
-  if (!date) return "";
-  const d = new Date(`${date}T00:00:00`);
-  const day = String(d.getDate()).padStart(2, "0");
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const year = d.getFullYear();
-  return locale === "en" ? `${month} / ${day} / ${year}` : `${day} / ${month} / ${year}`;
+const STRINGS = {
+  ar: { eyebrow: "بمشيئة الله وبمباركة العائلتين", invite: "يسعدنا حضوركم للاحتفال بزفاف", and: "و" },
+  fr: { eyebrow: "Avec la bénédiction de leurs familles", invite: "Vous êtes conviés au mariage de", and: "&" },
+  en: { eyebrow: "Together with their families", invite: "Invite you to celebrate the wedding of", and: "&" },
+};
+
+const MONTHS = {
+  ar: ["جانفي", "فيفري", "مارس", "أفريل", "ماي", "جوان", "جويلية", "أوت", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+};
+
+const WEEKDAYS = {
+  ar: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+  fr: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+};
+
+/** Formatted from the raw Y-M-D parts so server and client never disagree over a timezone. */
+function formatDateParts(date: string | null, locale: "ar" | "fr" | "en") {
+  if (!date) return null;
+  const [y, m, d] = date.split("-").map(Number);
+  if (!y || !m || !d) return null;
+  const weekday = WEEKDAYS[locale][new Date(Date.UTC(y, m - 1, d)).getUTCDay()]!;
+  return { weekday, day: String(d).padStart(2, "0"), month: MONTHS[locale][m - 1]!, year: String(y) };
 }
 
-const OPEN_LABEL = { ar: "افتحوا الدعوة ❤️", fr: "Ouvrir l'invitation ❤️", en: "Open Invitation ❤️" };
+function initialsOf(a: string, b: string) {
+  return `${(a.trim()[0] ?? "").toUpperCase()}${(b.trim()[0] ?? "").toUpperCase()}` || "&";
+}
 
 export function CoverSection({
   invitation,
@@ -34,98 +51,160 @@ export function CoverSection({
   isOpen: boolean;
 }) {
   const { locale } = useTranslation();
+  const t = STRINGS[locale];
   const hasCoverImage = Boolean(invitation.coverImageUrl);
+  const date = formatDateParts(invitation.weddingDate, locale);
   const nameColor = hasCoverImage ? "#ffffff" : "var(--inv-text)";
+  const ruleColor = hasCoverImage ? "rgba(255,255,255,0.55)" : "var(--inv-primary)";
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center">
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden px-7 py-14 text-center">
       {hasCoverImage ? (
         <div aria-hidden="true" className="absolute inset-0">
           <Image src={invitation.coverImageUrl!} alt="" fill priority sizes="100vw" className="object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/35 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/65" />
         </div>
       ) : (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-[0.06]">
-          <MotifIcon motif={theme.motif} className="absolute -end-10 -top-10 h-64 w-64" style={{ color: "var(--inv-primary)" }} />
-          <MotifIcon motif={theme.motif} className="absolute -bottom-16 -start-16 h-72 w-72" style={{ color: "var(--inv-primary)" }} />
+        <TextureOverlay texture={theme.texture} tint={theme.primary} />
+      )}
+
+      {theme.frameStyle && theme.frameStyle !== "arch" && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-5">
+          <FrameBorder style={theme.frameStyle} color={ruleColor} />
+        </div>
+      )}
+      {theme.frameStyle === "arch" && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-6 bottom-0 top-8">
+          <FrameBorder style="arch" color={ruleColor} />
         </div>
       )}
 
-      {theme.dividerStyle === "ornament" && (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-4 opacity-40">
-          <CornerFlourish className="absolute top-0 start-0 h-16 w-16" style={{ color: "var(--inv-primary)" }} />
-          <CornerFlourish className="absolute top-0 end-0 h-16 w-16 -scale-x-100" style={{ color: "var(--inv-primary)" }} />
-          <CornerFlourish className="absolute bottom-0 start-0 h-16 w-16 -scale-y-100" style={{ color: "var(--inv-primary)" }} />
-          <CornerFlourish className="absolute bottom-0 end-0 h-16 w-16 -scale-x-100 -scale-y-100" style={{ color: "var(--inv-primary)" }} />
-        </div>
-      )}
-
-      {theme.decorativeStyle === "floral" && (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-3 opacity-70">
-          <FloralCorner
-            className="absolute top-0 start-0 h-20 w-20"
-            style={{ color: "var(--inv-primary)" }}
+      {theme.decorativeStyle && (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-9">
+          <BotanicalCorner
+            variant={theme.decorativeStyle}
             accent={theme.accent}
+            className="absolute start-0 top-0 h-28 w-28"
+            style={{ color: ruleColor, opacity: hasCoverImage ? 0.45 : 0.75 }}
           />
-          <FloralCorner
-            className="absolute bottom-0 end-0 h-20 w-20 -scale-x-100 -scale-y-100"
-            style={{ color: "var(--inv-primary)" }}
+          <BotanicalCorner
+            variant={theme.decorativeStyle}
             accent={theme.accent}
+            className="absolute bottom-0 end-0 h-28 w-28 -scale-x-100 -scale-y-100"
+            style={{ color: ruleColor, opacity: hasCoverImage ? 0.45 : 0.75 }}
           />
         </div>
       )}
 
-      {theme.openAnimation === "envelope" && <EnvelopeOverlay theme={theme} isOpen={isOpen} onOpen={onOpen} />}
-      {theme.openAnimation === "curtain" && <CurtainOverlay theme={theme} isOpen={isOpen} onOpen={onOpen} />}
-
-      <Reveal animation="scale-in" className="relative z-10 flex flex-col items-center">
-        <span
-          className="flex h-14 w-14 items-center justify-center rounded-full border"
-          style={{ borderColor: "var(--inv-primary)", color: "var(--inv-primary)" }}
+      {/* The composition sits above centre — printed invitations leave the
+          deeper margin at the foot of the card, never an even split. */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center pb-[14vh] pt-[6vh]">
+        <p
+          className="max-w-[19rem] text-[0.6rem] uppercase leading-relaxed"
+          style={{
+            color: hasCoverImage ? "rgba(255,255,255,0.78)" : "var(--inv-text-muted)",
+            letterSpacing: "0.3em",
+            fontFamily: "var(--inv-font-body)",
+          }}
         >
-          <MotifIcon motif={theme.motif} className="h-6 w-6" />
+          {t.eyebrow}
+        </p>
+
+        <span
+          aria-hidden="true"
+          className="relative mt-7 block h-px w-16 origin-center animate-rule-draw"
+          style={{ backgroundColor: ruleColor, opacity: 0.6 }}
+        >
+          <FoilSweep enabled={theme.foil !== false} />
         </span>
 
         <p
-          className="mt-8 text-4xl font-bold sm:text-5xl"
-          style={{ fontFamily: "var(--inv-font-heading)", color: nameColor }}
+          className="mt-9 text-[clamp(2.6rem,13vw,3.9rem)] leading-[1.06]"
+          style={{
+            fontFamily: "var(--inv-font-display)",
+            fontStyle: "var(--inv-display-style)" as React.CSSProperties["fontStyle"],
+            color: nameColor,
+            fontWeight: 400,
+          }}
         >
           {invitation.groomName}
         </p>
-        <span className="my-3 text-2xl" style={{ color: "var(--inv-primary)" }}>
-          &amp;
+
+        <span
+          className="my-2 block text-2xl"
+          style={{ fontFamily: "var(--inv-font-display)", color: ruleColor, opacity: 0.85 }}
+        >
+          {t.and}
         </span>
+
         <p
-          className="text-4xl font-bold sm:text-5xl"
-          style={{ fontFamily: "var(--inv-font-heading)", color: nameColor }}
+          className="text-[clamp(2.6rem,13vw,3.9rem)] leading-[1.06]"
+          style={{
+            fontFamily: "var(--inv-font-display)",
+            fontStyle: "var(--inv-display-style)" as React.CSSProperties["fontStyle"],
+            color: nameColor,
+            fontWeight: 400,
+          }}
         >
           {invitation.brideName}
         </p>
 
-        {invitation.weddingDate && (
-          <p
-            className="mt-8 text-lg tracking-[0.2em]"
-            style={{ fontFamily: "var(--inv-font-heading)", color: "var(--inv-primary)" }}
-          >
-            {formatDate(invitation.weddingDate, locale)}
-          </p>
-        )}
+        <p
+          className="mt-9 max-w-[17rem] text-[0.58rem] uppercase leading-relaxed"
+          style={{
+            color: hasCoverImage ? "rgba(255,255,255,0.72)" : "var(--inv-text-muted)",
+            letterSpacing: "0.28em",
+            fontFamily: "var(--inv-font-body)",
+          }}
+        >
+          {t.invite}
+        </p>
 
-        {!isOpen && (
-          <button
-            type="button"
-            onClick={onOpen}
-            className={cn(buttonClass(theme.buttonStyle), "mt-10")}
-            style={{
-              backgroundColor: theme.buttonStyle === "outline-ornate" ? "transparent" : "var(--inv-primary)",
-              borderColor: "var(--inv-primary)",
-              color: theme.buttonStyle === "outline-ornate" ? "var(--inv-primary)" : theme.background,
-            }}
-          >
-            {OPEN_LABEL[locale]}
-          </button>
+        {date && (
+          <div className="mt-8 flex items-center gap-5">
+            <span aria-hidden="true" className="block h-px w-10" style={{ backgroundColor: ruleColor, opacity: 0.45 }} />
+            <div className="flex flex-col items-center gap-1.5">
+              <span
+                className="text-[0.58rem] uppercase"
+                style={{ color: ruleColor, letterSpacing: "0.26em", fontFamily: "var(--inv-font-body)" }}
+              >
+                {date.weekday}
+              </span>
+              <span
+                className="text-[2.15rem] leading-none"
+                style={{ color: nameColor, fontFamily: "var(--inv-font-heading)", fontWeight: 400 }}
+              >
+                {date.day}
+              </span>
+              <span
+                className="text-[0.58rem] uppercase"
+                style={{ color: ruleColor, letterSpacing: "0.26em", fontFamily: "var(--inv-font-body)" }}
+              >
+                {date.month} {date.year}
+              </span>
+            </div>
+            <span aria-hidden="true" className="block h-px w-10" style={{ backgroundColor: ruleColor, opacity: 0.45 }} />
+          </div>
         )}
-      </Reveal>
+      </div>
+
+      {isOpen && (
+        <span
+          aria-hidden="true"
+          className="relative z-10 mx-auto block h-10 w-px"
+          style={{
+            backgroundImage: `linear-gradient(to bottom, transparent, ${ruleColor})`,
+            opacity: 0.5,
+          }}
+        />
+      )}
+
+      <OpeningExperience
+        theme={theme}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        monogram={initialsOf(invitation.groomName, invitation.brideName)}
+      />
     </section>
   );
 }
