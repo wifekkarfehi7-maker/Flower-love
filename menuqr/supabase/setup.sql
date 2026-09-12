@@ -2979,7 +2979,7 @@ insert into public.subscription_plans (
   'كل المزايا بلا حدود: منتوجات، طاولات، طلبات من التليفون وتحليلات.',
   'Tout, sans limite : produits, tables, commandes depuis le téléphone et statistiques.',
   'Everything, with no limits: products, tables, phone ordering and analytics.',
-  29.900, 299.000, 'TND',
+  79.000, 790.000, 'TND',
   null, null, null, 10,
   '["everything_free","categories_unlimited","products_unlimited","tables_unlimited","qr_per_table","ordering","analytics","custom_branding","product_options","priority_support"]'::jsonb,
   2
