@@ -514,6 +514,8 @@ export const ar = {
     renewsOn: "يتجدّد في",
     perMonth: "/ شهر",
     perYear: "/ سنة",
+    whatsappIntro: "أهلاً، نحب نشترك في MenuQR للمطعم:",
+    contactWhatsapp: "تواصل معانا على واتساب",
   },
   plans: {
     menu_digital: "منيو رقمي كامل",
