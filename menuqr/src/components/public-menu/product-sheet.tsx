@@ -20,6 +20,7 @@ export interface CartSelection {
 }
 
 export function ProductSheet({
+  themeStyle,
   product,
   optionGroups,
   open,
@@ -33,6 +34,10 @@ export function ProductSheet({
   t,
   onAddToCart,
 }: {
+  /** The venue's palette. A portalled dialog sits outside the element that
+      declares it, so without repeating it here every var(--menu-*) resolves to
+      nothing and the sheet renders transparent over the menu. */
+  themeStyle: React.CSSProperties;
   product: Product | null;
   optionGroups: OptionGroupWithOptions[];
   open: boolean;
@@ -86,7 +91,10 @@ export function ProductSheet({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-[var(--menu-border)] bg-[var(--menu-surface)] text-[var(--menu-text)] sm:max-w-md">
+      <DialogContent
+        style={themeStyle}
+        className="border-[var(--menu-border)] bg-[var(--menu-surface)] text-[var(--menu-text)] sm:max-w-md"
+      >
         {showImage && product.image_url ? (
           <div className="relative aspect-[4/3] w-full shrink-0 bg-[var(--menu-surface-alt)]">
             <Image src={product.image_url} alt="" fill sizes="(max-width: 640px) 100vw, 448px" className="object-cover" priority />

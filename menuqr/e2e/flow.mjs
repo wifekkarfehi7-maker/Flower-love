@@ -265,6 +265,25 @@ try {
     sql(`select count(*) from public.orders where id = '${orderId}' and table_id = '${tableId}'`) === "1");
   check("the kitchen note is kept",
     sql(`select customer_note from public.orders where id = '${orderId}'`) === "bla harissa");
+  // A dialog is portalled onto document.body, outside the element the venue's
+  // palette is declared on. When that palette is not repeated on the panel,
+  // every var(--menu-*) resolves to nothing and the sheet renders transparent
+  // with the menu showing through it — which is what a guest sees, not a bug
+  // any assertion about text would catch.
+  const panelPaint = await dinerPage.locator('[role="dialog"]').evaluate((el) => {
+    const style = getComputedStyle(el);
+    return { background: style.backgroundColor, color: style.color };
+  });
+  const alpha = (value) => {
+    const parts = value.match(/[\d.]+/g) ?? [];
+    return parts.length === 4 ? Number(parts[3]) : 1;
+  };
+  check(
+    "the order sheet paints an opaque panel, not the menu behind it",
+    panelPaint.background !== "transparent" && alpha(panelPaint.background) === 1,
+    JSON.stringify(panelPaint)
+  );
+
   const receipt = await dinerPage.locator('[role="dialog"]').innerText();
   const orderNumber = sql(`select order_number::text from public.orders where id = '${orderId}'`);
   check("the first order of the day is number 1", orderNumber === "1", orderNumber);

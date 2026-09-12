@@ -70,6 +70,15 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
   const [cart, setCart] = React.useState<CartItem[]>([]);
   const [openNow, setOpenNow] = React.useState<boolean | null>(null);
 
+  // Radix renders dialogs through a portal, which mounts them on document.body
+  // — outside the element these variables are declared on. Without handing the
+  // palette to them too, every var(--menu-*) inside a dialog resolves to
+  // nothing: the panel loses its background and the menu shows through it.
+  const themeStyle = React.useMemo(
+    () => menuThemeStyle(restaurant.theme, restaurant.primary_color, restaurant.secondary_color),
+    [restaurant.theme, restaurant.primary_color, restaurant.secondary_color]
+  );
+
   const sectionRefs = React.useRef(new Map<string, HTMLElement>());
 
   const openingHours = React.useMemo(() => parseOpeningHours(settings?.opening_hours), [settings?.opening_hours]);
@@ -201,7 +210,7 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
 
   return (
     <div
-      style={menuThemeStyle(restaurant.theme, restaurant.primary_color, restaurant.secondary_color)}
+      style={themeStyle}
       className="min-h-dvh bg-[var(--menu-bg)] text-[var(--menu-text)]"
     >
       <header className="relative">
@@ -542,6 +551,7 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
       ) : null}
 
       <ProductSheet
+        themeStyle={themeStyle}
         product={selectedProduct}
         optionGroups={selectedProduct ? (optionGroupsByProduct[selectedProduct.id] ?? []) : []}
         open={Boolean(selectedProduct)}
@@ -577,6 +587,7 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
         currency={restaurant.currency}
         t={t}
         onOrderPlaced={() => setCart([])}
+        themeStyle={themeStyle}
         orderingEnabled={orderingEnabled}
         restaurantId={restaurant.id}
         tableId={tableId}
