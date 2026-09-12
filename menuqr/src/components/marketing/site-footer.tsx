@@ -3,7 +3,7 @@
 import Link from "next/link";
 
 import { Logo } from "@/components/brand/logo";
-import { SITE_NAME, SUPPORT_EMAIL } from "@/lib/config";
+import { SITE_NAME, SUPPORT_EMAIL, SUPPORT_WHATSAPP, whatsappLink } from "@/lib/config";
 import { useTranslation } from "@/lib/i18n/provider";
 
 export function SiteFooter() {
@@ -55,6 +55,17 @@ export function SiteFooter() {
             <li>
               <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-foreground" dir="ltr">
                 {SUPPORT_EMAIL}
+              </a>
+            </li>
+            <li>
+              <a
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-foreground"
+                dir="ltr"
+              >
+                {`+${SUPPORT_WHATSAPP}`}
               </a>
             </li>
           </ul>

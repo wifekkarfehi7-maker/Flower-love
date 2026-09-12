@@ -2917,6 +2917,30 @@ grant execute on function public.order_status_for_session(uuid, text) to anon, a
 
 
 -- ===========================================================================
+-- migrations/0010_two_plans.sql
+-- ===========================================================================
+
+-- ============================================================================
+-- MenuQR — 0010_two_plans
+--
+-- Three tiers was a guess made before the product had customers. The offer is
+-- two: a venue tries it free, and when it outgrows that there is one monthly
+-- subscription. A third tier only makes the choice harder to explain to a café
+-- owner over the phone.
+--
+-- Any venue already on `business` is moved to `pro` before the row goes, so no
+-- subscription is left pointing at a plan that no longer exists — and moved
+-- rather than dropped, because the venue paid for more than free.
+-- ============================================================================
+
+update public.subscriptions s
+   set plan_id = (select id from public.subscription_plans where code = 'pro')
+ where s.plan_id = (select id from public.subscription_plans where code = 'business');
+
+delete from public.subscription_plans where code = 'business';
+
+
+-- ===========================================================================
 -- seed.sql
 -- ===========================================================================
 
@@ -2940,10 +2964,10 @@ insert into public.subscription_plans (
 ) values
 (
   'free',
-  'مجاني', 'Gratuit', 'Free',
-  'ابدأ بمنيو رقمي بسيط ورمز QR واحد.',
-  'Commencez avec un menu digital simple et un QR code.',
-  'Start with a simple digital menu and one QR code.',
+  'تجريبي', 'Essai', 'Trial',
+  'جرّب المنيو الرقمي ورمز QR بلا ما تخلّص.',
+  'Essayez le menu digital et le QR code, gratuitement.',
+  'Try the digital menu and QR code, free.',
   0, 0, 'TND',
   5, 30, 3, 1,
   '["menu_digital","qr_basic","languages_three","mobile_menu"]'::jsonb,
@@ -2951,26 +2975,16 @@ insert into public.subscription_plans (
 ),
 (
   'pro',
-  'برو', 'Pro', 'Pro',
-  'لمطعم أو مقهى يخدم بجدية: منتجات أكثر، طاولات أكثر وإحصائيات.',
-  'Pour un restaurant ou café actif : plus de produits, plus de tables et des statistiques.',
-  'For a working restaurant or café: more products, more tables and analytics.',
+  'اشتراك', 'Abonnement', 'Subscription',
+  'كل المزايا بلا حدود: منتوجات، طاولات، طلبات من التليفون وتحليلات.',
+  'Tout, sans limite : produits, tables, commandes depuis le téléphone et statistiques.',
+  'Everything, with no limits: products, tables, phone ordering and analytics.',
   29.900, 299.000, 'TND',
-  null, 300, 25, 3,
-  '["everything_free","categories_unlimited","qr_per_table","analytics","custom_branding","product_options"]'::jsonb,
+  null, null, null, 10,
+  '["everything_free","categories_unlimited","products_unlimited","tables_unlimited","qr_per_table","ordering","analytics","custom_branding","product_options","priority_support"]'::jsonb,
   2
-),
-(
-  'business',
-  'بيزنس', 'Business', 'Business',
-  'لفرق العمل والمشاريع الكبيرة: كل شيء بلا حدود ودعم بالأولوية.',
-  'Pour les équipes et les grandes enseignes : tout en illimité et support prioritaire.',
-  'For teams and larger venues: everything unlimited plus priority support.',
-  79.900, 799.000, 'TND',
-  null, null, null, 15,
-  '["everything_pro","products_unlimited","tables_unlimited","staff_accounts","advanced_analytics","priority_support"]'::jsonb,
-  3
 )
+
 on conflict (code) do update set
   name_ar = excluded.name_ar,
   name_fr = excluded.name_fr,

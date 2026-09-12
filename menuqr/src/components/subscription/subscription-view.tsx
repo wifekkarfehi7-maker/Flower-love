@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertText, AlertTitle, PageHeader } from "@/components/ui/misc";
-import { SUPPORT_EMAIL } from "@/lib/config";
+import { whatsappLink } from "@/lib/config";
 import { planFeatureKeys, planPrice, type BillingPeriod } from "@/lib/billing/provider";
 import { formatDate, formatNumber, formatPrice, localized } from "@/lib/i18n/format";
 import { useTranslation } from "@/lib/i18n/provider";
@@ -73,7 +73,11 @@ export function SubscriptionView({
 
   const featureLabels = t.plans as Record<string, string>;
 
-  const contactHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Upgrade — ${restaurant.name} (${restaurant.slug})`)}`;
+  // WhatsApp, opened with the venue already named: whoever answers knows which
+  // café is asking without a round of "which restaurant is this?".
+  const contactHref = whatsappLink(
+    `${t.subscription.whatsappIntro}\n${restaurant.name} (${restaurant.slug})`
+  );
 
   return (
     <div className="space-y-6">
@@ -199,7 +203,7 @@ export function SubscriptionView({
                     </Button>
                   ) : (
                     <Button variant={price === 0 ? "outline" : "default"} asChild>
-                      <a href={contactHref}>
+                      <a href={contactHref} target="_blank" rel="noopener noreferrer">
                         <Mail aria-hidden />
                         {t.subscription.contactToUpgrade}
                       </a>

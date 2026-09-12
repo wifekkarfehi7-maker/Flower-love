@@ -33,3 +33,18 @@ export const SITE_URL = resolveSiteUrl();
 export const DEFAULT_CURRENCY = "TND";
 
 export const SUPPORT_EMAIL = "contact@menuqr.tn";
+
+/**
+ * Where an upgrade is actually arranged. There is no payment gateway, and
+ * WhatsApp is how a café owner in Tunisia expects to reach a supplier — far
+ * more than email, which many never open.
+ *
+ * International format without the +, which is what wa.me takes.
+ */
+export const SUPPORT_WHATSAPP = "21694409166";
+
+/** A wa.me link, optionally opening with the message already written. */
+export function whatsappLink(message?: string) {
+  const base = `https://wa.me/${SUPPORT_WHATSAPP}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}

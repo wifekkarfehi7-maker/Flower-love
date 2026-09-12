@@ -512,6 +512,8 @@ export const en: Dictionary = {
     renewsOn: "Renews on",
     perMonth: "/ month",
     perYear: "/ year",
+    whatsappIntro: "Hello, I would like a MenuQR subscription for:",
+    contactWhatsapp: "Contact us on WhatsApp",
   },
   plans: {
     menu_digital: "Full digital menu",

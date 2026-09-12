@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  MessageCircle,
   ArrowRight,
   BarChart3,
   Check,
@@ -19,7 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { planFeatureKeys } from "@/lib/billing/provider";
-import { SITE_URL } from "@/lib/config";
+import { SITE_URL, whatsappLink } from "@/lib/config";
 import { formatPrice, localized } from "@/lib/i18n/format";
 import { useTranslation } from "@/lib/i18n/provider";
 import { menuUrl } from "@/lib/qr/urls";
@@ -254,7 +255,7 @@ export function LandingPage({ plans }: { plans: SubscriptionPlan[] }) {
               <p className="mt-3 text-muted-foreground">{t.landing.pricingSubtitle}</p>
             </div>
 
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
+            <div className="mx-auto mt-10 grid max-w-3xl gap-5 md:grid-cols-2">
               {plans.map((plan, index) => {
                 const price = Number(plan.price_monthly);
                 const highlighted = index === 1;
@@ -299,6 +300,18 @@ export function LandingPage({ plans }: { plans: SubscriptionPlan[] }) {
             </div>
 
             <p className="mt-6 text-center text-sm text-muted-foreground">{t.landing.pricingNote}</p>
+
+            {/* There is no payment gateway: a subscription is arranged by
+                talking to someone, and in Tunisia that conversation happens on
+                WhatsApp. The button says so rather than implying a checkout. */}
+            <div className="mt-5 flex justify-center">
+              <Button asChild size="lg" variant="outline">
+                <a href={whatsappLink(t.subscription.whatsappIntro)} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="size-4" aria-hidden />
+                  {t.subscription.contactWhatsapp}
+                </a>
+              </Button>
+            </div>
           </div>
         </section>
 
