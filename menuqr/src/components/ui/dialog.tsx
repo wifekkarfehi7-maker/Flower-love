@@ -17,7 +17,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-sand-950/45 backdrop-blur-[2px]",
+      "fixed inset-0 z-50 bg-sand-950/75 backdrop-blur-md",
       "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0",
       className
     )}
@@ -48,6 +48,12 @@ export const DialogContent = React.forwardRef<
       )}
       {...props}
     >
+      {/* Phones get the handle a bottom sheet is expected to have; on a wide
+          screen the same component is a centred dialog and needs none. */}
+      <div className="flex shrink-0 justify-center pt-2.5 sm:hidden" aria-hidden>
+        <span className="h-1 w-10 rounded-full bg-border" />
+      </div>
+
       {children}
       {hideClose ? null : (
         <DialogPrimitive.Close
