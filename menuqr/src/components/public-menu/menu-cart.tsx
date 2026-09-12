@@ -42,6 +42,7 @@ export function MenuCart({
   fallbackLocale,
   currency,
   t,
+  themeStyle,
   orderingEnabled,
   restaurantId,
   tableId,
@@ -58,6 +59,10 @@ export function MenuCart({
   fallbackLocale: Locale;
   currency: string;
   t: Dictionary;
+  /** The venue's palette: a portalled dialog is outside the element that
+      declares it, so it has to be repeated here or every var() falls back to
+      nothing and the panel renders transparent. */
+  themeStyle: React.CSSProperties;
   orderingEnabled: boolean;
   restaurantId: string;
   tableId: string | null;
@@ -141,7 +146,10 @@ export function MenuCart({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-[var(--menu-border)] bg-[var(--menu-surface)] text-[var(--menu-text)] sm:max-w-md">
+      <DialogContent
+        style={themeStyle}
+        className="border-[var(--menu-border)] bg-[var(--menu-surface)] text-[var(--menu-text)] sm:max-w-md"
+      >
         {/* Once an order exists the receipt below carries its own heading, so
             the dialog's is kept for screen readers only rather than printed
             twice. */}
