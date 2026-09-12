@@ -142,112 +142,142 @@ export function MenuCart({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="border-[var(--menu-border)] bg-[var(--menu-surface)] text-[var(--menu-text)] sm:max-w-md">
-        <div className="px-5 pb-2 pt-5">
-          <DialogTitle>{orderId ? t.menu.orderPlaced : t.menu.cart}</DialogTitle>
-          <DialogDescription className="mt-1 text-[var(--menu-muted)]">
-            {orderId ? t.menu.orderPlacedText : orderingEnabled ? t.menu.cartOrderNote : t.menu.cartNote}
-          </DialogDescription>
-        </div>
+        {/* Once an order exists the receipt below carries its own heading, so
+            the dialog's is kept for screen readers only rather than printed
+            twice. */}
+        {orderId ? (
+          <>
+            <DialogTitle className="sr-only">{t.menu.orderPlaced}</DialogTitle>
+            <DialogDescription className="sr-only">{t.menu.orderPlacedText}</DialogDescription>
+          </>
+        ) : (
+          <div className="px-5 pb-2 pt-4">
+            <DialogTitle>{t.menu.cart}</DialogTitle>
+            <DialogDescription className="mt-1 text-[var(--menu-muted)]">
+              {orderingEnabled ? t.menu.cartOrderNote : t.menu.cartNote}
+            </DialogDescription>
+          </div>
+        )}
 
         {orderId ? (
-          <div className="px-5 pb-5">
-            {/* The number is the point of this screen: it is what the guest
-                says to the waiter and what the waiter calls back. */}
-            <div className="flex flex-col items-center gap-3 py-5">
-              <span className="flex size-12 items-center justify-center rounded-full bg-[var(--menu-accent)] text-[var(--menu-accent-text)]">
+          <div className="flex flex-col">
+            {/* A band, not a tick floating in white space: on a phone this is
+                the whole screen, and the guest should know at a glance that
+                the order left. */}
+            <div className="flex flex-col items-center gap-2 bg-[var(--menu-accent)] px-5 py-6 text-[var(--menu-accent-text)]">
+              <span className="flex size-11 items-center justify-center rounded-full bg-white/20">
                 <Check className="size-6" strokeWidth={3} aria-hidden />
               </span>
+              <p className="text-sm font-medium opacity-90">{t.menu.orderPlaced}</p>
+            </div>
 
-              <div className="text-center">
-                <p className="text-xs uppercase tracking-wide text-[var(--menu-muted)]">{t.menu.orderNumberLabel}</p>
-                <p className="text-4xl font-bold tabular-nums leading-tight">
-                  {receipt?.orderNumber ?? "—"}
-                </p>
+            {/* The number, given the room to be read across a table. */}
+            <div className="flex items-center justify-between gap-4 border-b border-[var(--menu-border)] px-5 py-4">
+              <div>
+                <p className="text-xs text-[var(--menu-muted)]">{t.menu.orderNumberLabel}</p>
+                <p className="text-3xl font-bold leading-tight tabular-nums">{receipt?.orderNumber ?? "—"}</p>
               </div>
-
               {receipt?.tableName ? (
-                <span className="rounded-full border border-[var(--menu-border)] px-3 py-1 text-sm">
-                  {t.menu.tableLabel} · {receipt.tableName}
-                </span>
+                <div className="text-end">
+                  <p className="text-xs text-[var(--menu-muted)]">{t.menu.tableLabel}</p>
+                  <p className="text-lg font-semibold leading-tight">{receipt.tableName}</p>
+                </div>
               ) : null}
             </div>
 
-            {/* Where the order has got to. Each step lights up as the kitchen
-                moves it along, so the guest can stop asking. */}
-            {status === "cancelled" ? (
-              <p className="rounded-2xl bg-red-500/10 p-3 text-center text-sm font-medium text-red-600 dark:text-red-400" aria-live="polite">
-                {t.menu.orderStatusCancelled}
-              </p>
-            ) : (
-              <ol className="flex items-start justify-between gap-1 py-2" aria-live="polite">
-                {TRAIL.map((step, index) => {
-                  const done = index <= reached;
-                  return (
-                    <li key={step} className="flex flex-1 flex-col items-center gap-1.5 text-center">
-                      <div className="flex w-full items-center">
-                        <span
-                          className={cn(
-                            "h-0.5 flex-1",
-                            index === 0 ? "opacity-0" : done ? "bg-[var(--menu-accent)]" : "bg-[var(--menu-border)]"
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            "size-2.5 shrink-0 rounded-full transition-colors",
-                            done ? "bg-[var(--menu-accent)]" : "bg-[var(--menu-border)]",
-                            index === reached && "ring-4 ring-[var(--menu-accent)]/25"
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            "h-0.5 flex-1",
-                            index === TRAIL.length - 1
-                              ? "opacity-0"
-                              : index < reached
-                                ? "bg-[var(--menu-accent)]"
-                                : "bg-[var(--menu-border)]"
-                          )}
-                        />
-                      </div>
-                      <span className={cn("text-[11px] leading-tight", done ? "font-medium" : "text-[var(--menu-muted)]")}>
-                        {statusLabel[step]}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ol>
-            )}
-
-            {receipt && receipt.items.length > 0 ? (
-              <div className="mt-4 rounded-2xl border border-[var(--menu-border)] p-3">
-                <ul className="space-y-1.5 text-sm">
-                  {receipt.items.map((item, index) => (
-                    <li key={`${item.name}-${index}`} className="flex justify-between gap-3">
-                      <span>
-                        <span className="tabular-nums text-[var(--menu-muted)]">{item.quantity}×</span> {item.name}
-                      </span>
-                      <span className="shrink-0 tabular-nums">{formatPrice(item.line_total, currency, locale)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-2 flex justify-between border-t border-[var(--menu-border)] pt-2 text-sm font-semibold">
-                  <span>{t.menu.cartTotal}</span>
-                  <span className="tabular-nums text-[var(--menu-accent)]">
-                    {formatPrice(receipt.total, currency, locale)}
-                  </span>
-                </div>
+            <div className="flex-1 overflow-y-auto">
+              {/* Where it has got to. */}
+              <div className="border-b border-[var(--menu-border)] px-5 py-4">
+                {status === "cancelled" ? (
+                  <p
+                    className="rounded-xl bg-red-500/10 p-3 text-center text-sm font-medium text-red-600 dark:text-red-400"
+                    aria-live="polite"
+                  >
+                    {t.menu.orderStatusCancelled}
+                  </p>
+                ) : (
+                  <ol className="flex items-start justify-between" aria-live="polite">
+                    {TRAIL.map((step, index) => {
+                      const done = index <= reached;
+                      return (
+                        <li key={step} className="flex flex-1 flex-col items-center gap-2 text-center">
+                          <div className="flex w-full items-center">
+                            <span
+                              className={cn(
+                                "h-0.5 flex-1",
+                                index === 0 ? "opacity-0" : done ? "bg-[var(--menu-accent)]" : "bg-[var(--menu-border)]"
+                              )}
+                            />
+                            <span
+                              className={cn(
+                                "size-3 shrink-0 rounded-full transition-colors",
+                                done ? "bg-[var(--menu-accent)]" : "bg-[var(--menu-border)]",
+                                index === reached && "ring-4 ring-[var(--menu-accent)]/25"
+                              )}
+                            />
+                            <span
+                              className={cn(
+                                "h-0.5 flex-1",
+                                index === TRAIL.length - 1
+                                  ? "opacity-0"
+                                  : index < reached
+                                    ? "bg-[var(--menu-accent)]"
+                                    : "bg-[var(--menu-border)]"
+                              )}
+                            />
+                          </div>
+                          <span
+                            className={cn(
+                              "text-[11px] leading-tight",
+                              done ? "font-semibold" : "text-[var(--menu-muted)]"
+                            )}
+                          >
+                            {statusLabel[step]}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                )}
               </div>
-            ) : null}
 
-            <p className="mt-3 text-center text-xs text-[var(--menu-muted)]">{t.menu.orderPlacedText}</p>
+              {/* What was ordered. */}
+              {receipt && receipt.items.length > 0 ? (
+                <div className="px-5 py-4">
+                  <ul className="space-y-2.5 text-sm">
+                    {receipt.items.map((item, index) => (
+                      <li key={`${item.name}-${index}`} className="flex justify-between gap-3">
+                        <span className="flex gap-2">
+                          <span className="min-w-6 tabular-nums text-[var(--menu-muted)]">{item.quantity}×</span>
+                          {item.name}
+                        </span>
+                        <span className="shrink-0 tabular-nums">
+                          {formatPrice(item.line_total, currency, locale)}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-3 flex justify-between border-t border-[var(--menu-border)] pt-3 font-semibold">
+                    <span>{t.menu.cartTotal}</span>
+                    <span className="tabular-nums text-[var(--menu-accent)]">
+                      {formatPrice(receipt.total, currency, locale)}
+                    </span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
 
-            <button
-              type="button"
-              onClick={startAnother}
-              className="mt-4 w-full rounded-full border border-[var(--menu-border)] px-4 py-2.5 text-sm font-medium"
-            >
-              {t.menu.orderNewOne}
-            </button>
+            {/* Pinned, so it is under the thumb wherever the receipt ends. */}
+            <div className="border-t border-[var(--menu-border)] p-4">
+              <p className="mb-3 text-center text-xs text-[var(--menu-muted)]">{t.menu.orderPlacedText}</p>
+              <button
+                type="button"
+                onClick={startAnother}
+                className="w-full rounded-full border border-[var(--menu-border)] px-4 py-3 text-sm font-medium"
+              >
+                {t.menu.orderNewOne}
+              </button>
+            </div>
           </div>
         ) : (
           <>
