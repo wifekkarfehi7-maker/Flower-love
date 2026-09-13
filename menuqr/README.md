@@ -379,7 +379,16 @@ src/lib/
 src/types/database.ts   Hand-written mirror of the SQL schema
 supabase/migrations/    Applied in numeric order
 supabase/tests/         Authorization suite + Postgres harness
+presentation/           Bilingual sales deck (static, no build) — see below
 ```
+
+## Sales presentation
+
+[`presentation/`](presentation/README.md) is a twelve-slide sales deck for
+showing MenuQR to a restaurant or café owner — Arabic (RTL) and French, one
+switch between them. It is a self-contained static folder with no build step
+and no network dependency: open `presentation/index.html` in a browser, or
+print it to a 16:9 PDF. It ships with the app but is entirely separate from it.
 
 ## License
 

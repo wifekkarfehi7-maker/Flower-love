@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>MenuQR — Présentation</title>
+<meta name="description" content="MenuQR — le menu digital par QR code pour les restaurants et cafés en Tunisie." />
+<meta name="theme-color" content="#0B100F" />
+<link rel="stylesheet" href="fonts.css" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230F766E'/%3E%3Crect x='5' y='5' width='6' height='6' rx='1.4' fill='none' stroke='white' stroke-width='1.8'/%3E%3Crect x='13' y='5' width='6' height='6' rx='1.4' fill='none' stroke='white' stroke-width='1.8'/%3E%3Crect x='5' y='13' width='6' height='6' rx='1.4' fill='none' stroke='white' stroke-width='1.8'/%3E%3Crect x='13.5' y='13.5' width='5' height='5' rx='1.2' fill='%23F0A72A'/%3E%3C/svg%3E" />
+</head>
+<body class="is-loading">
+
+<noscript>
+  <div class="noscript">
+    <p><strong>MenuQR</strong></p>
+    <p lang="fr" dir="ltr">Cette présentation a besoin de JavaScript. Activez-le, puis rechargez la page.</p>
+    <p lang="ar" dir="rtl">هذا العرض يحتاج JavaScript. فعّلو، وأعد تحميل الصفحة.</p>
+    <p><a href="https://wa.me/21694409166">+216 94 409 166</a></p>
+  </div>
+</noscript>
+
+<!-- ══════════ Icon + QR sprite (inline: no network, no broken assets) ══════════ -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="ico" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></g>
+  </defs>
+
+  <!-- Real QR code: encodes https://wa.me/21694409166 (error correction Q) -->
+  <symbol id="qr" viewBox="-1 -1 27 27">
+    <path fill="none" stroke="currentColor" stroke-width="1" shape-rendering="crispEdges" d="M0 0.5h7m1 0h2m2 0h4m2 0h7M0 1.5h1m5 0h1m1 0h1m1 0h2m1 0h2m3 0h1m5 0h1M0 2.5h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h3m1 0h1M0 3.5h1m1 0h3m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1M0 4.5h1m1 0h3m1 0h1m1 0h1m5 0h1m3 0h1m1 0h3m1 0h1M0 5.5h1m5 0h1m3 0h1m2 0h2m3 0h1m5 0h1M0 6.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M8 7.5h1m2 0h1m2 0h3M1 8.5h2m1 0h1m1 0h2m1 0h8m1 0h1m1 0h5M1 9.5h4m2 0h2m2 0h1m2 0h1m2 0h2m5 0h1M0 10.5h5m1 0h2m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m2 0h3M1 11.5h5m1 0h1m5 0h1m1 0h1m7 0h1M1 12.5h1m1 0h1m2 0h3m2 0h2m5 0h2m1 0h1m1 0h2M1 13.5h3m1 0h1m2 0h1m1 0h2m3 0h1m1 0h2m2 0h1m2 0h1M0 14.5h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h1m3 0h1m1 0h1m2 0h3M1 15.5h4m2 0h1m3 0h1m1 0h1m2 0h3m1 0h1m2 0h1M0 16.5h1m2 0h1m2 0h1m1 0h1m1 0h2m2 0h8M8 17.5h1m1 0h1m1 0h2m1 0h2m3 0h2m1 0h2M0 18.5h7m1 0h2m1 0h2m2 0h2m1 0h1m1 0h2m1 0h2M0 19.5h1m5 0h1m3 0h1m1 0h5m3 0h2m1 0h2M0 20.5h1m1 0h3m1 0h1m1 0h1m3 0h3m1 0h6m1 0h1M0 21.5h1m1 0h3m1 0h1m2 0h1m3 0h1m5 0h5M0 22.5h1m1 0h3m1 0h1m1 0h1m1 0h1m4 0h2m3 0h1m3 0h1M0 23.5h1m5 0h1m1 0h2m1 0h1m2 0h3m1 0h1m1 0h2m1 0h1M0 24.5h7m7 0h6m3 0h2" />
+  </symbol>
+
+  <symbol id="i-qr" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14h1M14 20h3M20 17v4"/></g></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M4 12h16"/></g></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10.5 5.5h3M11 18.5h2"/></g></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></g></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.4a2 2 0 0 0 2-1.55L20.5 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></g></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8.5a6 6 0 1 0-12 0c0 4.5-1.5 5.5-2 6.5h16c-.5-1-2-2-2-6.5Z"/><path d="M10 19a2.2 2.2 0 0 0 4 0"/></g></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3.5h10V9"/><path d="M7 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14.5" width="10" height="6" rx="1.2"/></g></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.3V5.2a1.7 1.7 0 0 1 1.7-1.7h6.1a1.7 1.7 0 0 1 1.2.5l7.3 7.3a1.7 1.7 0 0 1 0 2.4l-6.1 6.1a1.7 1.7 0 0 1-2.4 0L4 12.5a1.7 1.7 0 0 1-.5-1.2Z"/><circle cx="8" cy="8" r="1.3"/></g></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><circle cx="8.5" cy="10" r="1.6"/><path d="m3.8 17.5 4.4-4.2a2 2 0 0 1 2.7-.05L15 17M14.5 14.2l1.8-1.6a2 2 0 0 1 2.7.05l1.2 1.15"/></g></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-13.7-5.2L3.5 8.5"/><path d="M3.5 4.5v4h4"/><path d="M4 13a8 8 0 0 0 13.7 5.2l2.8-2.7"/><path d="M20.5 19.5v-4h-4"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.2V12l3 1.8"/></g></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.6 9.5h16.8M3.6 14.5h16.8"/><path d="M12 3.5c2.2 2.4 3.3 5.3 3.3 8.5s-1.1 6.1-3.3 8.5c-2.2-2.4-3.3-5.3-3.3-8.5S9.8 5.9 12 3.5Z"/></g></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20v-6M5 10V4M12 20v-9M12 7V4M19 20v-4M19 12V4"/><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="9" r="1.8"/><circle cx="19" cy="14" r="1.8"/></g></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5.5v13M5.5 12h13"/></g></symbol>
+  <symbol id="i-pencil" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10a2.5 2.5 0 0 0-3.5-3.5L4.5 16.5 4 20Z"/><path d="M13.5 7.5 16.5 10.5"/></g></symbol>
+  <symbol id="i-eye-off" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5 20 20"/><path d="M9.6 5.6A9 9 0 0 1 12 5.3c4.4 0 7.6 3.1 9 6.7a13 13 0 0 1-2.6 3.8M6.3 7.6A12.4 12.4 0 0 0 3 12c1.4 3.6 4.6 6.7 9 6.7 1.3 0 2.5-.3 3.6-.7"/><path d="M10 10.2a2.6 2.6 0 0 0 3.7 3.6"/></g></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 6.5h15M9.5 6.5V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v1.5"/><path d="M6.5 6.5 7.4 19a1.8 1.8 0 0 0 1.8 1.6h5.6a1.8 1.8 0 0 0 1.8-1.6l.9-12.5"/><path d="M10.5 10v6.5M13.5 10v6.5"/></g></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 20v-6M12 20V6M17 20v-9"/></g></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.5 8.5 4.3-8.5 4.3-8.5-4.3L12 3.5Z"/><path d="m3.5 12.2 8.5 4.3 8.5-4.3M3.5 16.4l8.5 4.3 8.5-4.3"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></g></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12.5 6l6 6-6 6"/></g></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></g></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M6 12.5l6 6 6-6"/></g></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="9" cy="7" rx="5.5" ry="2.6"/><path d="M3.5 7v4.2c0 1.4 2.5 2.6 5.5 2.6s5.5-1.2 5.5-2.6V7"/><path d="M14.5 11.2c2.8.2 5 1.3 5 2.5v3.8c0 1.4-2.5 2.6-5.5 2.6S8.5 18.9 8.5 17.5v-3.4"/></g></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.8 2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8L12 3.8Z"/></g></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.7 3.9 1.9 5.1 5.8 5.8-3.9.7-5.1 1.9-5.8 5.8-.7-3.9-1.9-5.1-5.8-5.8 3.9-.7 5.1-1.9 5.8-5.8Z"/><path d="M18.5 15.5c.3 1.8.9 2.4 2.7 2.7-1.8.3-2.4.9-2.7 2.7-.3-1.8-.9-2.4-2.7-2.7 1.8-.3 2.4-.9 2.7-2.7Z"/></g></symbol>
+  <symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5h18"/><path d="M5.5 8.5 7 20M18.5 8.5 17 20M12 8.5V14"/><path d="M4.5 5.5h15a1.5 1.5 0 0 1 1.5 1.5v1.5H3V7a1.5 1.5 0 0 1 1.5-1.5Z"/></g></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4.5h5M20 9V4.5h-5M4 15v4.5h5M20 15v4.5h-5"/></g></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></g></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2.2c-5.44 0-9.86 4.42-9.86 9.86 0 1.74.46 3.44 1.32 4.94L2.1 22l5.14-1.35a9.82 9.82 0 0 0 4.8 1.23h.01c5.43 0 9.85-4.42 9.85-9.86 0-2.63-1.02-5.11-2.88-6.97a9.8 9.8 0 0 0-6.98-2.85Zm0 18.03h-.01a8.2 8.2 0 0 1-4.17-1.14l-.3-.18-3.1.81.83-3.02-.2-.31a8.16 8.16 0 0 1-1.25-4.36c0-4.52 3.68-8.19 8.2-8.19a8.14 8.14 0 0 1 5.79 2.4 8.13 8.13 0 0 1 2.4 5.8c0 4.52-3.68 8.19-8.19 8.19Zm4.49-6.13c-.24-.12-1.45-.72-1.68-.8-.23-.08-.39-.12-.56.12-.16.25-.63.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.46-1.37-1.7-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.41-.56-.42h-.47c-.16 0-.43.06-.65.3-.22.25-.86.84-.86 2.05s.88 2.38 1 2.54c.13.17 1.73 2.64 4.2 3.7.58.26 1.04.41 1.4.52.59.19 1.13.16 1.55.1.47-.07 1.45-.59 1.66-1.17.2-.57.2-1.06.14-1.17-.06-.1-.22-.16-.46-.28Z"/></symbol>
+</svg>
+
+<!-- ══════════ Top chrome ══════════ -->
+<header class="chrome chrome--top">
+  <button type="button" class="brand" data-goto="1" aria-label="MenuQR">
+    <span class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><rect width="24" height="24" rx="6.5" fill="currentColor"/><rect x="5" y="5" width="6" height="6" rx="1.4" fill="none" stroke="#fff" stroke-width="1.8"/><rect x="13" y="5" width="6" height="6" rx="1.4" fill="none" stroke="#fff" stroke-width="1.8"/><rect x="5" y="13" width="6" height="6" rx="1.4" fill="none" stroke="#fff" stroke-width="1.8"/><rect x="13.5" y="13.5" width="5" height="5" rx="1.2" fill="#F0A72A"/></svg>
+    </span>
+    <span class="brand__name">MenuQR</span>
+  </button>
+
+  <div class="topright">
+    <div class="langswitch" role="group" aria-label="Language">
+      <button type="button" class="langswitch__btn" data-lang="ar" lang="ar">العربية</button>
+      <span class="langswitch__sep" aria-hidden="true">|</span>
+      <button type="button" class="langswitch__btn" data-lang="fr" lang="fr">Français</button>
+    </div>
+    <button type="button" class="iconbtn" data-action="overview" aria-label="Plan" title="O">
+      <svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>
+    </button>
+    <button type="button" class="iconbtn" data-action="fullscreen" aria-label="Plein écran" title="F">
+      <svg class="icon" aria-hidden="true"><use href="#i-expand"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+
+<!-- ══════════ Deck ══════════ -->
+<main class="deck" id="deck">
+
+  <!-- ─────────── 01 · HERO ─────────── -->
+  <section class="slide slide--dark" data-slide data-title="s1.nav">
+    <div class="slide__inner hero">
+      <div class="hero__copy">
+        <p class="eyebrow" data-anim><span class="eyebrow__dot" aria-hidden="true"></span><span data-i18n="s1.eyebrow"></span></p>
+        <h1 class="display" data-anim data-i18n="s1.title"></h1>
+        <p class="lede" data-anim data-i18n="s1.lede"></p>
+        <div class="hero__actions" data-anim>
+          <button type="button" class="btn btn--primary btn--lg" data-goto="4">
+            <span data-i18n="s1.cta"></span>
+            <svg class="icon rtl-flip" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </button>
+          <a class="btn btn--ghost btn--lg" data-wa href="#">
+            <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+            <span data-i18n="common.whatsapp"></span>
+          </a>
+        </div>
+        <p class="hero__note" data-anim data-i18n="s1.note"></p>
+      </div>
+
+      <div class="hero__scene" data-anim>
+        <div class="scene">
+          <span class="scene__bokeh b1" aria-hidden="true"></span>
+          <span class="scene__bokeh b2" aria-hidden="true"></span>
+          <span class="scene__bokeh b3" aria-hidden="true"></span>
+          <div class="scene__table" aria-hidden="true"></div>
+
+          <div class="tent" aria-hidden="true">
+            <div class="tent__face">
+              <span class="tent__eyebrow" data-i18n="scene.tentEyebrow"></span>
+              <span class="tent__qr"><svg viewBox="-1 -1 27 27"><use href="#qr"/></svg><span class="tent__beam"></span></span>
+              <span class="tent__venue">Café El Medina</span>
+            </div>
+            <div class="tent__shadow"></div>
+          </div>
+
+          <div class="device device--hero" aria-hidden="true">
+            <div class="device__body">
+              <span class="device__island"></span>
+              <div class="device__screen" data-menu-mount="hero"></div>
+            </div>
+          </div>
+
+          <span class="scene__ping p1" aria-hidden="true"></span>
+          <span class="scene__ping p2" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 02 · PROBLEM ─────────── -->
+  <section class="slide slide--light" data-slide data-title="s2.nav">
+    <div class="slide__inner">
+      <header class="shead" data-anim>
+        <p class="eyebrow eyebrow--muted"><span data-i18n="s2.eyebrow"></span></p>
+        <h2 class="h1" data-i18n="s2.title"></h2>
+        <p class="sub" data-i18n="s2.sub"></p>
+      </header>
+      <div class="grid grid--3 problems">
+        <article class="card card--problem" data-anim>
+          <span class="card__ico" aria-hidden="true"><svg class="icon"><use href="#i-list"/></svg></span>
+          <h3 data-i18n="s2.p1t"></h3><p data-i18n="s2.p1d"></p>
+        </article>
+        <article class="card card--problem" data-anim>
+          <span class="card__ico" aria-hidden="true"><svg class="icon"><use href="#i-printer"/></svg></span>
+          <h3 data-i18n="s2.p2t"></h3><p data-i18n="s2.p2d"></p>
+        </article>
+        <article class="card card--problem" data-anim>
+          <span class="card__ico" aria-hidden="true"><svg class="icon"><use href="#i-clock"/></svg></span>
+          <h3 data-i18n="s2.p3t"></h3><p data-i18n="s2.p3d"></p>
+        </article>
+        <article class="card card--problem" data-anim>
+          <span class="card__ico" aria-hidden="true"><svg class="icon"><use href="#i-image"/></svg></span>
+          <h3 data-i18n="s2.p4t"></h3><p data-i18n="s2.p4d"></p>
+        </article>
+        <article class="card card--problem" data-anim>
+          <span class="card__ico" aria-hidden="true"><svg class="icon"><use href="#i-coins"/></svg></span>
+          <h3 data-i18n="s2.p5t"></h3><p data-i18n="s2.p5d"></p>
+        </article>
+        <article class="card card--problem" data-anim>
+          <span class="card__ico" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span>
+          <h3 data-i18n="s2.p6t"></h3><p data-i18n="s2.p6d"></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 03 · SOLUTION ─────────── -->
+  <section class="slide slide--dark" data-slide data-title="s3.nav">
+    <div class="slide__inner">
+      <header class="shead shead--center" data-anim>
+        <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span><span data-i18n="s3.eyebrow"></span></p>
+        <h2 class="display display--sm" data-i18n="s3.title"></h2>
+        <p class="sub" data-i18n="s3.sub"></p>
+      </header>
+
+      <div class="triflow" data-anim>
+        <figure class="triflow__node">
+          <span class="triflow__art triflow__art--qr">
+            <svg class="qrart" viewBox="-1 -1 27 27" aria-hidden="true"><use href="#qr"/></svg>
+            <span class="qrart__scan" aria-hidden="true"></span>
+          </span>
+          <figcaption><strong data-i18n="s3.n1t"></strong><span data-i18n="s3.n1d"></span></figcaption>
+        </figure>
+        <span class="triflow__link" aria-hidden="true"><i></i><svg class="icon rtl-flip"><use href="#i-chev"/></svg></span>
+        <figure class="triflow__node">
+          <span class="triflow__art triflow__art--phone">
+            <span class="miniphone"><span class="miniphone__scan"></span></span>
+          </span>
+          <figcaption><strong data-i18n="s3.n2t"></strong><span data-i18n="s3.n2d"></span></figcaption>
+        </figure>
+        <span class="triflow__link" aria-hidden="true"><i></i><svg class="icon rtl-flip"><use href="#i-chev"/></svg></span>
+        <figure class="triflow__node">
+          <span class="triflow__art triflow__art--menu">
+            <span class="minimenu"><b></b><i></i><i></i><b></b><i></i></span>
+          </span>
+          <figcaption><strong data-i18n="s3.n3t"></strong><span data-i18n="s3.n3d"></span></figcaption>
+        </figure>
+      </div>
+
+      <div class="pillars" data-anim>
+        <div class="pillar"><svg class="icon" aria-hidden="true"><use href="#i-qr"/></svg><div><strong data-i18n="s3.b1t"></strong><p data-i18n="s3.b1d"></p></div></div>
+        <div class="pillar"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><div><strong data-i18n="s3.b2t"></strong><p data-i18n="s3.b2d"></p></div></div>
+        <div class="pillar"><svg class="icon" aria-hidden="true"><use href="#i-sliders"/></svg><div><strong data-i18n="s3.b3t"></strong><p data-i18n="s3.b3d"></p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 04 · HOW IT WORKS ─────────── -->
+  <section class="slide slide--light" data-slide data-title="s4.nav">
+    <div class="slide__inner">
+      <header class="shead shead--center" data-anim>
+        <p class="eyebrow eyebrow--muted"><span data-i18n="s4.eyebrow"></span></p>
+        <h2 class="h1" data-i18n="s4.title"></h2>
+      </header>
+
+      <ol class="flow" data-anim>
+        <li class="flow__step">
+          <span class="flow__num">1</span>
+          <span class="flow__ico" aria-hidden="true"><svg class="icon"><use href="#i-table"/></svg></span>
+          <strong data-i18n="s4.f1t"></strong>
+          <span class="flow__d" data-i18n="s4.f1d"></span>
+        </li>
+        <li class="flow__arrow" aria-hidden="true"><span class="flow__line"></span><svg class="icon rtl-flip"><use href="#i-chev"/></svg></li>
+        <li class="flow__step">
+          <span class="flow__num">2</span>
+          <span class="flow__ico" aria-hidden="true"><svg class="icon"><use href="#i-scan"/></svg></span>
+          <strong data-i18n="s4.f2t"></strong>
+          <span class="flow__d" data-i18n="s4.f2d"></span>
+        </li>
+        <li class="flow__arrow" aria-hidden="true"><span class="flow__line"></span><svg class="icon rtl-flip"><use href="#i-chev"/></svg></li>
+        <li class="flow__step">
+          <span class="flow__num">3</span>
+          <span class="flow__ico" aria-hidden="true"><svg class="icon"><use href="#i-list"/></svg></span>
+          <strong data-i18n="s4.f3t"></strong>
+          <span class="flow__d" data-i18n="s4.f3d"></span>
+        </li>
+        <li class="flow__arrow" aria-hidden="true"><span class="flow__line"></span><svg class="icon rtl-flip"><use href="#i-chev"/></svg></li>
+        <li class="flow__step">
+          <span class="flow__num">4</span>
+          <span class="flow__ico" aria-hidden="true"><svg class="icon"><use href="#i-cart"/></svg></span>
+          <strong data-i18n="s4.f4t"></strong>
+          <span class="flow__d" data-i18n="s4.f4d"></span>
+        </li>
+        <li class="flow__arrow" aria-hidden="true"><span class="flow__line"></span><svg class="icon rtl-flip"><use href="#i-chev"/></svg></li>
+        <li class="flow__step flow__step--opt">
+          <span class="flow__num">5</span>
+          <span class="flow__ico" aria-hidden="true"><svg class="icon rtl-flip"><use href="#i-arrow"/></svg></span>
+          <strong data-i18n="s4.f5t"></strong>
+          <span class="flow__d" data-i18n="s4.f5d"></span>
+        </li>
+        <li class="flow__arrow" aria-hidden="true"><span class="flow__line"></span><svg class="icon rtl-flip"><use href="#i-chev"/></svg></li>
+        <li class="flow__step flow__step--opt flow__step--end">
+          <span class="flow__num">6</span>
+          <span class="flow__ico" aria-hidden="true"><svg class="icon"><use href="#i-bell"/></svg></span>
+          <strong data-i18n="s4.f6t"></strong>
+          <span class="flow__d" data-i18n="s4.f6d"></span>
+        </li>
+      </ol>
+
+      <p class="flow__foot" data-anim><svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg><span data-i18n="s4.foot"></span></p>
+    </div>
+  </section>
+
+  <!-- ─────────── 05 · CUSTOMER EXPERIENCE ─────────── -->
+  <section class="slide slide--light slide--split" data-slide data-title="s5.nav">
+    <div class="slide__inner showcase">
+      <div class="showcase__copy">
+        <header class="shead" data-anim>
+          <p class="eyebrow eyebrow--muted"><span data-i18n="s5.eyebrow"></span></p>
+          <h2 class="h1" data-i18n="s5.title"></h2>
+          <p class="sub" data-i18n="s5.sub"></p>
+        </header>
+        <ul class="ticks" data-anim>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s5.t1"></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s5.t2"></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s5.t3"></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s5.t4"></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s5.t5"></span></li>
+        </ul>
+      </div>
+
+      <div class="showcase__stage" data-anim>
+        <span class="stageglow" aria-hidden="true"></span>
+        <div class="device device--lg">
+          <div class="device__body">
+            <span class="device__island"></span>
+            <div class="device__screen" data-menu-mount="full"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 06 · DASHBOARD ─────────── -->
+  <section class="slide slide--dark" data-slide data-title="s6.nav">
+    <div class="slide__inner">
+      <header class="shead shead--center" data-anim>
+        <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span><span data-i18n="s6.eyebrow"></span></p>
+        <h2 class="h1" data-i18n="s6.title"></h2>
+        <p class="sub" data-i18n="s6.sub"></p>
+      </header>
+
+      <div class="dashwrap" data-anim>
+        <div class="dash" role="img" data-i18n-label="s6.alt">
+          <aside class="dash__side">
+            <span class="dash__brand"><span class="dash__logo" aria-hidden="true"></span><b>MenuQR</b></span>
+            <nav class="dash__nav">
+              <span class="dash__link"><svg class="icon"><use href="#i-chart"/></svg><em data-i18n="s6.nav1"></em></span>
+              <span class="dash__link is-on"><svg class="icon"><use href="#i-list"/></svg><em data-i18n="s6.nav2"></em></span>
+              <span class="dash__link"><svg class="icon"><use href="#i-layers"/></svg><em data-i18n="s6.nav3"></em></span>
+              <span class="dash__link"><svg class="icon"><use href="#i-qr"/></svg><em data-i18n="s6.nav4"></em></span>
+              <span class="dash__link"><svg class="icon"><use href="#i-bell"/></svg><em data-i18n="s6.nav5"></em></span>
+              <span class="dash__link"><svg class="icon"><use href="#i-sliders"/></svg><em data-i18n="s6.nav6"></em></span>
+            </nav>
+            <span class="dash__plan"><b data-i18n="s6.planT"></b><em data-i18n="s6.planD"></em></span>
+          </aside>
+
+          <div class="dash__main">
+            <header class="dash__top">
+              <div>
+                <b data-i18n="s6.h"></b>
+                <em data-i18n="s6.hsub"></em>
+              </div>
+              <span class="dash__live"><i></i><span data-i18n="s6.live"></span></span>
+              <span class="dash__btn"><svg class="icon"><use href="#i-plus"/></svg><span data-i18n="s6.add"></span></span>
+            </header>
+
+            <div class="dash__tabs">
+              <span class="is-on" data-i18n="menu.cat.breakfast"></span>
+              <span data-i18n="menu.cat.pizza"></span>
+              <span data-i18n="menu.cat.sandwich"></span>
+              <span data-i18n="menu.cat.drinks"></span>
+              <span data-i18n="menu.cat.desserts"></span>
+            </div>
+
+            <div class="dash__table">
+              <div class="dash__row dash__row--head">
+                <span data-i18n="s6.colProduct"></span>
+                <span data-i18n="s6.colPhoto"></span>
+                <span data-i18n="s6.colPrice"></span>
+                <span data-i18n="s6.colState"></span>
+                <span aria-hidden="true"></span>
+              </div>
+              <div class="dash__row">
+                <span class="dash__prod"><i class="ph ph--pizza"></i><b data-i18n="dish.margherita"></b></span>
+                <span class="dash__ok"><svg class="icon"><use href="#i-image"/></svg></span>
+                <span class="dash__price"><bdi>12,500</bdi></span>
+                <span><i class="tog is-on"></i></span>
+                <span class="dash__acts"><svg class="icon"><use href="#i-pencil"/></svg><svg class="icon"><use href="#i-eye-off"/></svg><svg class="icon"><use href="#i-trash"/></svg></span>
+              </div>
+              <div class="dash__row is-editing">
+                <span class="dash__prod"><i class="ph ph--escalope"></i><b data-i18n="dish.escalope"></b></span>
+                <span class="dash__ok"><svg class="icon"><use href="#i-image"/></svg></span>
+                <span class="dash__price dash__price--edit"><bdi class="dash__val">7,500</bdi><i class="caret"></i></span>
+                <span><i class="tog is-on"></i></span>
+                <span class="dash__acts"><svg class="icon"><use href="#i-pencil"/></svg><svg class="icon"><use href="#i-eye-off"/></svg><svg class="icon"><use href="#i-trash"/></svg></span>
+              </div>
+              <div class="dash__row">
+                <span class="dash__prod"><i class="ph ph--cappuccino"></i><b data-i18n="dish.cappuccino"></b></span>
+                <span class="dash__ok"><svg class="icon"><use href="#i-image"/></svg></span>
+                <span class="dash__price"><bdi>3,500</bdi></span>
+                <span><i class="tog is-on"></i></span>
+                <span class="dash__acts"><svg class="icon"><use href="#i-pencil"/></svg><svg class="icon"><use href="#i-eye-off"/></svg><svg class="icon"><use href="#i-trash"/></svg></span>
+              </div>
+              <div class="dash__row is-off">
+                <span class="dash__prod"><i class="ph ph--lablabi"></i><b data-i18n="dish.lablabi"></b></span>
+                <span class="dash__ok"><svg class="icon"><use href="#i-image"/></svg></span>
+                <span class="dash__price"><bdi>6,000</bdi></span>
+                <span><i class="tog"></i><em class="dash__hint" data-i18n="s6.hidden"></em></span>
+                <span class="dash__acts"><svg class="icon"><use href="#i-pencil"/></svg><svg class="icon"><use href="#i-eye-off"/></svg><svg class="icon"><use href="#i-trash"/></svg></span>
+              </div>
+            </div>
+
+            <span class="dash__toast"><svg class="icon"><use href="#i-check"/></svg><span data-i18n="s6.toast"></span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chips" data-anim>
+        <span class="chip2" data-i18n="s6.k1"></span>
+        <span class="chip2" data-i18n="s6.k2"></span>
+        <span class="chip2" data-i18n="s6.k3"></span>
+        <span class="chip2" data-i18n="s6.k4"></span>
+        <span class="chip2" data-i18n="s6.k5"></span>
+        <span class="chip2" data-i18n="s6.k6"></span>
+        <span class="chip2" data-i18n="s6.k7"></span>
+        <span class="chip2" data-i18n="s6.k8"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 07 · BENEFITS ─────────── -->
+  <section class="slide slide--light" data-slide data-title="s7.nav">
+    <div class="slide__inner">
+      <header class="shead shead--center" data-anim>
+        <p class="eyebrow eyebrow--muted"><span data-i18n="s7.eyebrow"></span></p>
+        <h2 class="h1" data-i18n="s7.title"></h2>
+      </header>
+      <div class="grid grid--3 benefits">
+        <article class="card card--benefit" data-anim>
+          <span class="card__ico card__ico--accent" aria-hidden="true"><svg class="icon"><use href="#i-coins"/></svg></span>
+          <h3 data-i18n="s7.b1t"></h3><p data-i18n="s7.b1d"></p>
+        </article>
+        <article class="card card--benefit" data-anim>
+          <span class="card__ico card__ico--accent" aria-hidden="true"><svg class="icon"><use href="#i-refresh"/></svg></span>
+          <h3 data-i18n="s7.b2t"></h3><p data-i18n="s7.b2d"></p>
+        </article>
+        <article class="card card--benefit" data-anim>
+          <span class="card__ico card__ico--accent" aria-hidden="true"><svg class="icon"><use href="#i-star"/></svg></span>
+          <h3 data-i18n="s7.b3t"></h3><p data-i18n="s7.b3d"></p>
+        </article>
+        <article class="card card--benefit" data-anim>
+          <span class="card__ico card__ico--accent" aria-hidden="true"><svg class="icon"><use href="#i-image"/></svg></span>
+          <h3 data-i18n="s7.b4t"></h3><p data-i18n="s7.b4d"></p>
+        </article>
+        <article class="card card--benefit" data-anim>
+          <span class="card__ico card__ico--accent" aria-hidden="true"><svg class="icon"><use href="#i-clock"/></svg></span>
+          <h3 data-i18n="s7.b5t"></h3><p data-i18n="s7.b5d"></p>
+        </article>
+        <article class="card card--benefit" data-anim>
+          <span class="card__ico card__ico--accent" aria-hidden="true"><svg class="icon"><use href="#i-sparkle"/></svg></span>
+          <h3 data-i18n="s7.b6t"></h3><p data-i18n="s7.b6d"></p>
+        </article>
+      </div>
+      <p class="shead__foot" data-anim data-i18n="s7.foot"></p>
+    </div>
+  </section>
+
+  <!-- ─────────── 08 · COMPARISON ─────────── -->
+  <section class="slide slide--light" data-slide data-title="s8.nav">
+    <div class="slide__inner">
+      <header class="shead shead--center" data-anim>
+        <p class="eyebrow eyebrow--muted"><span data-i18n="s8.eyebrow"></span></p>
+        <h2 class="h1" data-i18n="s8.title"></h2>
+      </header>
+
+      <div class="compare" data-anim>
+        <div class="compare__head">
+          <span class="compare__label"></span>
+          <span class="compare__col compare__col--old"><svg class="icon" aria-hidden="true"><use href="#i-printer"/></svg><b data-i18n="s8.colOld"></b></span>
+          <span class="compare__col compare__col--new"><svg class="icon" aria-hidden="true"><use href="#i-qr"/></svg><b data-i18n="s8.colNew"></b></span>
+        </div>
+        <div class="compare__row">
+          <span class="compare__label" data-i18n="s8.r1"></span>
+          <span class="compare__cell compare__cell--old"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span data-i18n="s8.r1a"></span></span>
+          <span class="compare__cell compare__cell--new"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s8.r1b"></span></span>
+        </div>
+        <div class="compare__row">
+          <span class="compare__label" data-i18n="s8.r2"></span>
+          <span class="compare__cell compare__cell--old"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span data-i18n="s8.r2a"></span></span>
+          <span class="compare__cell compare__cell--new"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s8.r2b"></span></span>
+        </div>
+        <div class="compare__row">
+          <span class="compare__label" data-i18n="s8.r3"></span>
+          <span class="compare__cell compare__cell--old"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span data-i18n="s8.r3a"></span></span>
+          <span class="compare__cell compare__cell--new"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s8.r3b"></span></span>
+        </div>
+        <div class="compare__row">
+          <span class="compare__label" data-i18n="s8.r4"></span>
+          <span class="compare__cell compare__cell--old"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span data-i18n="s8.r4a"></span></span>
+          <span class="compare__cell compare__cell--new"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s8.r4b"></span></span>
+        </div>
+        <div class="compare__row">
+          <span class="compare__label" data-i18n="s8.r5"></span>
+          <span class="compare__cell compare__cell--old"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span data-i18n="s8.r5a"></span></span>
+          <span class="compare__cell compare__cell--new"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s8.r5b"></span></span>
+        </div>
+        <div class="compare__row">
+          <span class="compare__label" data-i18n="s8.r6"></span>
+          <span class="compare__cell compare__cell--old"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg><span data-i18n="s8.r6a"></span></span>
+          <span class="compare__cell compare__cell--new"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s8.r6b"></span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 09 · USE CASE ─────────── -->
+  <section class="slide slide--light" data-slide data-title="s9.nav">
+    <div class="slide__inner">
+      <header class="shead shead--center" data-anim>
+        <p class="eyebrow eyebrow--muted"><span data-i18n="s9.eyebrow"></span></p>
+        <h2 class="h1" data-i18n="s9.title"></h2>
+        <p class="sub" data-i18n="s9.sub"></p>
+      </header>
+
+      <div class="lanes" data-anim>
+        <section class="lane lane--old">
+          <header class="lane__head">
+            <span class="lane__ico" aria-hidden="true"><svg class="icon"><use href="#i-printer"/></svg></span>
+            <b data-i18n="s9.oldT"></b>
+          </header>
+          <ol class="lane__steps">
+            <li style="--s:0"><i>1</i><span data-i18n="s9.o1"></span></li>
+            <li style="--s:1"><i>2</i><span data-i18n="s9.o2"></span></li>
+            <li style="--s:2"><i>3</i><span data-i18n="s9.o3"></span></li>
+            <li style="--s:3"><i>4</i><span data-i18n="s9.o4"></span></li>
+          </ol>
+          <footer class="lane__foot lane__foot--old"><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg><span data-i18n="s9.oldFoot"></span></footer>
+        </section>
+
+        <section class="lane lane--new">
+          <header class="lane__head">
+            <span class="lane__ico" aria-hidden="true"><svg class="icon"><use href="#i-sliders"/></svg></span>
+            <b data-i18n="s9.newT"></b>
+          </header>
+          <ol class="lane__steps">
+            <li style="--s:0"><i>1</i><span data-i18n="s9.n1"></span></li>
+            <li style="--s:1"><i>2</i><span data-i18n="s9.n2"></span></li>
+            <li style="--s:2"><i>3</i><span data-i18n="s9.n3"></span></li>
+          </ol>
+          <footer class="lane__foot lane__foot--new"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s9.newFoot"></span></footer>
+        </section>
+      </div>
+
+      <p class="lanes__note" data-anim data-i18n="s9.note"></p>
+    </div>
+  </section>
+
+  <!-- ─────────── 10 · BRAND ─────────── -->
+  <section class="slide slide--dark slide--split" data-slide data-title="s10.nav">
+    <div class="slide__inner showcase showcase--rev">
+      <div class="showcase__copy">
+        <header class="shead" data-anim>
+          <p class="eyebrow"><span class="eyebrow__dot" aria-hidden="true"></span><span data-i18n="s10.eyebrow"></span></p>
+          <h2 class="h1" data-i18n="s10.title"></h2>
+          <p class="lede lede--sm" data-i18n="s10.sub"></p>
+        </header>
+        <ul class="ticks ticks--dark" data-anim>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg><div><strong data-i18n="s10.p1t"></strong><span data-i18n="s10.p1d"></span></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-image"/></svg><div><strong data-i18n="s10.p2t"></strong><span data-i18n="s10.p2d"></span></div></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-globe"/></svg><div><strong data-i18n="s10.p3t"></strong><span data-i18n="s10.p3d"></span></div></li>
+        </ul>
+      </div>
+
+      <div class="showcase__stage" data-anim>
+        <div class="scene scene--night">
+          <span class="scene__bokeh b1" aria-hidden="true"></span>
+          <span class="scene__bokeh b2" aria-hidden="true"></span>
+          <span class="scene__bokeh b3" aria-hidden="true"></span>
+          <span class="scene__candle" aria-hidden="true"></span>
+          <div class="scene__table scene__table--night" aria-hidden="true"></div>
+          <div class="tent tent--sm" aria-hidden="true">
+            <div class="tent__face">
+              <span class="tent__eyebrow" data-i18n="scene.tentEyebrow"></span>
+              <span class="tent__qr"><svg viewBox="-1 -1 27 27"><use href="#qr"/></svg></span>
+              <span class="tent__venue">Café El Medina</span>
+            </div>
+            <div class="tent__shadow"></div>
+          </div>
+          <div class="device device--night" aria-hidden="true">
+            <div class="device__body">
+              <span class="device__island"></span>
+              <div class="device__screen" data-menu-mount="night"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── 11 · CALL TO ACTION ─────────── -->
+  <section class="slide slide--dark slide--cta" data-slide data-title="s11.nav">
+    <div class="slide__inner cta">
+      <div class="cta__copy">
+        <p class="eyebrow" data-anim><span class="eyebrow__dot" aria-hidden="true"></span><span data-i18n="s11.eyebrow"></span></p>
+        <h2 class="display" data-anim data-i18n="s11.title"></h2>
+        <p class="lede" data-anim data-i18n="s11.sub"></p>
+
+        <div class="cta__actions" data-anim>
+          <a class="btn btn--wa btn--xl" data-wa href="#">
+            <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+            <span data-i18n="s11.cta"></span>
+          </a>
+          <a class="cta__phone" data-wa href="#" dir="ltr">+216 94 409 166</a>
+        </div>
+
+        <ul class="cta__chips" data-anim>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s11.k1"></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s11.k2"></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-i18n="s11.k3"></span></li>
+        </ul>
+      </div>
+
+      <figure class="cta__qr" data-anim>
+        <span class="qrcard">
+          <svg class="qrcard__code" viewBox="-1 -1 27 27" aria-hidden="true"><use href="#qr"/></svg>
+          <span class="qrcard__beam" aria-hidden="true"></span>
+        </span>
+        <figcaption data-i18n="s11.qrHint"></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ─────────── 12 · CLOSING ─────────── -->
+  <section class="slide slide--dark slide--end" data-slide data-title="s12.nav">
+    <div class="slide__inner closing">
+      <div class="closing__mark" data-anim>
+        <!-- Replace this mark with the client logo: see README (BRAND.logo). -->
+        <span class="closing__logo" data-logo-slot>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6.5" fill="currentColor"/><rect x="5" y="5" width="6" height="6" rx="1.4" fill="none" stroke="#0B100F" stroke-width="1.8"/><rect x="13" y="5" width="6" height="6" rx="1.4" fill="none" stroke="#0B100F" stroke-width="1.8"/><rect x="5" y="13" width="6" height="6" rx="1.4" fill="none" stroke="#0B100F" stroke-width="1.8"/><rect x="13.5" y="13.5" width="5" height="5" rx="1.2" fill="#F0A72A"/></svg>
+        </span>
+        <span class="closing__name">MenuQR</span>
+      </div>
+
+      <p class="closing__tag" data-anim data-i18n="s12.tag"></p>
+
+      <div class="closing__contact" data-anim>
+        <a class="closing__wa" data-wa href="#">
+          <svg class="icon" aria-hidden="true"><use href="#i-wa"/></svg>
+          <span>
+            <em data-i18n="common.whatsapp"></em>
+            <b dir="ltr">+216 94 409 166</b>
+          </span>
+        </a>
+        <span class="closing__qr"><svg viewBox="-1 -1 27 27" aria-hidden="true"><use href="#qr"/></svg></span>
+      </div>
+
+      <!-- Social / web slots: filled from BRAND in content.js. Nothing is shown
+           while they are empty — no invented links. -->
+      <ul class="closing__links" data-links-slot data-anim></ul>
+
+      <p class="closing__foot" data-anim data-i18n="s12.foot"></p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ══════════ Bottom chrome ══════════ -->
+<footer class="chrome chrome--bottom">
+  <button type="button" class="navbtn" data-nav="prev" aria-label="Prev">
+    <svg class="icon flip" aria-hidden="true"><use href="#i-chev"/></svg>
+  </button>
+
+  <nav class="rail" data-rail aria-label="Slides"></nav>
+
+  <button type="button" class="counter" data-action="overview">
+    <b data-current>01</b><i>/</i><span data-total>12</span>
+  </button>
+
+  <button type="button" class="navbtn navbtn--next" data-nav="next" aria-label="Next">
+    <svg class="icon rtl-flip" aria-hidden="true"><use href="#i-chev"/></svg>
+  </button>
+</footer>
+
+<!-- ══════════ Overview (press O) ══════════ -->
+<div class="overview" data-overview hidden>
+  <div class="overview__panel">
+    <header>
+      <b data-i18n="ui.overview"></b>
+      <button type="button" class="iconbtn" data-action="close-overview" aria-label="Close"><svg class="icon"><use href="#i-x"/></svg></button>
+    </header>
+    <ol class="overview__grid" data-overview-grid></ol>
+    <p class="overview__keys">
+      <kbd>←</kbd><kbd>→</kbd><span data-i18n="ui.keysNav"></span>
+      <kbd class="kbd--wide">Space</kbd><span data-i18n="ui.keysNext"></span>
+      <kbd>F</kbd><span data-i18n="ui.keysFull"></span>
+      <kbd>Esc</kbd><span data-i18n="ui.keysEsc"></span>
+    </p>
+  </div>
+</div>
+
+<script src="content.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
