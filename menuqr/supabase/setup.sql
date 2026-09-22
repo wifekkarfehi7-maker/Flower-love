@@ -2954,7 +2954,7 @@ delete from public.subscription_plans where code = 'business';
 -- What it decides, and why each one matters:
 --   * the venue must be published — a review cannot be filed against a venue
 --     that is not open to the public;
---   * the rating is clamped to 1..5 rather than trusted;
+--   * a rating outside 1..5 is refused, not clamped into a score nobody gave;
 --   * a table id from another venue is dropped, not honoured;
 --   * one review per session per venue per day, so a single phone cannot
 --     manufacture a reputation — good or bad;
@@ -3140,6 +3140,70 @@ grant execute on function public.restaurant_review_summary(uuid) to authenticate
 
 
 -- ===========================================================================
+-- migrations/0012_function_grants.sql
+-- ===========================================================================
+
+-- ============================================================================
+-- MenuQR — 0012_function_grants
+--
+-- 0007 took the blanket table grants away from `anon`; this does the same for
+-- functions, and for the same reason.
+--
+-- On a hosted Supabase project every new function in `public` is granted
+-- EXECUTE directly to anon, authenticated and service_role by default
+-- privileges — not through PUBLIC. So the `revoke all ... from public` each
+-- migration wrote after a function never touched anon's own grant: every
+-- function meant for signed-in staff stayed callable from the open internet.
+--
+-- Most of them check the caller themselves and refuse. Two did not:
+-- seed_demo_restaurant and remove_demo_restaurant skipped their ownership
+-- check when there was no signed-in user at all — which is exactly what an
+-- anonymous caller is — and remove_demo_restaurant deletes any venue by slug.
+-- Their bodies are fixed in seed.sql; this closes the door for every function.
+--
+-- What a guest keeps is the list below: what the public menu calls, and what
+-- the policies a guest reads under call. Everything else of ours is staff-only.
+-- ============================================================================
+
+do $$
+declare
+  r record;
+  v_guest_functions constant text[] := array[
+    -- called by the public menu
+    'resolve_qr_token',
+    'track_menu_view',
+    'track_menu_interaction',
+    'place_order',
+    'order_status_for_session',
+    'leave_review',
+    'has_reviewed_today',
+    -- called by the policies a guest's reads are checked against
+    'is_restaurant_public',
+    'is_super_admin'
+  ];
+begin
+  for r in
+    select p.oid::regprocedure as fn
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public'
+      and p.prokind = 'f'
+      and not (p.proname = any (v_guest_functions))
+      -- An extension's functions are the extension's business.
+      and not exists (
+        select 1 from pg_depend d
+        where d.classid = 'pg_proc'::regclass and d.objid = p.oid and d.deptype = 'e'
+      )
+  loop
+    -- Staff keep exactly what they had: grant first, so revoking PUBLIC can
+    -- never take away a function a signed-in user reached only through it.
+    execute format('grant execute on function %s to authenticated, service_role', r.fn);
+    execute format('revoke execute on function %s from public, anon', r.fn);
+  end loop;
+end $$;
+
+
+-- ===========================================================================
 -- seed.sql
 -- ===========================================================================
 
@@ -3225,7 +3289,15 @@ declare
   v_desserts uuid;
   v_pro uuid;
 begin
-  if auth.uid() is not null and auth.uid() <> p_owner and not public.is_super_admin() then
+  -- No signed-in user is trusted only outside the API: someone at the SQL
+  -- editor, where `role` is unset. Through the API that same "no user" is an
+  -- anonymous visitor, and letting it through is how anyone on the internet
+  -- could plant venues on other people's accounts.
+  if auth.uid() is null then
+    if coalesce(current_setting('role', true), 'none') in ('anon', 'authenticated') then
+      raise exception 'Not allowed' using errcode = 'insufficient_privilege';
+    end if;
+  elsif auth.uid() <> p_owner and not public.is_super_admin() then
     raise exception 'You can only seed demo data onto your own account' using errcode = 'insufficient_privilege';
   end if;
 
@@ -3370,7 +3442,8 @@ begin
 end;
 $$;
 
-revoke all on function public.seed_demo_restaurant(uuid, text) from public;
+-- `from public` alone is not enough on Supabase, where anon holds its own grant.
+revoke all on function public.seed_demo_restaurant(uuid, text) from public, anon;
 grant execute on function public.seed_demo_restaurant(uuid, text) to authenticated;
 
 create or replace function public.remove_demo_restaurant(p_slug text default 'cafe-el-medina')
@@ -3389,7 +3462,13 @@ begin
     return;
   end if;
 
-  if auth.uid() is not null and auth.uid() <> v_owner and not public.is_super_admin() then
+  -- As above — and here it matters most: this deletes whichever venue owns
+  -- the slug, and slugs are printed in every menu link.
+  if auth.uid() is null then
+    if coalesce(current_setting('role', true), 'none') in ('anon', 'authenticated') then
+      raise exception 'Not allowed' using errcode = 'insufficient_privilege';
+    end if;
+  elsif auth.uid() <> v_owner and not public.is_super_admin() then
     raise exception 'Not allowed' using errcode = 'insufficient_privilege';
   end if;
 
@@ -3397,7 +3476,7 @@ begin
 end;
 $$;
 
-revoke all on function public.remove_demo_restaurant(text) from public;
+revoke all on function public.remove_demo_restaurant(text) from public, anon;
 grant execute on function public.remove_demo_restaurant(text) to authenticated;
 
 

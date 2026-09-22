@@ -8,7 +8,7 @@
 -- What it decides, and why each one matters:
 --   * the venue must be published — a review cannot be filed against a venue
 --     that is not open to the public;
---   * the rating is clamped to 1..5 rather than trusted;
+--   * a rating outside 1..5 is refused, not clamped into a score nobody gave;
 --   * a table id from another venue is dropped, not honoured;
 --   * one review per session per venue per day, so a single phone cannot
 --     manufacture a reputation — good or bad;

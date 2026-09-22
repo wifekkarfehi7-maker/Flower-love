@@ -1095,5 +1095,123 @@ begin
   );
 end $$;
 
+-- ---------------------------------------------------------------------------
+-- Function privileges (0012_function_grants)
+--
+-- The same sweep as the tables above, for functions. On Supabase a new
+-- function is granted EXECUTE to anon directly, so `revoke ... from public`
+-- alone left every staff function callable from the internet. A guest may run
+-- exactly what the public menu calls and what its policies call; nothing else.
+-- ---------------------------------------------------------------------------
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+
+do $$
+declare
+  r record;
+  v_guest_functions text[] := array[
+    'resolve_qr_token', 'track_menu_view', 'track_menu_interaction',
+    'place_order', 'order_status_for_session',
+    'leave_review', 'has_reviewed_today',
+    'is_restaurant_public', 'is_super_admin'
+  ];
+begin
+  for r in
+    select p.oid, p.proname
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    where n.nspname = 'public'
+      and p.prokind = 'f'
+      -- the suite's own helper, which every block calls whatever its role
+      and p.proname <> 'test_assert'
+      and not exists (
+        select 1 from pg_depend d
+        where d.classid = 'pg_proc'::regclass and d.objid = p.oid and d.deptype = 'e'
+      )
+  loop
+    perform public.test_assert(
+      has_function_privilege('anon', r.oid, 'EXECUTE') = (r.proname = any (v_guest_functions)),
+      format('anon execute on %s matches the guest set', r.proname)
+    );
+  end loop;
+end $$;
+
+-- The attack itself: a venue's slug is in every menu link, and
+-- remove_demo_restaurant deletes whichever venue owns the slug it is given.
+set role anon;
+
+do $$
+declare
+  v_blocked boolean;
+begin
+  begin
+    perform public.remove_demo_restaurant('cafe-a');
+    v_blocked := false;
+  exception when insufficient_privilege then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a guest cannot delete a venue by its slug');
+
+  begin
+    perform public.seed_demo_restaurant(gen_random_uuid(), 'planted-by-a-guest');
+    v_blocked := false;
+  exception when insufficient_privilege then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a guest cannot plant a venue on someone else''s account');
+end $$;
+
+reset role;
+
+do $$
+begin
+  perform public.test_assert(
+    (select count(*) from public.restaurants where slug = 'cafe-a') = 1,
+    'the venue a guest aimed at is still there'
+  );
+end $$;
+
+-- And the body holds on its own: were the grant ever to come back, an API
+-- caller with no signed-in user is still refused. Re-opened for this block
+-- only, then closed again.
+grant execute on function public.remove_demo_restaurant(text) to anon;
+grant execute on function public.seed_demo_restaurant(uuid, text) to anon;
+set role anon;
+
+do $$
+declare
+  v_blocked boolean;
+begin
+  begin
+    perform public.remove_demo_restaurant('cafe-a');
+    v_blocked := false;
+  exception when insufficient_privilege then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'remove_demo_restaurant itself refuses a caller with no signed-in user');
+
+  begin
+    perform public.seed_demo_restaurant(gen_random_uuid(), 'planted-by-a-guest');
+    v_blocked := false;
+  exception when insufficient_privilege then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'seed_demo_restaurant itself refuses a caller with no signed-in user');
+end $$;
+
+reset role;
+revoke execute on function public.remove_demo_restaurant(text) from anon;
+revoke execute on function public.seed_demo_restaurant(uuid, text) from anon;
+
+do $$
+begin
+  perform public.test_assert(
+    (select count(*) from public.restaurants where slug = 'cafe-a') = 1
+    and (select count(*) from public.restaurants where slug = 'planted-by-a-guest') = 0,
+    'nothing was deleted or planted'
+  );
+end $$;
+
 \pset tuples_only off
 \echo 'ALL AUTHORIZATION TESTS PASSED'

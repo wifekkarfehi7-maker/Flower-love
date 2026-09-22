@@ -76,4 +76,7 @@ grant select on storage.objects to anon;
 -- the permissive default that 0007_grants.sql exists to claw back, and the
 -- suite can only prove that if it starts from the same place production does.
 alter default privileges in schema public grant all on tables to anon, authenticated, service_role;
-alter default privileges in schema public grant execute on functions to anon, authenticated;
+-- Functions likewise: Supabase grants EXECUTE on each new one to these roles
+-- directly, so `revoke ... from public` never removes anon's own grant. That
+-- is the default 0012_function_grants.sql claws back.
+alter default privileges in schema public grant execute on functions to anon, authenticated, service_role;
