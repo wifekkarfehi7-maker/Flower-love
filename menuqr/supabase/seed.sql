@@ -80,7 +80,15 @@ declare
   v_desserts uuid;
   v_pro uuid;
 begin
-  if auth.uid() is not null and auth.uid() <> p_owner and not public.is_super_admin() then
+  -- No signed-in user is trusted only outside the API: someone at the SQL
+  -- editor, where `role` is unset. Through the API that same "no user" is an
+  -- anonymous visitor, and letting it through is how anyone on the internet
+  -- could plant venues on other people's accounts.
+  if auth.uid() is null then
+    if coalesce(current_setting('role', true), 'none') in ('anon', 'authenticated') then
+      raise exception 'Not allowed' using errcode = 'insufficient_privilege';
+    end if;
+  elsif auth.uid() <> p_owner and not public.is_super_admin() then
     raise exception 'You can only seed demo data onto your own account' using errcode = 'insufficient_privilege';
   end if;
 
@@ -225,7 +233,8 @@ begin
 end;
 $$;
 
-revoke all on function public.seed_demo_restaurant(uuid, text) from public;
+-- `from public` alone is not enough on Supabase, where anon holds its own grant.
+revoke all on function public.seed_demo_restaurant(uuid, text) from public, anon;
 grant execute on function public.seed_demo_restaurant(uuid, text) to authenticated;
 
 create or replace function public.remove_demo_restaurant(p_slug text default 'cafe-el-medina')
@@ -244,7 +253,13 @@ begin
     return;
   end if;
 
-  if auth.uid() is not null and auth.uid() <> v_owner and not public.is_super_admin() then
+  -- As above — and here it matters most: this deletes whichever venue owns
+  -- the slug, and slugs are printed in every menu link.
+  if auth.uid() is null then
+    if coalesce(current_setting('role', true), 'none') in ('anon', 'authenticated') then
+      raise exception 'Not allowed' using errcode = 'insufficient_privilege';
+    end if;
+  elsif auth.uid() <> v_owner and not public.is_super_admin() then
     raise exception 'Not allowed' using errcode = 'insufficient_privilege';
   end if;
 
@@ -252,5 +267,5 @@ begin
 end;
 $$;
 
-revoke all on function public.remove_demo_restaurant(text) from public;
+revoke all on function public.remove_demo_restaurant(text) from public, anon;
 grant execute on function public.remove_demo_restaurant(text) to authenticated;
