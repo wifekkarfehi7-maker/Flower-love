@@ -832,6 +832,196 @@ reset role;
 select set_config('request.jwt.claim.sub', '', false);
 
 -- ---------------------------------------------------------------------------
+-- Reviews (0011_reviews)
+--
+-- Same shape as ordering: `anon` writes nothing directly, leave_review is the
+-- only door, and what is checked here is that the door refuses what it should.
+-- The fixtures still live in the session settings the ordering block set.
+-- ---------------------------------------------------------------------------
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+set role anon;
+
+do $$
+declare
+  v_rest_a uuid := current_setting('menuqr.rest_a')::uuid;
+  v_rest_b uuid := current_setting('menuqr.rest_b')::uuid;
+  v_table_b uuid := current_setting('menuqr.table_b')::uuid;
+  v_review uuid;
+  v_blocked boolean;
+begin
+  -- Writing a row straight into the table is not a thing a guest can do,
+  -- whatever rating it would carry.
+  begin
+    insert into public.reviews (restaurant_id, rating) values (v_rest_a, 5);
+    v_blocked := false;
+  exception when insufficient_privilege then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a guest cannot insert a review directly');
+
+  -- Nor read what anybody else said.
+  begin
+    perform count(*) from public.reviews;
+    v_blocked := false;
+  exception when insufficient_privilege then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a guest cannot read the reviews table');
+
+  -- A rating outside 1..5 is refused rather than clamped into a lie.
+  begin
+    perform public.leave_review(v_rest_a, 'guest-session-0101', 7::smallint);
+    v_blocked := false;
+  exception when check_violation then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a rating outside 1..5 is refused');
+
+  -- A session identifier too short to be a real one is refused, so a caller
+  -- cannot collapse every guest into one bucket and then overwrite it.
+  begin
+    perform public.leave_review(v_rest_a, 'x', 5::smallint);
+    v_blocked := false;
+  exception when check_violation then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'a review needs a real session identifier');
+
+  -- An unpublished venue takes no reviews.
+  begin
+    perform public.leave_review(v_rest_b, 'guest-session-0102', 5::smallint);
+    v_blocked := false;
+  exception when no_data_found then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'an unpublished venue cannot be reviewed');
+
+  -- The good case, with a note and a table from the wrong venue attached.
+  v_review := public.leave_review(
+    v_rest_a, 'guest-session-0103', 4::smallint,
+    '   maklet behi barcha   ', v_table_b, null
+  );
+  perform public.test_assert(v_review is not null, 'a guest can leave a rating');
+  perform set_config('menuqr.review_1', v_review::text, false);
+
+  -- Twice in a day is once too many.
+  begin
+    perform public.leave_review(v_rest_a, 'guest-session-0103', 1::smallint);
+    v_blocked := false;
+  exception when unique_violation then
+    v_blocked := true;
+  end;
+  perform public.test_assert(v_blocked, 'one review per session per day');
+
+  perform public.test_assert(
+    public.has_reviewed_today(v_rest_a, 'guest-session-0103'),
+    'a guest who has reviewed is told so'
+  );
+  perform public.test_assert(
+    not public.has_reviewed_today(v_rest_a, 'guest-session-0104'),
+    'a guest who has not reviewed is not told otherwise'
+  );
+
+  -- A second guest, so the average below has something to average.
+  perform public.leave_review(v_rest_a, 'guest-session-0104', 2::smallint, null, null, null);
+end $$;
+
+reset role;
+select set_config('request.jwt.claim.sub', :'ownera_id', false);
+set role authenticated;
+
+do $$
+declare
+  v_review uuid := current_setting('menuqr.review_1')::uuid;
+  v_summary record;
+begin
+  perform public.test_assert(
+    (select r.rating from public.reviews r where r.id = v_review) = 4,
+    'the rating is stored as it was given'
+  );
+  perform public.test_assert(
+    (select r.comment from public.reviews r where r.id = v_review) = 'maklet behi barcha',
+    'the note is trimmed and kept'
+  );
+  perform public.test_assert(
+    (select r.table_id from public.reviews r where r.id = v_review) is null,
+    'a table from another venue is not attributed to the review'
+  );
+
+  select * into v_summary
+  from public.restaurant_review_summary(current_setting('menuqr.rest_a')::uuid);
+  perform public.test_assert(v_summary.total = 2, 'the venue sees both of its reviews');
+  perform public.test_assert(v_summary.average = 3.00, 'the average is the average');
+  perform public.test_assert(
+    v_summary.four = 1 and v_summary.two = 1 and v_summary.five = 0,
+    'the summary counts each star separately'
+  );
+end $$;
+
+-- Another venue reads none of it, and cannot delete what it cannot see.
+reset role;
+select set_config('request.jwt.claim.sub', :'ownerb_id', false);
+set role authenticated;
+
+do $$
+declare
+  v_summary record;
+begin
+  perform public.test_assert(
+    (select count(*) from public.reviews) = 0,
+    'another venue cannot read these reviews'
+  );
+
+  delete from public.reviews where id = current_setting('menuqr.review_1')::uuid;
+  perform public.test_assert(
+    (select count(*) from public.reviews
+     where restaurant_id = current_setting('menuqr.rest_a')::uuid) = 0,
+    'a delete from another venue removes nothing it can see'
+  );
+
+  select * into v_summary
+  from public.restaurant_review_summary(current_setting('menuqr.rest_a')::uuid);
+  perform public.test_assert(
+    coalesce(v_summary.total, 0) = 0,
+    'the summary is empty for a venue that is not a member'
+  );
+end $$;
+
+-- The owner's delete does land, and a waiter's does not.
+reset role;
+select set_config('request.jwt.claim.sub', :'staff_id', false);
+set role authenticated;
+
+do $$
+begin
+  delete from public.reviews where id = current_setting('menuqr.review_1')::uuid;
+  perform public.test_assert(
+    (select count(*) from public.reviews
+     where id = current_setting('menuqr.review_1')::uuid) = 1,
+    'a waiter cannot delete a review'
+  );
+end $$;
+
+reset role;
+select set_config('request.jwt.claim.sub', :'ownera_id', false);
+set role authenticated;
+
+do $$
+begin
+  delete from public.reviews where id = current_setting('menuqr.review_1')::uuid;
+  perform public.test_assert(
+    (select count(*) from public.reviews
+     where id = current_setting('menuqr.review_1')::uuid) = 0,
+    'an owner can remove a review'
+  );
+end $$;
+
+reset role;
+select set_config('request.jwt.claim.sub', '', false);
+
+-- ---------------------------------------------------------------------------
 -- Table privileges (0007_grants)
 --
 -- RLS decides which rows a caller reaches; these grants decide which commands

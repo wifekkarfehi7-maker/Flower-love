@@ -1,11 +1,12 @@
 "use client";
 
-import { ChevronDown, ExternalLink, LogOut, Menu as MenuIcon, Shield, UserRound, X } from "lucide-react";
+import { Bell, ChevronDown, ExternalLink, LogOut, Menu as MenuIcon, Shield, UserRound, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import { Logo, LogoMark } from "@/components/brand/logo";
+import { OrderNotifications } from "@/components/orders/order-notifications";
 import { LanguageSwitcher } from "@/components/shared/language-switcher";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/lib/auth/provider";
 import { useTranslation } from "@/lib/i18n/provider";
+import { useOrderAlerts } from "@/lib/orders/alerts-provider";
 import { useRestaurant } from "@/lib/restaurants/provider";
 import { cn } from "@/lib/utils";
 import { DASHBOARD_NAV } from "./dashboard-nav";
@@ -32,6 +34,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
   const { t } = useTranslation();
   const items = useVisibleNav();
+  const { pending } = useOrderAlerts();
 
   return (
     <nav className="flex flex-col gap-0.5" aria-label={t.dashboard.overview}>
@@ -51,10 +54,47 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           >
             <Icon className="size-[18px] shrink-0" aria-hidden />
             <span className="truncate">{item.label(t)}</span>
+            {item.href === "/dashboard/orders" && pending > 0 ? (
+              <span
+                className="ms-auto flex min-w-5 items-center justify-center rounded-full bg-red-600 px-1.5 py-0.5 text-[11px] font-bold tabular-nums text-white"
+                aria-label={`${pending} ${t.orders.waiting}`}
+              >
+                {pending > 99 ? "99+" : pending}
+              </span>
+            ) : null}
           </Link>
         );
       })}
     </nav>
+  );
+}
+
+/**
+ * The header bell, because on a phone the side navigation — and the count on
+ * it — is hidden behind the menu button. The one place a waiter's eye always
+ * lands is the top bar, so the count has to live there too.
+ */
+function OrdersBell() {
+  const { t } = useTranslation();
+  const { pending } = useOrderAlerts();
+
+  return (
+    <Button variant="ghost" size="icon" asChild className="relative">
+      <Link
+        href="/dashboard/orders"
+        aria-label={pending > 0 ? `${pending} ${t.orders.waiting}` : t.dashboard.orders}
+        data-testid="orders-bell"
+      >
+        {/* Keyed on the count so the bell shakes again for every new order, not
+            just the first one. */}
+        <Bell key={pending} className={cn(pending > 0 && "motion-safe:animate-wiggle")} />
+        {pending > 0 ? (
+          <span className="absolute -end-0.5 -top-0.5 flex min-w-[18px] items-center justify-center rounded-full border-2 border-card bg-red-600 px-1 text-[10px] font-bold leading-4 tabular-nums text-white">
+            {pending > 99 ? "99+" : pending}
+          </span>
+        ) : null}
+      </Link>
+    </Button>
   );
 }
 
@@ -206,6 +246,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 <ExternalLink className="rtl-flip" />
               </a>
             </Button>
+            <OrdersBell />
             <LanguageSwitcher />
             <UserMenu />
           </div>
@@ -213,6 +254,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
         <main className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">{children}</main>
       </div>
+
+      <OrderNotifications />
 
       {mobileOpen ? (
         <div className="fixed inset-0 z-40 lg:hidden">

@@ -235,6 +235,17 @@ type OrderItemRow = {
   created_at: string;
 }
 
+type ReviewRow = {
+  id: string;
+  restaurant_id: string;
+  table_id: string | null;
+  order_id: string | null;
+  rating: number;
+  comment: string | null;
+  session_identifier: string | null;
+  created_at: string;
+}
+
 type SubscriptionPlanRow = {
   id: string;
   code: string;
@@ -373,6 +384,14 @@ export interface Database {
         Update: Partial<OrderItemRow>;
         Relationships: [];
       };
+      reviews: {
+        Row: ReviewRow;
+        // Written only through leave_review: no client role holds INSERT or
+        // UPDATE on the table, so these types describe rows, not permissions.
+        Insert: Insertable<ReviewRow, "restaurant_id" | "rating", "id" | "created_at">;
+        Update: Partial<ReviewRow>;
+        Relationships: [];
+      };
       subscription_plans: {
         Row: SubscriptionPlanRow;
         Insert: Insertable<SubscriptionPlanRow, "code" | "name_ar" | "name_fr" | "name_en", "id" | "created_at" | "updated_at">;
@@ -490,6 +509,33 @@ export interface Database {
         Args: { p_order: string; p_status: OrderStatus };
         Returns: undefined;
       };
+      leave_review: {
+        Args: {
+          p_restaurant: string;
+          p_session: string;
+          p_rating: number;
+          p_comment?: string | null;
+          p_table?: string | null;
+          p_order?: string | null;
+        };
+        Returns: string;
+      };
+      has_reviewed_today: {
+        Args: { p_restaurant: string; p_session: string };
+        Returns: boolean;
+      };
+      restaurant_review_summary: {
+        Args: { p_restaurant: string };
+        Returns: {
+          total: number;
+          average: number | null;
+          five: number;
+          four: number;
+          three: number;
+          two: number;
+          one: number;
+        }[];
+      };
       add_restaurant_member_by_email: {
         Args: { p_restaurant: string; p_email: string; p_role?: RestaurantRole };
         Returns: string;
@@ -603,6 +649,7 @@ export type RestaurantTable = Tables["restaurant_tables"]["Row"];
 export type QrCode = Tables["qr_codes"]["Row"];
 export type Order = Tables["orders"]["Row"];
 export type OrderItem = Tables["order_items"]["Row"];
+export type Review = Tables["reviews"]["Row"];
 export type SubscriptionPlan = Tables["subscription_plans"]["Row"];
 export type Subscription = Tables["subscriptions"]["Row"];
 export type AdminAuditLogEntry = Tables["admin_audit_log"]["Row"];
