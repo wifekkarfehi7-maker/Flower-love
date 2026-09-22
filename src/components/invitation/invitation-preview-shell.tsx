@@ -4,13 +4,14 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { InvitationRenderer } from "@/components/invitation/invitation-renderer";
+import { useProtectedHref } from "@/lib/auth/use-protected-href";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import type { InvitationData, TemplateRecord } from "@/types/invitation";
 
 const STRINGS = {
   template: {
-    ar: { back: "كل النماذج", use: "استعمال هذا النموذج" },
-    fr: { back: "Tous les modèles", use: "Utiliser ce modèle" },
+    ar: { back: "كل النماذج", use: "اختيار هذا النموذج" },
+    fr: { back: "Tous les modèles", use: "Choisir ce modèle" },
     en: { back: "All templates", use: "Use this template" },
   },
   owner: {
@@ -19,8 +20,12 @@ const STRINGS = {
     en: { back: "Back to editor", use: "" },
   },
 };
-const PREVIEW_LABEL = { ar: "معاينة", fr: "Aperçu", en: "Preview" };
 
+/**
+ * The bar that frames a preview. It stays quiet on purpose — ink, a hairline
+ * and small type — so the invitation underneath is the only thing with a
+ * voice. `data-preview-chrome` lets the preview generator hide it.
+ */
 export function InvitationPreviewShell({
   template,
   invitation,
@@ -39,22 +44,49 @@ export function InvitationPreviewShell({
   const { locale, dir } = useTranslation();
   const t = STRINGS[variant][locale];
   const BackIcon = dir === "rtl" ? ArrowRight : ArrowLeft;
+  const primaryName = locale === "ar" ? template.nameAr : template.name;
+  const secondaryName = locale === "ar" ? template.name : template.nameAr;
+  const signedInAwareCta = useProtectedHref(ctaHref ?? "/");
 
   return (
     <div className="min-h-screen">
-      <div className="sticky top-0 z-50 flex items-center justify-between gap-3 border-b border-white/10 bg-ink-950/90 px-4 py-3 backdrop-blur-md sm:px-6">
-        <Link href={backHref} className="flex items-center gap-1.5 text-sm font-medium text-white/80 hover:text-white">
-          <BackIcon className="h-4 w-4" />
-          {t.back}
-        </Link>
-        <span className="hidden text-sm font-semibold text-gold-300 sm:inline">
-          {PREVIEW_LABEL[locale]} — {locale === "ar" ? template.nameAr : template.name}
-        </span>
-        {ctaHref && (
-          <Link href={ctaHref} className="rounded-full bg-gold-gradient px-4 py-2 text-sm font-semibold text-ink-950 shadow-soft">
-            {t.use}
+      <div
+        data-preview-chrome=""
+        className="sticky top-0 z-50 border-b border-white/10 bg-ink-950/95 text-white backdrop-blur-sm"
+      >
+        <div className="mx-auto grid h-14 max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 sm:px-6">
+          <Link
+            href={backHref}
+            className="flex items-center gap-2 justify-self-start text-[0.8rem] text-white/65 transition-colors hover:text-white"
+          >
+            <BackIcon className="h-3.5 w-3.5" strokeWidth={1.5} />
+            {/* Visually just the arrow on phones, but always named for screen readers. */}
+            <span className="sr-only sm:not-sr-only">{t.back}</span>
           </Link>
-        )}
+
+          <div className="flex flex-col items-center leading-none">
+            <span
+              className="text-[1.05rem] text-white"
+              style={{ fontFamily: "var(--font-cormorant), var(--font-naskh), Georgia, serif", letterSpacing: "0.04em" }}
+            >
+              {primaryName}
+            </span>
+            {secondaryName && (
+              <span className="mt-1 hidden text-[0.62rem] text-white/45 sm:block">{secondaryName}</span>
+            )}
+          </div>
+
+          {ctaHref ? (
+            <Link
+              href={signedInAwareCta}
+              className="justify-self-end border border-white/35 px-3.5 py-2 text-[0.72rem] text-white transition-colors hover:border-white hover:bg-white hover:text-ink-950 sm:px-5"
+            >
+              {t.use}
+            </Link>
+          ) : (
+            <span />
+          )}
+        </div>
       </div>
 
       <InvitationRenderer invitation={invitation} theme={template.theme} fonts={template.fonts} isPreview={isPreview} />

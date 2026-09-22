@@ -48,22 +48,12 @@ const fr: Dictionary = {
     ],
   },
   templates: {
-    eyebrow: "Designs de luxe",
+    eyebrow: "La collection",
     title: "Des modèles conçus avec soin",
     description:
-      "Chaque modèle possède une identité visuelle totalement indépendante : couleurs, typographies, mise en page et animations. Pas seulement une palette différente.",
+      "Chaque modèle a sa palette, sa typographie, ses ornements et sa façon d'arriver chez vos invités. Ouvrez-en un pour le voir comme eux.",
     viewAll: "Voir tous les modèles",
     useTemplate: "Utiliser ce modèle",
-    items: [
-      { name: "Luxury Gold", nameAr: "Doré Luxe", category: "Classique" },
-      { name: "Elegant White", nameAr: "Blanc Élégant", category: "Épuré" },
-      { name: "Floral", nameAr: "Floral", category: "Romantique" },
-      { name: "Romantic", nameAr: "Romantique", category: "Émotion" },
-      { name: "Modern", nameAr: "Moderne", category: "Contemporain" },
-      { name: "Black & Gold", nameAr: "Noir & Or", category: "Prestige" },
-      { name: "Traditional Arabic", nameAr: "Arabe Traditionnel", category: "Héritage" },
-      { name: "Minimal", nameAr: "Minimaliste", category: "Sobre" },
-    ],
   },
   features: {
     eyebrow: "Fonctionnalités",

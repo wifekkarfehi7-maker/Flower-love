@@ -48,22 +48,12 @@ const en: Dictionary = {
     ],
   },
   templates: {
-    eyebrow: "Luxury designs",
+    eyebrow: "The collection",
     title: "Templates crafted with care",
     description:
-      "Every template has a completely independent visual identity: colors, typography, layout and animations. Not just a different color swap.",
+      "Each template has its own palette, type, ornament and way of arriving. Open one to see it exactly as your guests will.",
     viewAll: "View all templates",
     useTemplate: "Use this template",
-    items: [
-      { name: "Luxury Gold", nameAr: "ذهبي فاخر", category: "Classic" },
-      { name: "Elegant White", nameAr: "أبيض أنيق", category: "Minimal" },
-      { name: "Floral", nameAr: "زهري", category: "Romantic" },
-      { name: "Romantic", nameAr: "رومانسي", category: "Emotional" },
-      { name: "Modern", nameAr: "عصري", category: "Contemporary" },
-      { name: "Black & Gold", nameAr: "أسود وذهبي", category: "Prestige" },
-      { name: "Traditional Arabic", nameAr: "تراث عربي", category: "Heritage" },
-      { name: "Minimal", nameAr: "بسيط ونقي", category: "Minimalist" },
-    ],
   },
   features: {
     eyebrow: "Platform features",

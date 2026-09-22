@@ -46,6 +46,21 @@ export async function createDraftInvitation(userId: string): Promise<ActionResul
   return ok({ id: data.id });
 }
 
+/**
+ * Best effort: point a fresh draft at the template chosen in the gallery.
+ * Does nothing if the slug no longer resolves — the builder then opens on
+ * its default template, exactly as it did before a choice was carried over.
+ */
+export async function setDraftTemplateBySlug(invitationId: string, slug: string): Promise<void> {
+  const supabase = getSupabaseBrowserClient();
+  if (!supabase) return;
+
+  const { data } = await supabase.from("templates").select("id").eq("slug", slug).eq("status", "active").maybeSingle();
+  if (!data) return;
+
+  await updateInvitationFields(invitationId, { template_id: data.id });
+}
+
 export async function updateInvitationFields(
   id: string,
   patch: Partial<InvitationRow>

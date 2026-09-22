@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
 import { useAuth } from "@/lib/auth/provider";
-import { createDraftInvitation } from "@/lib/invitations/client";
+import { createDraftInvitation, setDraftTemplateBySlug } from "@/lib/invitations/client";
 import { useTranslation } from "@/lib/i18n/use-translation";
 
 const LABEL = {
@@ -23,14 +23,19 @@ export default function NewInvitationPage() {
   React.useEffect(() => {
     if (loading || started.current) return;
 
+    // Set by "use this template" in the gallery; carried through sign-in.
+    const templateSlug = new URLSearchParams(window.location.search).get("template");
+    const returnTo = templateSlug ? `/invitations/new?template=${encodeURIComponent(templateSlug)}` : "/invitations/new";
+
     if (!user) {
-      router.replace("/login?next=/invitations/new");
+      router.replace(`/login?next=${encodeURIComponent(returnTo)}`);
       return;
     }
 
     started.current = true;
-    createDraftInvitation(user.id).then((result) => {
+    createDraftInvitation(user.id).then(async (result) => {
       if (result.data) {
+        if (templateSlug) await setDraftTemplateBySlug(result.data.id, templateSlug);
         router.replace(`/invitations/${result.data.id}/builder`);
       } else {
         router.replace("/my-invitations");

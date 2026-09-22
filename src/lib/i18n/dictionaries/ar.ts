@@ -48,22 +48,12 @@ const ar: Dictionary = {
     ],
   },
   templates: {
-    eyebrow: "تصاميم فاخرة",
+    eyebrow: "المجموعة",
     title: "نماذج مصممة بعناية فائقة",
     description:
-      "كل نموذج يحمل هوية بصرية مستقلة بالكامل: ألوان، خطوط، تخطيط وحركات مختلفة تماماً. وليس مجرد تغيير لون.",
+      "لكلّ نموذج ألوانه وخطوطه وزخارفه وطريقة وصوله إلى ضيوفكم. افتحوا أيّ نموذج لتروه كما سيراه ضيوفكم.",
     viewAll: "مشاهدة كل النماذج",
     useTemplate: "استعمال هذا النموذج",
-    items: [
-      { name: "Luxury Gold", nameAr: "ذهبي فاخر", category: "كلاسيكي" },
-      { name: "Elegant White", nameAr: "أبيض أنيق", category: "بسيط" },
-      { name: "Floral", nameAr: "زهري", category: "رومانسي" },
-      { name: "Romantic", nameAr: "رومانسي", category: "عاطفي" },
-      { name: "Modern", nameAr: "عصري", category: "حديث" },
-      { name: "Black & Gold", nameAr: "أسود وذهبي", category: "فخم" },
-      { name: "Traditional Arabic", nameAr: "تراث عربي", category: "تراثي" },
-      { name: "Minimal", nameAr: "بسيط ونقي", category: "مينيمال" },
-    ],
   },
   features: {
     eyebrow: "مميزات المنصة",

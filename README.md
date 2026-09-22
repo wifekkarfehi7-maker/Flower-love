@@ -79,6 +79,35 @@ Premium digital wedding invitations for the Tunisian & Arabic-speaking market �
 | `npm run start` | Serve the production build (run `build` first) |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm run previews` | Re-render the template gallery images (see below) |
+
+### Template previews
+
+The gallery at `/templates`, the templates section of the landing page and each
+template's social card show real renders of the invitation, not mockups.
+`scripts/generate-template-previews.mjs` opens every template's
+`/templates/[slug]/preview` in headless Chromium at 390×844 @2x and captures
+three states — `sealed` (before opening), `cover` (opened) and `detail` (the
+photo page) — plus a 1200×630 `og.jpg` composed from them. Files land in
+`public/template-previews/<slug>/`; dimensions and blur placeholders go to
+`src/lib/templates/preview-manifest.json`. Both are committed.
+
+Re-run it whenever a template's look changes, against a production build so no
+dev overlay can leak into a capture:
+
+```bash
+npm run build && npm run start           # in one terminal
+npm run previews                         # every template the app serves
+npm run previews -- romantic minimal     # or just these slugs
+npm run previews -- --base http://localhost:3200
+```
+
+It needs Playwright with Chromium (`npm i -D playwright && npx playwright install
+chromium`, or a global install). Output is deterministic: reduced motion, fixed
+demo data and no timestamps mean two runs against the same build produce
+identical files. The run exits non-zero if any template logs a console error or
+a failed request. A template with no render yet (e.g. one just added from the
+admin panel) shows a typographic placeholder in its own colours until you run it.
 
 ## Deployment
 

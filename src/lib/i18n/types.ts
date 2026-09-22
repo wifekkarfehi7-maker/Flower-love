@@ -41,7 +41,6 @@ export interface Dictionary {
     description: string;
     viewAll: string;
     useTemplate: string;
-    items: { name: string; nameAr: string; category: string }[];
   };
   features: {
     eyebrow: string;

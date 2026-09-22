@@ -7,15 +7,17 @@ import { Testimonials } from "@/components/landing/testimonials";
 import { Faq } from "@/components/landing/faq";
 import { WhatsAppSection } from "@/components/landing/whatsapp-section";
 import { getActivePricingPlans } from "@/lib/pricing/get-plans";
+import { getActiveTemplates } from "@/lib/templates/get-templates";
+import { toTemplateCardItem } from "@/lib/templates/presentation";
 
 export default async function HomePage() {
-  const plans = await getActivePricingPlans();
+  const [plans, templates] = await Promise.all([getActivePricingPlans(), getActiveTemplates()]);
 
   return (
     <>
       <Hero />
       <HowItWorks />
-      <TemplatesPreview />
+      <TemplatesPreview items={templates.map(toTemplateCardItem)} />
       <Features />
       <PricingPreview plans={plans} />
       <Testimonials />

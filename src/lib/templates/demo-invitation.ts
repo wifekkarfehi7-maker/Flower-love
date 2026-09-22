@@ -49,16 +49,19 @@ export const DEMO_INVITATION: InvitationData = {
     groomFather: DEMO_GROOM_FATHER,
     brideFather: DEMO_BRIDE_FATHER,
   }),
-  finalMessage: "شكراً لمشاركتكم أجمل لحظات حياتنا، حضوركم يعني لنا الكثير ❤️",
-  partyRules: ["جنة الأطفال بيوتهم 👶", "ممنوع التصوير أثناء الحفل 📵"],
-  weddingDate: "2026-09-09",
+  finalMessage: "شكراً لمشاركتكم أجمل لحظات حياتنا، حضوركم يعني لنا الكثير",
+  partyRules: ["جنة الأطفال بيوتهم", "ممنوع التصوير أثناء الحفل"],
+  // A fixed Saturday in July — Tunisian wedding season — far enough ahead that
+  // the countdown in every template preview has real numbers to show. Fixed,
+  // not computed from today, so generated previews stay reproducible.
+  weddingDate: "2027-07-17",
   weddingTime: "20:00",
   events: [
     {
       id: "demo-event-wedding",
       type: "wedding",
       name: "حفل الزفاف",
-      date: "2026-09-09",
+      date: "2027-07-17",
       time: "20:00",
       locationName: "قاعة الأفراح الكبرى",
       locationUrl: "https://maps.google.com/?q=Wedding+Venue+Tunis",
@@ -67,7 +70,7 @@ export const DEMO_INVITATION: InvitationData = {
       id: "demo-event-dinner",
       type: "dinner",
       name: "حفل العشاء",
-      date: "2026-09-09",
+      date: "2027-07-17",
       time: "21:30",
       locationName: "قاعة الأفراح الكبرى",
       locationUrl: "https://maps.google.com/?q=Wedding+Venue+Tunis",

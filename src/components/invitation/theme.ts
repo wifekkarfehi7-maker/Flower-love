@@ -2,15 +2,24 @@ import type { CSSProperties } from "react";
 
 import type { TemplateFonts, TemplateTheme } from "@/types/invitation";
 
+/*
+ * Cinzel, Cormorant, Playfair, Pinyon and Inter carry no Arabic glyphs. On
+ * their own, every Arabic heading set in them fell through to whatever the
+ * phone ships (DejaVu Sans, SF Arabic…). Each Latin face therefore names a
+ * designed Arabic companion right after it: the browser picks per glyph, so
+ * Latin keeps its face and Arabic gets one chosen to sit beside it —
+ * classical naskh next to Garamond, calligraphic Amiri next to the display
+ * and inscriptional faces.
+ */
 const FONT_FAMILY_MAP: Record<string, string> = {
   amiri: "var(--font-amiri), serif",
-  playfair: "var(--font-playfair), serif",
-  inter: "var(--font-inter), sans-serif",
+  playfair: "var(--font-playfair), var(--font-amiri), serif",
+  inter: "var(--font-inter), var(--font-cairo), sans-serif",
   cairo: "var(--font-cairo), sans-serif",
-  cormorant: "var(--font-cormorant), Georgia, serif",
-  "cormorant-italic": "var(--font-cormorant), Georgia, serif",
-  cinzel: "var(--font-cinzel), Georgia, serif",
-  pinyon: "var(--font-pinyon), cursive",
+  cormorant: "var(--font-cormorant), var(--font-naskh), Georgia, serif",
+  "cormorant-italic": "var(--font-cormorant), var(--font-naskh), Georgia, serif",
+  cinzel: "var(--font-cinzel), var(--font-amiri), Georgia, serif",
+  pinyon: "var(--font-pinyon), var(--font-amiri), cursive",
   naskh: "var(--font-naskh), serif",
   kufi: "var(--font-kufi), sans-serif",
 };

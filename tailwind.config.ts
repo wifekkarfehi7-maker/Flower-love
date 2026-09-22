@@ -92,6 +92,9 @@ const config: Config = {
         heading: ["var(--font-heading)", "serif"],
         body: ["var(--font-body)", "sans-serif"],
         arabicDisplay: ["var(--font-arabic-display)", "serif"],
+        // Editorial display: Cormorant for Latin, Amiri for the Arabic glyphs
+        // Cormorant doesn't have. Same pairing the invitations use.
+        editorial: ["var(--font-cormorant)", "var(--font-amiri)", "Georgia", "serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
