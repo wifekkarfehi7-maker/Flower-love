@@ -99,7 +99,13 @@ try {
     const text = m.text();
     // Aborted route prefetches are expected when a script navigates faster than
     // Next can finish them; it falls back to a normal navigation on its own.
-    const benign = text.includes("404") || text.includes("Failed to fetch RSC payload");
+    const benign =
+      text.includes("404") ||
+      text.includes("Failed to fetch RSC payload") ||
+      // `supabase start` brings up no realtime service here, so the socket
+      // cannot connect. The app treats that as normal — the timer carries the
+      // same rows — so it must not fail the run either.
+      text.includes("realtime/v1/websocket");
     if (m.type() === "error" && !benign) clientErrors.push(text);
   });
 
@@ -242,6 +248,40 @@ try {
 
   // A phone, but with the interface pinned to English: what is under test here
   // is ordering, not the first-visit language pick the guest checks above.
+  // A waiter is rarely sitting on the orders screen, so the alert has to reach
+  // them elsewhere. Parked on another page before the order exists — opened
+  // after, the order would rightly be part of what was already there.
+  const elsewhere = await ownerContext.newPage();
+  await ownerContext.grantPermissions(["notifications"], { origin: BASE });
+  await elsewhere.goto(`${BASE}/dashboard/menu`, { waitUntil: "networkidle" });
+  await elsewhere.waitForTimeout(2000);
+  // Stand in for the operating system: record what would have been shown,
+  // through either path the app may take (service worker on Android, the page
+  // API on desktop), and make the tab report that nobody is looking at it —
+  // the only situation in which a system notification is sent at all.
+  await elsewhere.evaluate(() => {
+    window.__notified = [];
+    const record = (via, title, options) => window.__notified.push({ via, title, body: options?.body ?? "" });
+    ServiceWorkerRegistration.prototype.showNotification = function (title, options) {
+      record("worker", title, options);
+      return Promise.resolve();
+    };
+    const Real = window.Notification;
+    window.Notification = class {
+      constructor(title, options) {
+        record("page", title, options);
+      }
+      close() {}
+      static get permission() {
+        return Real.permission;
+      }
+      static requestPermission() {
+        return Real.requestPermission();
+      }
+    };
+    document.hasFocus = () => false;
+  });
+
   const diner = await freshContext(guestContextOptions());
   const dinerPage = await diner.newPage();
   await dinerPage.goto(`${BASE}/menu/${slug}?t=${encodeURIComponent(token)}`, { waitUntil: "networkidle" });
@@ -298,6 +338,47 @@ try {
   // is the safety net: the screen re-reads on its own and the order turns up.
   // The websocket path is the same data, arriving sooner.
   await kitchen.waitForTimeout(25000);
+
+  const badge = await elsewhere.locator('nav a[href="/dashboard/orders"] span').last().innerText();
+  check("a new order shows a count on another page of the dashboard", badge.trim() === "1", badge);
+
+  const card = elsewhere.getByTestId("order-notification");
+  const cardText = (await card.count()) ? await card.first().innerText() : "";
+  check("a notification card pops up on whatever page the waiter is on", /New order/.test(cardText), cardText);
+  check("the card carries the order number", cardText.includes(`#${orderNumber}`), cardText);
+  check("the card names the table as the owner wrote it", /Table 7/.test(cardText) && !/Table Table/.test(cardText), cardText);
+  check("the card previews what was ordered, like a message",
+    (await elsewhere.getByTestId("order-notification-preview").innerText()).includes("1× Pizza Margherita"));
+  check("the card shows what the order is worth", /12\.500/.test(cardText), cardText);
+  const bell = (await elsewhere.getByTestId("orders-bell").innerText()).trim();
+  check("the header bell carries the count too, where a phone can see it", bell === "1", bell);
+  const tabTitle = await elsewhere.title();
+  check("the tab title shows the count, like a chat app", tabTitle.startsWith("(1) "), tabTitle);
+  const notified = await elsewhere.evaluate(() => window.__notified);
+  check(
+    "a system notification is sent while the tab is in the background",
+    notified.length === 1 &&
+      notified[0].title === `New order #${orderNumber} · Table 7` &&
+      notified[0].body.includes("1× Pizza Margherita") &&
+      /12\.500/.test(notified[0].body),
+    JSON.stringify(notified)
+  );
+  await elsewhere.screenshot({ path: `${SHOTS}/order-notification.png` });
+
+  // Still there after the waiter has had time to look away: it waits to be
+  // acted on rather than timing out unseen.
+  await elsewhere.waitForTimeout(16000);
+  check("the card waits to be acted on instead of vanishing", (await card.count()) === 1);
+
+  await card.first().getByRole("button", { name: /View order/ }).click();
+  await elsewhere.waitForURL("**/dashboard/orders", { timeout: 15000 });
+  check("tapping the card opens the orders screen", elsewhere.url().endsWith("/dashboard/orders"), elsewhere.url());
+  await elsewhere.waitForTimeout(1500);
+  // Looking at the list is not the same as dealing with it: the count stays
+  // until someone confirms, and it survives the full page load just made.
+  check("the waiting count survives a page load and a glance at the list",
+    (await elsewhere.title()).startsWith("(1) "), await elsewhere.title());
+  await elsewhere.close();
   const kitchenText = await kitchen.locator("main").innerText();
   check("the order appears on the waiter's screen without a reload",
     kitchenText.includes("Pizza Margherita"), kitchenText.slice(0, 200));
@@ -309,11 +390,39 @@ try {
   await kitchen.waitForTimeout(2000);
   check("a waiter can confirm the order",
     sql(`select status from public.orders where id = '${orderId}'`) === "confirmed");
+  check("confirming clears the waiting count straight away",
+    !(await kitchen.title()).startsWith("(") && (await kitchen.getByTestId("orders-bell").innerText()).trim() === "",
+    await kitchen.title());
 
   await dinerPage.waitForTimeout(16000);
   check("the guest's receipt follows the kitchen",
     /Confirmed/i.test(await dinerPage.locator('[role="dialog"]').innerText()),
     (await dinerPage.locator('[role="dialog"]').innerText()).slice(0, 200));
+
+  // Served: the receipt now asks how it was, tied to this order.
+  await kitchen.reload({ waitUntil: "networkidle" });
+  await kitchen.getByRole("button", { name: "Start preparing" }).first().click();
+  await kitchen.waitForTimeout(1500);
+  await kitchen.getByRole("button", { name: "Served" }).first().click();
+  await kitchen.waitForTimeout(1500);
+  check("the order can be marked served",
+    sql(`select status from public.orders where id = '${orderId}'`) === "served");
+
+  await dinerPage.waitForTimeout(16000);
+  const receiptReview = dinerPage.getByTestId("receipt-review");
+  check("once served, the receipt asks the guest how it was", (await receiptReview.count()) === 1);
+  await receiptReview.getByTestId("review-star-5").click();
+  await receiptReview.getByTestId("review-comment").fill("  Pizza bnina barcha, merci!  ");
+  await receiptReview.getByTestId("review-submit").click();
+  await dinerPage.waitForTimeout(2500);
+  check("the guest is thanked for the review",
+    /Thanks for your feedback/.test(await receiptReview.innerText()), await receiptReview.innerText());
+  check("the review reaches the venue, tied to the order and the table",
+    sql(`select rating || '|' || coalesce(comment, '') || '|' || (order_id = '${orderId}') || '|' || (table_id = '${tableId}')
+         from public.reviews where restaurant_id = '${restaurantId}' and order_id = '${orderId}'`)
+      === "5|Pizza bnina barcha, merci!|true|true",
+    sql(`select rating, comment, order_id, table_id from public.reviews where restaurant_id = '${restaurantId}'`));
+  await dinerPage.screenshot({ path: `${SHOTS}/receipt-review.png` });
 
   check("the guest cannot read the orders table directly",
     (await dinerPage.evaluate(async () => {
@@ -324,6 +433,71 @@ try {
     })) !== 200);
 
   await diner.close();
+
+  // =======================================================================
+  // 1c. Reviews: a guest who did not order still gets asked
+  // =======================================================================
+  const critic = await freshContext(guestContextOptions());
+  const criticPage = await critic.newPage();
+  await criticPage.goto(`${BASE}/menu/${slug}`, { waitUntil: "networkidle" });
+  await criticPage.waitForTimeout(2000);
+  await criticPage.getByTestId("review-open").click();
+  await criticPage.waitForTimeout(1200);
+  const sheetPaint = await criticPage.getByTestId("review-sheet").evaluate((el) => getComputedStyle(el).backgroundColor);
+  check("the review sheet paints an opaque panel on a phone",
+    sheetPaint !== "transparent" && alpha(sheetPaint) === 1, sheetPaint);
+  check("the submit button waits for a rating",
+    await criticPage.getByTestId("review-submit").isDisabled());
+  await criticPage.getByTestId("review-star-2").click();
+  check("the chosen star is named, not just coloured",
+    (await criticPage.getByTestId("review-sheet").innerText()).includes("Fair"));
+  await criticPage.getByTestId("review-comment").fill("Service lent, 30 minutes d'attente.");
+  // Let the star and button transitions settle, so the picture is what a
+  // guest sees rather than a frame from the middle of a fade.
+  await criticPage.waitForTimeout(600);
+  await criticPage.screenshot({ path: `${SHOTS}/review-sheet.png` });
+  await criticPage.getByTestId("review-submit").click();
+  await criticPage.waitForTimeout(2500);
+  check("a guest can rate the venue from the menu",
+    sql(`select count(*) from public.reviews where restaurant_id = '${restaurantId}' and rating = 2 and order_id is null`) === "1");
+  await criticPage.keyboard.press("Escape");
+  await criticPage.waitForTimeout(800);
+  await criticPage.getByTestId("review-open").click();
+  await criticPage.waitForTimeout(2000);
+  check("the same phone is thanked, not asked again, the same day",
+    /already left a review today/.test(await criticPage.getByTestId("review-sheet").innerText()));
+  check("a guest cannot read reviews directly",
+    (await criticPage.evaluate(async () => {
+      const response = await fetch(`${window.location.origin.replace(/:\d+$/, ":54321")}/rest/v1/reviews?select=id`, {
+        headers: { apikey: "x" },
+      }).catch(() => null);
+      return response ? response.status : 401;
+    })) !== 200);
+  await critic.close();
+
+  await page.goto(`${BASE}/dashboard/reviews`, { waitUntil: "networkidle" });
+  const reviewsText = await page.locator("main").innerText();
+  check("the owner sees the average", (await page.getByTestId("reviews-average").innerText()).trim() === "3.5",
+    await page.getByTestId("reviews-average").innerText());
+  check("the owner sees how many reviews there are", (await page.getByTestId("reviews-total").innerText()).trim() === "2");
+  check("the owner reads what guests wrote",
+    reviewsText.includes("Pizza bnina barcha, merci!") && reviewsText.includes("30 minutes"), reviewsText.slice(0, 300));
+  check("a review left from an order says which one", reviewsText.includes(`#${orderNumber}`));
+  await page.screenshot({ path: `${SHOTS}/reviews-dashboard.png`, fullPage: true });
+
+  await page.getByRole("button", { name: "3 stars or fewer" }).click();
+  const lowText = await page.getByTestId("reviews-list").innerText();
+  check("the low-score filter shows only what needs attention",
+    lowText.includes("30 minutes") && !lowText.includes("Pizza bnina"), lowText.slice(0, 200));
+
+  await page.getByTestId("reviews-list").getByRole("button", { name: "Delete" }).first().click();
+  await page.getByRole("dialog").getByRole("button", { name: "Delete" }).click();
+  await page.waitForTimeout(2000);
+  check("an owner can remove a review",
+    sql(`select count(*) from public.reviews where restaurant_id = '${restaurantId}'`) === "1");
+  check("the average follows the removal",
+    (await page.getByTestId("reviews-average").innerText()).trim() === "5.0",
+    await page.getByTestId("reviews-average").innerText());
 
   // =======================================================================
   // 2. Password reset, through the actual email

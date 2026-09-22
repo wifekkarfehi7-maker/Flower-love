@@ -10,6 +10,7 @@ import { formatPrice, localized } from "@/lib/i18n/format";
 import type { Dictionary } from "@/lib/i18n/types";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types/database";
+import { ReviewForm } from "./review-form";
 
 export interface CartItem {
   key: string;
@@ -271,6 +272,16 @@ export function MenuCart({
                       {formatPrice(receipt.total, currency, locale)}
                     </span>
                   </div>
+                </div>
+              ) : null}
+
+              {/* Asked once the food is on the table, not while the guest is
+                  still waiting for it — and tied to this order, so the venue
+                  can see which meal the note is about. */}
+              {status === "served" && orderId ? (
+                <div className="border-t border-[var(--menu-border)] px-5 py-4" data-testid="receipt-review">
+                  <p className="mb-3 text-center text-sm font-semibold">{t.reviews.rateOrderPrompt}</p>
+                  <ReviewForm restaurantId={restaurantId} tableId={tableId} orderId={orderId} t={t} compact />
                 </div>
               ) : null}
             </div>

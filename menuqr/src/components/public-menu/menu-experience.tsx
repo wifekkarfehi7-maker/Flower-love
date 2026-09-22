@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, MapPin, Phone, Search, ShoppingBag, Store, X } from "lucide-react";
+import { Clock, MapPin, Phone, Search, ShoppingBag, Star, Store, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
@@ -19,6 +19,7 @@ import type { Product } from "@/types/database";
 import { MenuCart, type CartItem } from "./menu-cart";
 import { ProductCard } from "./product-card";
 import { ProductSheet, type CartSelection } from "./product-sheet";
+import { ReviewSheet } from "./review-sheet";
 
 const UNCATEGORIZED = "__uncategorized__";
 
@@ -69,6 +70,8 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
   const [cartOpen, setCartOpen] = React.useState(false);
   const [cart, setCart] = React.useState<CartItem[]>([]);
   const [openNow, setOpenNow] = React.useState<boolean | null>(null);
+  // null = closed; a number = open, with that star already chosen (0 = none).
+  const [reviewStart, setReviewStart] = React.useState<number | null>(null);
 
   // Radix renders dialogs through a portal, which mounts them on document.body
   // — outside the element these variables are declared on. Without handing the
@@ -297,6 +300,16 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
                   {t.menu.tableLabel} · {tableName}
                 </span>
               ) : null}
+
+              <button
+                type="button"
+                onClick={() => setReviewStart(0)}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--menu-border)] bg-[var(--menu-surface)] px-2.5 py-1 font-medium text-[var(--menu-text)]"
+                data-testid="review-open"
+              >
+                <Star className="size-3.5 fill-amber-400 text-amber-400" aria-hidden />
+                {t.reviews.rateCta}
+              </button>
             </div>
           </div>
 
@@ -456,7 +469,33 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
           </div>
         )}
 
-        <footer className="mt-12 space-y-3 border-t border-[var(--menu-border)] pt-6 text-sm text-[var(--menu-muted)]">
+        {/* The end of the menu is where a guest has finished deciding — the
+            natural moment to ask how it went. Tapping a star opens the form
+            with that star already chosen. */}
+        <section
+          className="mt-12 rounded-[var(--menu-radius)] border border-[var(--menu-border)] bg-[var(--menu-surface)] p-5 text-center"
+          aria-labelledby="menu-review-heading"
+        >
+          <h2 id="menu-review-heading" className="text-base font-semibold">
+            {t.reviews.rateTitle}
+          </h2>
+          <p className="mt-1 text-sm text-[var(--menu-muted)]">{t.reviews.rateSubtitle}</p>
+          <div className="mt-3 flex justify-center gap-1">
+            {[1, 2, 3, 4, 5].map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setReviewStart(value)}
+                className="grid size-11 place-items-center rounded-full transition-transform active:scale-90"
+                aria-label={`${value} / 5`}
+              >
+                <Star className="size-8 text-amber-400" strokeWidth={1.6} aria-hidden />
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <footer className="mt-8 space-y-3 border-t border-[var(--menu-border)] pt-6 text-sm text-[var(--menu-muted)]">
           {restaurant.address ? (
             <p className="flex items-start gap-2">
               <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
@@ -564,6 +603,16 @@ export function MenuExperience({ menu }: { menu: PublicMenu }) {
         cartEnabled={cartEnabled}
         t={t}
         onAddToCart={addToCart}
+      />
+
+      <ReviewSheet
+        themeStyle={themeStyle}
+        open={reviewStart !== null}
+        onOpenChange={(open) => !open && setReviewStart(null)}
+        restaurantId={restaurant.id}
+        tableId={tableId}
+        initialRating={reviewStart ?? 0}
+        t={t}
       />
 
       <MenuCart

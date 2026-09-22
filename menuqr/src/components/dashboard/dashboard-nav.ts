@@ -1,5 +1,6 @@
 import {
   ShoppingBag,
+  Star,
   BarChart3,
   CreditCard,
   LayoutDashboard,
@@ -30,6 +31,7 @@ export const DASHBOARD_NAV: NavItem[] = [
   { href: "/dashboard/categories", label: (t) => t.dashboard.categories, icon: Tags },
   { href: "/dashboard/products", label: (t) => t.dashboard.products, icon: UtensilsCrossed },
   { href: "/dashboard/orders", label: (t) => t.dashboard.orders, icon: ShoppingBag },
+  { href: "/dashboard/reviews", label: (t) => t.dashboard.reviews, icon: Star },
   { href: "/dashboard/tables", label: (t) => t.dashboard.tables, icon: Table2 },
   { href: "/dashboard/qr", label: (t) => t.dashboard.qrCodes, icon: QrCode },
   { href: "/dashboard/analytics", label: (t) => t.dashboard.analytics, icon: BarChart3, capability: "analytics:view" },

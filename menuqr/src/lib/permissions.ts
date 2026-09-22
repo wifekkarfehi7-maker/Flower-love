@@ -15,7 +15,10 @@ export type Capability =
   | "restaurant:write"
   | "settings:write"
   | "team:manage"
-  | "subscription:manage";
+  | "subscription:manage"
+  // Deleting a guest's review changes the venue's average, so it is the
+  // owner's call — the same line the database draws in "reviews: owners delete".
+  | "reviews:manage";
 
 const ROLE_CAPABILITIES: Record<RestaurantRole, Capability[]> = {
   owner: [
@@ -28,6 +31,7 @@ const ROLE_CAPABILITIES: Record<RestaurantRole, Capability[]> = {
     "settings:write",
     "team:manage",
     "subscription:manage",
+    "reviews:manage",
   ],
   manager: ["menu:write", "tables:write", "qr:write", "availability:toggle", "analytics:view", "settings:write"],
   staff: ["availability:toggle"],

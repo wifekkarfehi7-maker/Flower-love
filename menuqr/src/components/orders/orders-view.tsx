@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, BellOff, ChefHat, Check, Clock, Loader2, ShoppingBag, X } from "lucide-react";
+import { Bell, BellOff, BellRing, ChefHat, Check, Clock, Loader2, ShoppingBag, X } from "lucide-react";
 import * as React from "react";
 
 import { EmptyState } from "@/components/ui/misc";
@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/toast";
 import type { Locale } from "@/lib/i18n/config";
 import { formatPrice } from "@/lib/i18n/format";
 import { useTranslation } from "@/lib/i18n/provider";
+import { useOrderAlerts } from "@/lib/orders/alerts-provider";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import type { OrderItem, OrderStatus, Order } from "@/types/database";
@@ -41,13 +42,12 @@ export function OrdersView({
   const { t, locale } = useTranslation();
   const toast = useToast();
 
+  const { refresh: refreshAlerts, soundOn, setSoundOn, revision, pushPermission, requestPush } = useOrderAlerts();
   const [orders, setOrders] = React.useState<OrderWithItems[]>(initialOrders);
-  const [soundOn, setSoundOn] = React.useState(false);
   const [busy, setBusy] = React.useState<string | null>(null);
 
-  const audioRef = React.useRef<AudioContext | null>(null);
-  const knownIds = React.useRef(new Set(initialOrders.map((order) => order.id)));
-
+  // Arrivals, the chime and the count belong to the provider, which listens for
+  // the whole dashboard; this screen refetches when it says something changed.
   const refresh = React.useCallback(async () => {
     const supabase = getSupabaseBrowserClient();
     if (!supabase || !restaurantId) return;
@@ -80,118 +80,18 @@ export function OrdersView({
     }
     const tableNames = new Map((tablesResult.data ?? []).map((table) => [table.id, table.name]));
 
-    const next = rows.map((order) => ({
-      ...order,
-      items: itemsByOrder.get(order.id) ?? [],
-      tableName: order.table_id ? (tableNames.get(order.table_id) ?? null) : null,
-    }));
-
-    const arrivals = next.filter((order) => !knownIds.current.has(order.id));
-    next.forEach((order) => knownIds.current.add(order.id));
-    setOrders(next);
-    return arrivals;
+    setOrders(
+      rows.map((order) => ({
+        ...order,
+        items: itemsByOrder.get(order.id) ?? [],
+        tableName: order.table_id ? (tableNames.get(order.table_id) ?? null) : null,
+      }))
+    );
   }, [restaurantId]);
 
-  // A short two-tone chime, synthesised rather than fetched: no asset to ship,
-  // nothing to 404 on a weak connection in a basement café.
-  const chime = React.useCallback(() => {
-    if (!soundOn) return;
-    try {
-      const context = audioRef.current ?? new AudioContext();
-      audioRef.current = context;
-      const now = context.currentTime;
-      [880, 1320].forEach((frequency, index) => {
-        const oscillator = context.createOscillator();
-        const gain = context.createGain();
-        oscillator.frequency.value = frequency;
-        oscillator.connect(gain);
-        gain.connect(context.destination);
-        gain.gain.setValueAtTime(0.0001, now + index * 0.18);
-        gain.gain.exponentialRampToValueAtTime(0.25, now + index * 0.18 + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + index * 0.18 + 0.16);
-        oscillator.start(now + index * 0.18);
-        oscillator.stop(now + index * 0.18 + 0.18);
-      });
-    } catch {
-      // An audio context the browser refuses is not a reason to lose an order.
-    }
-  }, [soundOn]);
-
-  // Realtime is how an order should arrive; this is what happens when it does
-  // not. A café's wifi drops, a socket dies quietly, and a waiter's screen that
-  // trusted the socket would simply stop showing orders — with no sign that
-  // anything is wrong. Re-reading on a timer, and whenever the screen is looked
-  // at again, means the worst case is a slow order rather than a lost one.
   React.useEffect(() => {
-    const tick = async () => {
-      const arrivals = await refresh();
-      if (arrivals && arrivals.length > 0) {
-        chime();
-        toast({ title: t.orders.newOrder });
-      }
-    };
-
-    const timer = window.setInterval(tick, 20000);
-    const onVisible = () => {
-      if (document.visibilityState === "visible") void tick();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-
-    return () => {
-      window.clearInterval(timer);
-      document.removeEventListener("visibilitychange", onVisible);
-    };
-  }, [refresh, chime, toast, t.orders.newOrder]);
-
-  React.useEffect(() => {
-    const supabase = getSupabaseBrowserClient();
-    if (!supabase || !restaurantId) return;
-
-    const channel = supabase
-      .channel(`orders:${restaurantId}`)
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "orders", filter: `restaurant_id=eq.${restaurantId}` },
-        async (payload) => {
-          const row = payload.new as Order;
-          // The insert arrives without its lines, so fetch the order whole
-          // rather than render a total with nothing under it.
-          const [itemsResult, tableResult] = await Promise.all([
-            supabase.from("order_items").select("*").eq("order_id", row.id),
-            row.table_id
-              ? supabase.from("restaurant_tables").select("name").eq("id", row.table_id).maybeSingle()
-              : Promise.resolve({ data: null }),
-          ]);
-
-          const next: OrderWithItems = {
-            ...row,
-            items: itemsResult.data ?? [],
-            tableName: tableResult.data?.name ?? null,
-          };
-
-          if (knownIds.current.has(next.id)) return;
-          knownIds.current.add(next.id);
-          setOrders((current) => (current.some((o) => o.id === next.id) ? current : [next, ...current]));
-          chime();
-          toast({ title: t.orders.newOrder, description: next.tableName ?? undefined });
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "orders", filter: `restaurant_id=eq.${restaurantId}` },
-        (payload) => {
-          const row = payload.new as Order;
-          setOrders((current) =>
-            current.map((order) => (order.id === row.id ? { ...order, status: row.status } : order))
-          );
-        }
-      )
-      .subscribe();
-
-    return () => {
-      void supabase.removeChannel(channel);
-    };
-  }, [restaurantId, chime, toast, t.orders.newOrder]);
+    if (revision > 0) void refresh();
+  }, [revision, refresh]);
 
   const setStatus = async (orderId: string, status: OrderStatus) => {
     const supabase = getSupabaseBrowserClient();
@@ -207,7 +107,11 @@ export function OrdersView({
     if (error) {
       setOrders(previous);
       toast({ title: t.errors.saveFailed, variant: "error" });
+      return;
     }
+    // The waiting count on the bell should drop the moment the order is
+    // confirmed here, not on the next timed re-read.
+    refreshAlerts();
   };
 
   const statusLabel: Record<OrderStatus, string> = {
@@ -229,16 +133,50 @@ export function OrdersView({
           <p className="mt-1 text-sm text-muted-foreground">{t.orders.subtitle}</p>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setSoundOn((value) => !value)}
-          className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm"
-          aria-pressed={soundOn}
-        >
-          {soundOn ? <Bell className="size-4" aria-hidden /> : <BellOff className="size-4" aria-hidden />}
-          {soundOn ? t.orders.soundOn : t.orders.soundOff}
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setSoundOn(!soundOn)}
+            className={cn(
+              "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition-colors",
+              soundOn && "border-emerald-500/40 bg-emerald-500/10 text-emerald-800 dark:text-emerald-300"
+            )}
+            aria-pressed={soundOn}
+          >
+            {soundOn ? <Bell className="size-4" aria-hidden /> : <BellOff className="size-4" aria-hidden />}
+            {soundOn ? t.orders.soundOn : t.orders.soundOff}
+          </button>
+
+          {/* A browser only shows a notification outside the tab once asked,
+              and only if the asking came from a tap — so it is a button, not
+              something that happens by itself on load. */}
+          {pushPermission === "default" ? (
+            <button
+              type="button"
+              onClick={requestPush}
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-700"
+              data-testid="enable-notifications"
+            >
+              <BellRing className="size-4" aria-hidden />
+              {t.orders.notifyEnable}
+            </button>
+          ) : pushPermission === "granted" ? (
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-4 py-2 text-sm text-emerald-800 dark:text-emerald-300">
+              <BellRing className="size-4" aria-hidden />
+              {t.orders.notifyOn}
+            </span>
+          ) : pushPermission === "denied" ? (
+            <span className="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm text-muted-foreground">
+              <BellOff className="size-4" aria-hidden />
+              {t.orders.notifyBlocked}
+            </span>
+          ) : null}
+        </div>
       </div>
+
+      {pushPermission === "default" ? (
+        <p className="-mt-3 text-xs text-muted-foreground">{t.orders.notifyHint}</p>
+      ) : null}
 
       {!orderingEnabled ? (
         <div className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-200">

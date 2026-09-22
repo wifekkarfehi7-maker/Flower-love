@@ -108,6 +108,15 @@ const config: Config = {
         shimmer: {
           "100%": { transform: "translateX(100%)" },
         },
+        // The bell shakes when an order lands, the way a phone buzzes.
+        wiggle: {
+          "0%, 100%": { transform: "rotate(0deg)" },
+          "15%": { transform: "rotate(14deg)" },
+          "30%": { transform: "rotate(-12deg)" },
+          "45%": { transform: "rotate(9deg)" },
+          "60%": { transform: "rotate(-6deg)" },
+          "75%": { transform: "rotate(3deg)" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -121,6 +130,7 @@ const config: Config = {
         "fade-in": "fade-in 0.25s ease-out",
         "fade-up": "fade-up 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
         "scale-in": "scale-in 0.18s cubic-bezier(0.16, 1, 0.3, 1)",
+        wiggle: "wiggle 0.9s ease-in-out 2",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },

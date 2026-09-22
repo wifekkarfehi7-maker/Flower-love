@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import { DashboardShell } from "@/components/dashboard/dashboard-shell";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
+import { OrderAlertsProvider } from "@/lib/orders/alerts-provider";
 import { getRestaurantContext } from "@/lib/restaurants/get-restaurant-context";
 import { RestaurantProvider } from "@/lib/restaurants/provider";
 
@@ -19,7 +20,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
       initialSettings={settings}
       memberships={memberships}
     >
-      <DashboardShell>{children}</DashboardShell>
+      <OrderAlertsProvider>
+        <DashboardShell>{children}</DashboardShell>
+      </OrderAlertsProvider>
     </RestaurantProvider>
   );
 }

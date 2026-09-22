@@ -112,3 +112,13 @@ export function localized<F extends string>(
   }
   return "";
 }
+
+/**
+ * Owners name their own tables — "Table 7", "Terrasse 3", or just "7". A bare
+ * number says nothing on its own, so it gets the word in front; anything the
+ * owner already spelled out is shown exactly as written, never "Table Table 7".
+ */
+export function tableDisplayName(name: string, tableWord: string) {
+  const trimmed = name.trim();
+  return /^\d+$/.test(trimmed) ? `${tableWord} ${trimmed}` : trimmed;
+}
