@@ -28,24 +28,75 @@ function Eyebrow({ theme, isOpen }: { theme: TemplateTheme; isOpen: boolean }) {
   );
 }
 
-/** The one shared control: a hairline-ruled label, never a filled button. */
-function OpenControl({ theme, isOpen, delay = 0 }: { theme: TemplateTheme; isOpen: boolean; delay?: number }) {
+const TAP_HINT = { ar: "أنقر", fr: "Touchez", en: "Tap" };
+
+/**
+ * The seal is the control. It is the one real button on the sealed screen,
+ * named for what it does, and a single press runs the template's opening.
+ * Under it sits one small word saying so: outside the seal, no frame, no
+ * fill, no movement. The word is decoration for sighted guests; assistive
+ * technology hears the button's name instead.
+ */
+function SealButton({
+  theme,
+  isOpen,
+  onOpen,
+  children,
+  round = true,
+  hint = "flow",
+}: Pick<OpeningProps, "theme" | "isOpen" | "onOpen"> & {
+  children: React.ReactNode;
+  /** Seals are round; a typographic monogram is not. */
+  round?: boolean;
+  /** "flow" takes its own line; "hang" hangs under the seal without moving it (the envelope seal is placed by its centre). */
+  hint?: "flow" | "hang" | "none";
+}) {
+  const { locale } = useTranslation();
+  return (
+    <span className="relative flex flex-col items-center">
+      <button
+        type="button"
+        onClick={(event) => {
+          // The screen behind also opens on a tap; stop here so one press is one open.
+          event.stopPropagation();
+          onOpen();
+        }}
+        disabled={isOpen}
+        aria-label={OPEN_LABEL[locale]}
+        className={`relative inline-flex items-center justify-center ${round ? "rounded-full" : "rounded-[2px]"}`}
+        style={{ cursor: isOpen ? "default" : "pointer" }}
+      >
+        {children}
+      </button>
+      {hint !== "none" && (
+        <TapHint
+          theme={theme}
+          isOpen={isOpen}
+          className={hint === "hang" ? "absolute left-1/2 top-full mt-5 -translate-x-1/2" : "mt-5"}
+        />
+      )}
+    </span>
+  );
+}
+
+/** «أنقر» — the quiet word under the seal. */
+function TapHint({ theme, isOpen, className }: { theme: TemplateTheme; isOpen: boolean; className?: string }) {
   const { locale } = useTranslation();
   return (
     <span
-      className="relative inline-flex items-center justify-center overflow-hidden border px-8 py-3 text-[0.62rem] font-medium uppercase"
+      aria-hidden="true"
+      className={`block whitespace-nowrap leading-none ${locale === "ar" ? "text-[0.875rem]" : "text-[0.62rem] uppercase"} ${className ?? ""}`}
       style={{
-        borderColor: `${theme.primary}66`,
-        color: theme.primary,
-        letterSpacing: "var(--inv-track-button, 0.3em)",
-        fontFamily: "var(--font-cinzel), serif",
+        // Brass pulled 45% toward the template's text: still warm, and at least
+        // 5:1 on every template's ground (plain brass drops to 2.5:1 on ivory).
+        color: `color-mix(in srgb, ${theme.text} 45%, ${theme.primary})`,
+        letterSpacing: locale === "ar" ? 0 : "var(--inv-track-label, 0.34em)",
+        fontFamily: "var(--font-cinzel), var(--font-amiri), serif",
         opacity: isOpen ? 0 : 1,
-        transform: isOpen ? "translateY(6px)" : "translateY(0)",
-        transition: `opacity 500ms ease ${delay}ms, transform 500ms ease ${delay}ms`,
+        transition: "opacity 400ms ease",
       }}
     >
-      <span className="relative">{OPEN_LABEL[locale]}</span>
-      <FoilSweep enabled={theme.foil !== false} delay={900} />
+      {TAP_HINT[locale]}
     </span>
   );
 }
@@ -57,7 +108,11 @@ type OpeningProps = {
   monogram: string;
 };
 
-/** The full-bleed pressable surface every opening style sits on. */
+/**
+ * The full-bleed surface every opening style sits on. The seal is the button;
+ * a tap anywhere else on the sealed screen still opens the invitation, so a
+ * guest who misses the seal is never left waiting.
+ */
 function OpeningShell({
   theme,
   isOpen,
@@ -66,13 +121,9 @@ function OpeningShell({
   background,
   fadeDelay = 1150,
 }: OpeningProps & { children: React.ReactNode; background?: React.CSSProperties; fadeDelay?: number }) {
-  const { locale } = useTranslation();
   return (
-    <button
-      type="button"
-      onClick={onOpen}
-      disabled={isOpen}
-      aria-label={OPEN_LABEL[locale]}
+    <div
+      onClick={isOpen ? undefined : onOpen}
       className="absolute inset-0 z-20 flex flex-col items-center justify-center overflow-hidden"
       style={{
         backgroundColor: theme.background,
@@ -85,7 +136,7 @@ function OpeningShell({
     >
       <TextureOverlay texture={theme.texture} tint={theme.primary} />
       {children}
-    </button>
+    </div>
   );
 }
 
@@ -184,13 +235,14 @@ function EnvelopeOpening(props: OpeningProps) {
             transition: "opacity 400ms ease",
           }}
         >
-          <WaxSeal color={seal} monogram={monogram} size={62} broken={isOpen} idle={!isOpen} />
+          <SealButton theme={theme} isOpen={isOpen} onOpen={props.onOpen} hint="hang">
+            <WaxSeal color={seal} monogram={monogram} size={62} broken={isOpen} idle={!isOpen} />
+          </SealButton>
         </span>
       </div>
 
       <span className="relative mt-12 flex flex-col items-center gap-6">
         <Eyebrow theme={theme} isOpen={isOpen} />
-        <OpenControl theme={theme} isOpen={isOpen} />
       </span>
     </OpeningShell>
   );
@@ -227,8 +279,9 @@ function CurtainOpening(props: OpeningProps) {
         style={{ opacity: isOpen ? 0 : 1, transition: "opacity 400ms ease" }}
       >
         <Eyebrow theme={theme} isOpen={isOpen} />
-        <WaxSeal color={theme.sealColor ?? theme.primary} monogram={monogram} size={66} broken={isOpen} idle={!isOpen} />
-        <OpenControl theme={theme} isOpen={isOpen} />
+        <SealButton theme={theme} isOpen={isOpen} onOpen={props.onOpen}>
+          <WaxSeal color={theme.sealColor ?? theme.primary} monogram={monogram} size={66} broken={isOpen} idle={!isOpen} />
+        </SealButton>
       </span>
     </OpeningShell>
   );
@@ -268,8 +321,9 @@ function PaperFoldOpening(props: OpeningProps) {
         <span className="relative block h-px w-24" style={{ backgroundColor: `${theme.primary}66` }}>
           <FoilSweep enabled={theme.foil !== false} />
         </span>
-        <WaxSeal color={theme.sealColor ?? theme.primary} monogram={monogram} size={60} broken={isOpen} idle={!isOpen} />
-        <OpenControl theme={theme} isOpen={isOpen} />
+        <SealButton theme={theme} isOpen={isOpen} onOpen={props.onOpen}>
+          <WaxSeal color={theme.sealColor ?? theme.primary} monogram={monogram} size={60} broken={isOpen} idle={!isOpen} />
+        </SealButton>
       </span>
     </OpeningShell>
   );
@@ -311,10 +365,9 @@ function WaxSealOpening(props: OpeningProps) {
         >
           <FoilSweep enabled={theme.foil !== false} />
         </span>
-        <WaxSeal color={theme.sealColor ?? theme.primary} monogram={monogram} size={84} broken={isOpen} idle={!isOpen} />
-        <span className="mt-12">
-          <OpenControl theme={theme} isOpen={isOpen} />
-        </span>
+        <SealButton theme={theme} isOpen={isOpen} onOpen={props.onOpen}>
+          <WaxSeal color={theme.sealColor ?? theme.primary} monogram={monogram} size={84} broken={isOpen} idle={!isOpen} />
+        </SealButton>
       </span>
     </OpeningShell>
   );
@@ -336,23 +389,24 @@ function MinimalFadeOpening(props: OpeningProps) {
           transition: "opacity 620ms ease, transform 900ms cubic-bezier(0.22,1,0.36,1)",
         }}
       >
-        <span
-          className="relative block text-5xl"
-          style={{
-            fontFamily: "var(--font-cinzel), serif",
-            color: theme.primary,
-            letterSpacing: "0.12em",
-          }}
-        >
-          {monogram}
-          <FoilSweep enabled={theme.foil !== false} />
-        </span>
+        {/* No wax here: the monogram is the seal, and the hint sits under its rule. */}
+        <SealButton theme={theme} isOpen={isOpen} onOpen={props.onOpen} round={false} hint="none">
+          <span
+            className="relative block text-5xl"
+            style={{
+              fontFamily: "var(--font-cinzel), serif",
+              color: theme.primary,
+              letterSpacing: "0.12em",
+            }}
+          >
+            {monogram}
+            <FoilSweep enabled={theme.foil !== false} />
+          </span>
+        </SealButton>
         <span className="relative mt-7 block h-px w-40" style={{ backgroundColor: `${theme.primary}59` }}>
           <FoilSweep enabled={theme.foil !== false} delay={600} />
         </span>
-        <span className="mt-12">
-          <OpenControl theme={theme} isOpen={isOpen} />
-        </span>
+        <TapHint theme={theme} isOpen={isOpen} className="mt-5" />
       </span>
     </OpeningShell>
   );
