@@ -216,6 +216,12 @@ export type MusicFileRow = {
   created_at: string;
 };
 
+export type InvitationDailyViewRow = {
+  invitation_id: string;
+  day: string;
+  views: number;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -308,12 +314,22 @@ export type Database = {
         Update: Partial<MusicFileRow>;
         Relationships: [];
       };
+      invitation_daily_views: {
+        Row: InvitationDailyViewRow;
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
       increment_invitation_views: {
         Args: { target_id: string };
         Returns: void;
+      };
+      set_invitation_slug: {
+        Args: { p_invitation_id: string; p_slug: string };
+        Returns: string;
       };
       log_admin_action: {
         Args: {

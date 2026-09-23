@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CalendarCheck, Copy, Eye, HelpCircle, Loader2, MoreVertical, Pencil, Plus, Trash2, Users } from "lucide-react";
+import { BarChart3, CalendarCheck, Copy, Eye, HelpCircle, Loader2, MoreVertical, Pencil, Plus, Share2, Trash2, Users } from "lucide-react";
 
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
@@ -198,6 +198,21 @@ export function MyInvitationsView({
                         </div>
                       )}
                     </div>
+                  </div>
+
+                  <div className="mt-3 flex items-center gap-2 border-t border-ink-900/[0.06] pt-3">
+                    <Button asChild variant="ghost" size="sm" className="flex-1">
+                      <Link href={`/invitations/${invitation.id}/share`}>
+                        <Share2 className="h-3.5 w-3.5" />
+                        {t.dashboard.share}
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" size="sm" className="flex-1">
+                      <Link href={`/invitations/${invitation.id}/stats`}>
+                        <BarChart3 className="h-3.5 w-3.5" />
+                        {t.dashboard.stats}
+                      </Link>
+                    </Button>
                   </div>
                 </Card>
               ))}

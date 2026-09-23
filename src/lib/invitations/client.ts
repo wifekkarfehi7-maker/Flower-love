@@ -322,3 +322,22 @@ export async function duplicateInvitation(source: InvitationRow, userId: string)
 
   return ok({ id: newInvitation.id });
 }
+
+export type SlugError = "invalid_slug" | "slug_taken" | "premium_required" | "generic";
+
+/**
+ * Premium: sets the invitation's public address (/invite/<slug>). The
+ * database validates the format, uniqueness and the Premium plan; this only
+ * maps its answer to something the UI can explain.
+ */
+export async function setInvitationSlug(invitationId: string, slug: string): Promise<ActionResult<string>> {
+  const supabase = getSupabaseBrowserClient();
+  if (!supabase) return fail(NOT_CONFIGURED);
+
+  const { data, error } = await supabase.rpc("set_invitation_slug", { p_invitation_id: invitationId, p_slug: slug });
+  if (error || !data) {
+    const known: SlugError[] = ["invalid_slug", "slug_taken", "premium_required"];
+    return fail(known.find((code) => error?.message.includes(code)) ?? "generic");
+  }
+  return ok(data);
+}

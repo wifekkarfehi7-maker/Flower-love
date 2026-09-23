@@ -201,6 +201,8 @@ export interface Dictionary {
     deleting: string;
     deleteConfirm: string;
     guests: string;
+    share: string;
+    stats: string;
   };
   common: {
     langSwitcherLabel: string;

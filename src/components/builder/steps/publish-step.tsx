@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { Check, CheckCircle2, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { Check, CheckCircle2, Loader2, Share2 } from "lucide-react";
 
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,7 @@ const STRINGS = {
     price: "السعر",
     status: "الحالة",
     whatsapp: "تواصل معنا لإتمام الدفع ❤️",
+    share: "مشاركة الدعوة",
     finish: "إنهاء والعودة إلى دعواتي",
     mostPopular: "الأكثر طلباً",
     free: "مجانية",
@@ -63,6 +65,7 @@ const STRINGS = {
     price: "Prix",
     status: "Statut",
     whatsapp: "Contactez-nous pour payer ❤️",
+    share: "Partager l'invitation",
     finish: "Terminer et retourner à mes invitations",
     mostPopular: "Le plus demandé",
     free: "Gratuite",
@@ -87,6 +90,7 @@ const STRINGS = {
     price: "Price",
     status: "Status",
     whatsapp: "Contact us to complete payment ❤️",
+    share: "Share invitation",
     finish: "Finish & return to My Invitations",
     mostPopular: "Most popular",
     free: "Free",
@@ -212,6 +216,12 @@ export function PublishStep({
           <WhatsAppButton message={message} size="lg">
             {t.whatsapp}
           </WhatsAppButton>
+          <Button asChild variant="secondary">
+            <Link href={`/invitations/${invitation.id}/share`}>
+              <Share2 className="h-4 w-4" />
+              {t.share}
+            </Link>
+          </Button>
           <Button variant="ghost" onClick={onPublish}>
             {t.finish}
           </Button>
