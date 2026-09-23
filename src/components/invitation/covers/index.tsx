@@ -18,6 +18,19 @@ export const COVER_LAYOUTS: Record<CoverLayout, ComponentType<{ model: CoverMode
   midnight: MidnightCover,
 };
 
+/*
+ * When each opening's veil begins to lift (its fade delay in OpeningExperience).
+ * The composition starts revealing at that moment, so the cover crossfades in
+ * under the lifting veil instead of leaving an empty beat between the two.
+ */
+const REVEAL_START: Partial<Record<NonNullable<TemplateTheme["openAnimation"]>, number>> = {
+  "minimal-fade": 500,
+  "wax-seal": 900,
+  envelope: 1150,
+  "paper-fold": 1350,
+  curtain: 1500,
+};
+
 export function isCoverLayout(value: unknown): value is CoverLayout {
   return typeof value === "string" && Object.prototype.hasOwnProperty.call(COVER_LAYOUTS, value);
 }
@@ -25,8 +38,8 @@ export function isCoverLayout(value: unknown): value is CoverLayout {
 /**
  * A named cover composition under the template's own opening experience.
  * The opening is shared and unchanged; the composition's reveal starts as the
- * opening clears (`--cover-start`), and its resting state is always the
- * finished design, so reduced motion simply shows it.
+ * opening's veil begins to lift (`--cover-start`), and its resting state is
+ * always the finished design, so reduced motion simply shows it.
  */
 export function LayoutCover({
   layout,
@@ -53,7 +66,7 @@ export function LayoutCover({
       data-cover-layout={layout}
       data-open={isOpen || !hasOpening ? "true" : "false"}
       className={`${styles.cover} relative min-h-[100svh] overflow-hidden`}
-      style={{ ["--cover-start" as string]: hasOpening ? "1300ms" : "0ms" } as CSSProperties}
+      style={{ ["--cover-start" as string]: `${hasOpening ? REVEAL_START[theme.openAnimation!] ?? 1300 : 0}ms` } as CSSProperties}
     >
       <Composition model={buildCoverModel(invitation, theme, locale)} />
       <OpeningExperience theme={theme} isOpen={isOpen} onOpen={onOpen} monogram={monogram} />
