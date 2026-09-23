@@ -239,6 +239,12 @@
   color: var(--inv-text);
 }
 
+/* Tablet portrait keeps the phone composition, with names scaled to the wider page. */
+@media (min-width: 600px) and (max-width: 899.98px) {
+  .edName { font-size: clamp(5.1rem, 13vw, 7rem); }
+  .edAnd { font-size: 2.6rem; }
+}
+
 @media (min-width: 900px) {
   .editorial {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -389,6 +395,13 @@
   object-fit: cover;
   object-position: 50% 28%;
   filter: grayscale(0.55) contrast(1.08) brightness(0.62);
+}
+/* On a landscape screen a portrait photograph is cropped to a band; hold that band
+   on the people (usually just below the middle of the frame), not on the sky above them. */
+@media (min-aspect-ratio: 1/1) {
+  .mnPhoto img {
+    object-position: 50% 58%;
+  }
 }
 /* A scrim, not a decoration: the head keeps the masthead legible, the foot goes to black for the titles. */
 .mnScrim {
