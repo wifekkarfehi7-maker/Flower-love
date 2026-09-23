@@ -6,6 +6,7 @@ import { STATIC_TEMPLATES } from "@/lib/templates/static-templates";
 import { DEMO_INVITATION } from "@/lib/templates/demo-invitation";
 import { useTranslation } from "@/lib/i18n/use-translation";
 import { OpeningExperience } from "../opening-experience";
+import { MusicPlayer } from "../music-player";
 import { formatDateParts } from "../date-parts";
 import { sectionBackground, themeCssVars } from "../theme";
 import { EditorialCover } from "./editorial-cover";
@@ -68,6 +69,22 @@ function demoSource(url: string | undefined): string | null {
   return url.includes("images.unsplash.com") ? url.replace(/([?&])w=\d+/, "$1w=2400") : url;
 }
 
+/*
+ * One tap, even before hydration. The cover is server-rendered, so a guest on
+ * a slow connection sees the seal before React has attached its handlers; a
+ * tap in that window would otherwise do nothing and need repeating. This
+ * inline script runs as the HTML is parsed, notes the first tap on the cover,
+ * and the stage opens as soon as it hydrates. Once hydrated it has nothing
+ * left to do: React's own handler opens the invitation directly.
+ */
+const EARLY_TAP_SCRIPT = `(function(){var s=document.currentScript.previousElementSibling;if(!s)return;s.addEventListener("click",function(){window.__flOpenQueued=true;},{capture:true,once:true});})();`;
+
+declare global {
+  interface Window {
+    __flOpenQueued?: boolean;
+  }
+}
+
 function initialsOf(a: string, b: string) {
   return `${(a.trim()[0] ?? "").toUpperCase()}${(b.trim()[0] ?? "").toUpperCase()}` || "&";
 }
@@ -76,10 +93,13 @@ export function CoverPrototypeStage({
   layout,
   startOpen,
   withPhoto,
+  musicUrl = null,
 }: {
   layout: PrototypeLayout;
   startOpen: boolean;
   withPhoto: boolean;
+  /** Same-origin track for exercising the music path exactly as the renderer mounts it. */
+  musicUrl?: string | null;
 }) {
   const { locale } = useTranslation();
   const { slug, galleryIndex, Cover } = PROTOTYPES[layout];
@@ -89,6 +109,14 @@ export function CoverPrototypeStage({
   // Opened on arrival: the composition's own motion starts at once. Opened by
   // the guest: it waits for the seal or the veil to clear first.
   const [start] = React.useState(startOpen ? 0 : 1300);
+
+  // A tap that landed before hydration opens the invitation now, without a second one.
+  React.useEffect(() => {
+    if (window.__flOpenQueued) {
+      window.__flOpenQueued = false;
+      setIsOpen(true);
+    }
+  }, []);
 
   const [y, m, d] = (invitation.weddingDate ?? "").split("-");
   const firstEvent = invitation.events[0];
@@ -126,6 +154,9 @@ export function CoverPrototypeStage({
           monogram={initialsOf(invitation.groomName, invitation.brideName)}
         />
       </section>
+      <script dangerouslySetInnerHTML={{ __html: EARLY_TAP_SCRIPT }} />
+
+      {musicUrl && <MusicPlayer url={musicUrl} autoplayAfterOpen show={isOpen} triggerAutoplay={isOpen} />}
     </div>
   );
 }

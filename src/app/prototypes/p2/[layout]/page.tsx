@@ -21,7 +21,7 @@ export default function CoverPrototypePage({
   searchParams,
 }: {
   params: { layout: string };
-  searchParams: { sealed?: string; photo?: string };
+  searchParams: { sealed?: string; photo?: string; music?: string };
 }) {
   if (process.env.ENABLE_P2_PROTOTYPES !== "1") notFound();
   if (!(PROTOTYPE_LAYOUTS as readonly string[]).includes(params.layout)) notFound();
@@ -31,6 +31,8 @@ export default function CoverPrototypePage({
       layout={params.layout as PrototypeLayout}
       startOpen={searchParams.sealed !== "1"}
       withPhoto={searchParams.photo !== "0"}
+      // Same-origin paths only: this exists to test the music path, not to play arbitrary URLs.
+      musicUrl={searchParams.music?.startsWith("/") && !searchParams.music.startsWith("//") ? searchParams.music : null}
     />
   );
 }
