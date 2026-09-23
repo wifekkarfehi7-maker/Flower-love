@@ -1,0 +1,685 @@
+[
+  {
+    "shot": "editorial-390x844.png",
+    "problems": [],
+    "qa": {
+      "dir": "rtl",
+      "lang": "ar",
+      "scrollW": 390,
+      "vw": 390,
+      "scrollH": 844,
+      "vh": 844,
+      "offenders": [],
+      "text": [
+        {
+          "text": "دعوة زفاف",
+          "size": "12px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "17.07.2027",
+          "size": "11.2px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "بمشيئة الله وبمباركة العائلتين",
+          "size": "12px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "محمد",
+          "size": "70.2px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "سيرين",
+          "size": "70.2px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "التاريخ",
+          "size": "11.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "السبت 17 جويلية",
+          "size": "14px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "المكان",
+          "size": "11.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "قاعة الأفراح الكبرى",
+          "size": "14px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "الساعة",
+          "size": "11.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "20:00",
+          "size": "14px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Noto Kufi Arabic×4",
+        "small": "Cormorant Garamond Light×7, Noto Naskh Arabic×74",
+        "details": "Noto Kufi Arabic×8"
+      }
+    }
+  },
+  {
+    "shot": "editorial-1200x1600.png",
+    "problems": [],
+    "qa": {
+      "dir": "rtl",
+      "lang": "ar",
+      "scrollW": 1200,
+      "vw": 1200,
+      "scrollH": 1600,
+      "vh": 1600,
+      "offenders": [],
+      "text": [
+        {
+          "text": "دعوة زفاف",
+          "size": "15.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "17.07.2027",
+          "size": "13.6px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "بمشيئة الله وبمباركة العائلتين",
+          "size": "15.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "محمد",
+          "size": "132px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "سيرين",
+          "size": "132px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "التاريخ",
+          "size": "13.6px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "السبت 17 جويلية",
+          "size": "17.6px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "المكان",
+          "size": "13.6px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "قاعة الأفراح الكبرى",
+          "size": "17.6px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "الساعة",
+          "size": "13.6px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "20:00",
+          "size": "17.6px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Noto Kufi Arabic×4",
+        "small": "Cormorant Garamond Light×7, Noto Naskh Arabic×74",
+        "details": "Noto Kufi Arabic×8"
+      }
+    }
+  },
+  {
+    "shot": "arch-390x844.png",
+    "problems": [],
+    "qa": {
+      "dir": "rtl",
+      "lang": "ar",
+      "scrollW": 390,
+      "vw": 390,
+      "scrollH": 844,
+      "vh": 844,
+      "offenders": [],
+      "text": [
+        {
+          "text": "بمشيئة الله وبمباركة العائلتين",
+          "size": "12.457px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        },
+        {
+          "text": "يسعدنا حضوركم للاحتفال بزفاف",
+          "size": "12.457px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        },
+        {
+          "text": "محمدوسيرين",
+          "size": "16px",
+          "color": "rgb(244, 235, 214)",
+          "lines": 1
+        },
+        {
+          "text": "السبت 17 جويلية 2027",
+          "size": "19.2px",
+          "color": "rgb(244, 235, 214)",
+          "lines": 1
+        },
+        {
+          "text": "20:00 · قاعة الأفراح الكبرى",
+          "size": "12px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Amiri×4",
+        "small": "Noto Naskh Arabic×42"
+      }
+    }
+  },
+  {
+    "shot": "arch-1200x1600.png",
+    "problems": [],
+    "qa": {
+      "dir": "rtl",
+      "lang": "ar",
+      "scrollW": 1200,
+      "vw": 1200,
+      "scrollH": 1600,
+      "vh": 1600,
+      "offenders": [],
+      "text": [
+        {
+          "text": "بمشيئة الله وبمباركة العائلتين",
+          "size": "23.616px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        },
+        {
+          "text": "يسعدنا حضوركم للاحتفال بزفاف",
+          "size": "23.616px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        },
+        {
+          "text": "محمدوسيرين",
+          "size": "16px",
+          "color": "rgb(244, 235, 214)",
+          "lines": 1
+        },
+        {
+          "text": "السبت 17 جويلية 2027",
+          "size": "30.4px",
+          "color": "rgb(244, 235, 214)",
+          "lines": 1
+        },
+        {
+          "text": "20:00 · قاعة الأفراح الكبرى",
+          "size": "16px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Amiri×4",
+        "small": "Noto Naskh Arabic×42"
+      }
+    }
+  },
+  {
+    "shot": "midnight-390x844.png",
+    "problems": [],
+    "qa": {
+      "dir": "rtl",
+      "lang": "ar",
+      "scrollW": 390,
+      "vw": 390,
+      "scrollH": 844,
+      "vh": 844,
+      "offenders": [],
+      "text": [
+        {
+          "text": "دعوة زفاف",
+          "size": "12.8px",
+          "color": "rgb(216, 188, 126)",
+          "lines": 1
+        },
+        {
+          "text": "يسعدنا حضوركم للاحتفال بزفاف",
+          "size": "12px",
+          "color": "rgb(167, 156, 136)",
+          "lines": 1
+        },
+        {
+          "text": "محمدوسيرين",
+          "size": "52.65px",
+          "color": "rgb(246, 240, 228)",
+          "lines": 1
+        },
+        {
+          "text": "17.07.2027",
+          "size": "12.8px",
+          "color": "rgb(216, 188, 126)",
+          "lines": 1
+        },
+        {
+          "text": "السبت20:00قاعة الأفراح الكبرى",
+          "size": "13px",
+          "color": "color(srgb 0.964706 0.941176 0.894118 / 0.78)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Noto Naskh Arabic×13",
+        "small": "Cormorant Garamond Light×3, Noto Naskh Arabic×34",
+        "details": "Noto Naskh Arabic×7"
+      }
+    }
+  },
+  {
+    "shot": "midnight-1200x1600.png",
+    "problems": [],
+    "qa": {
+      "dir": "rtl",
+      "lang": "ar",
+      "scrollW": 1200,
+      "vw": 1200,
+      "scrollH": 1600,
+      "vh": 1600,
+      "offenders": [],
+      "text": [
+        {
+          "text": "دعوة زفاف",
+          "size": "16px",
+          "color": "rgb(216, 188, 126)",
+          "lines": 1
+        },
+        {
+          "text": "يسعدنا حضوركم للاحتفال بزفاف",
+          "size": "16px",
+          "color": "rgb(167, 156, 136)",
+          "lines": 1
+        },
+        {
+          "text": "محمدوسيرين",
+          "size": "112px",
+          "color": "rgb(246, 240, 228)",
+          "lines": 1
+        },
+        {
+          "text": "17.07.2027",
+          "size": "16px",
+          "color": "rgb(216, 188, 126)",
+          "lines": 1
+        },
+        {
+          "text": "السبت20:00قاعة الأفراح الكبرى",
+          "size": "17.6px",
+          "color": "color(srgb 0.964706 0.941176 0.894118 / 0.78)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Noto Naskh Arabic×13",
+        "small": "Cormorant Garamond Light×3, Noto Naskh Arabic×34",
+        "details": "Noto Naskh Arabic×7"
+      }
+    }
+  },
+  {
+    "shot": "editorial-nophoto-390x844.png",
+    "problems": []
+  },
+  {
+    "shot": "midnight-nophoto-390x844.png",
+    "problems": []
+  },
+  {
+    "shot": "editorial-sealed-390x844.png",
+    "problems": []
+  },
+  {
+    "shot": "arch-sealed-390x844.png",
+    "problems": []
+  },
+  {
+    "shot": "midnight-sealed-390x844.png",
+    "problems": []
+  },
+  {
+    "shot": "editorial-fr-390x844.png",
+    "problems": [],
+    "qa": {
+      "dir": "ltr",
+      "lang": "fr",
+      "scrollW": 390,
+      "vw": 390,
+      "scrollH": 844,
+      "vh": 844,
+      "offenders": [],
+      "text": [
+        {
+          "text": "Faire-part de mariage",
+          "size": "10px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "17.07.2027",
+          "size": "11.2px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "Avec la bénédiction de leurs f",
+          "size": "12.8px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "محمد",
+          "size": "70.2px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "سيرين",
+          "size": "70.2px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "Date",
+          "size": "11.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "Samedi 17 Juillet",
+          "size": "14px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "Lieu",
+          "size": "11.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "قاعة الأفراح الكبرى",
+          "size": "14px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        },
+        {
+          "text": "Heure",
+          "size": "11.2px",
+          "color": "color(srgb 0.421176 0.392941 0.355294)",
+          "lines": 1
+        },
+        {
+          "text": "20:00",
+          "size": "14px",
+          "color": "rgb(36, 33, 29)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Noto Kufi Arabic×4",
+        "small": "Cormorant Garamond Light×69",
+        "details": "Noto Kufi Arabic×8"
+      }
+    }
+  },
+  {
+    "shot": "arch-fr-390x844.png",
+    "problems": [],
+    "qa": {
+      "dir": "ltr",
+      "lang": "fr",
+      "scrollW": 390,
+      "vw": 390,
+      "scrollH": 844,
+      "vh": 844,
+      "offenders": [],
+      "text": [
+        {
+          "text": "Avec la bénédiction de leurs f",
+          "size": "12.457px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        },
+        {
+          "text": "Vous êtes conviés au mariage d",
+          "size": "12.457px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        },
+        {
+          "text": "محمد&سيرين",
+          "size": "16px",
+          "color": "rgb(244, 235, 214)",
+          "lines": 1
+        },
+        {
+          "text": "Samedi 17 Juillet 2027",
+          "size": "19.2px",
+          "color": "rgb(244, 235, 214)",
+          "lines": 1
+        },
+        {
+          "text": "20:00 · قاعة الأفراح الكبرى",
+          "size": "10px",
+          "color": "rgb(169, 186, 203)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Amiri×4",
+        "small": "Noto Naskh Arabic×36"
+      }
+    }
+  },
+  {
+    "shot": "midnight-fr-390x844.png",
+    "problems": [],
+    "qa": {
+      "dir": "ltr",
+      "lang": "fr",
+      "scrollW": 390,
+      "vw": 390,
+      "scrollH": 844,
+      "vh": 844,
+      "offenders": [],
+      "text": [
+        {
+          "text": "Faire-part de mariage",
+          "size": "9.92px",
+          "color": "rgb(216, 188, 126)",
+          "lines": 1
+        },
+        {
+          "text": "Vous êtes conviés au mariage d",
+          "size": "10px",
+          "color": "rgb(167, 156, 136)",
+          "lines": 1
+        },
+        {
+          "text": "محمد&سيرين",
+          "size": "52.65px",
+          "color": "rgb(246, 240, 228)",
+          "lines": 1
+        },
+        {
+          "text": "17.07.2027",
+          "size": "12.8px",
+          "color": "rgb(216, 188, 126)",
+          "lines": 1
+        },
+        {
+          "text": "Samedi20:00قاعة الأفراح الكبرى",
+          "size": "13px",
+          "color": "color(srgb 0.964706 0.941176 0.894118 / 0.78)",
+          "lines": 1
+        }
+      ],
+      "fonts": {
+        "names": "Noto Naskh Arabic×13",
+        "small": "Cormorant Garamond Light×31",
+        "details": "Cormorant Garamond Light×6"
+      }
+    }
+  },
+  {
+    "motion": "editorial",
+    "frames": [
+      {
+        "t": 300,
+        "animations": 7,
+        "file": "editorial-motion-0300ms.png"
+      },
+      {
+        "t": 1000,
+        "animations": 7,
+        "file": "editorial-motion-1000ms.png"
+      },
+      {
+        "t": 1900,
+        "animations": 7,
+        "file": "editorial-motion-1900ms.png"
+      },
+      {
+        "t": 4200,
+        "animations": 7,
+        "file": "editorial-motion-4200ms.png"
+      }
+    ],
+    "problems": []
+  },
+  {
+    "motion": "arch",
+    "frames": [
+      {
+        "t": 300,
+        "animations": 17,
+        "file": "arch-motion-0300ms.png"
+      },
+      {
+        "t": 1000,
+        "animations": 17,
+        "file": "arch-motion-1000ms.png"
+      },
+      {
+        "t": 1900,
+        "animations": 17,
+        "file": "arch-motion-1900ms.png"
+      },
+      {
+        "t": 4200,
+        "animations": 17,
+        "file": "arch-motion-4200ms.png"
+      }
+    ],
+    "problems": []
+  },
+  {
+    "motion": "midnight",
+    "frames": [
+      {
+        "t": 300,
+        "animations": 7,
+        "file": "midnight-motion-0300ms.png"
+      },
+      {
+        "t": 1000,
+        "animations": 7,
+        "file": "midnight-motion-1000ms.png"
+      },
+      {
+        "t": 1900,
+        "animations": 7,
+        "file": "midnight-motion-1900ms.png"
+      },
+      {
+        "t": 4200,
+        "animations": 7,
+        "file": "midnight-motion-4200ms.png"
+      }
+    ],
+    "problems": []
+  },
+  {
+    "flow": "editorial",
+    "state": {
+      "open": "true",
+      "running": 0,
+      "infinite": []
+    },
+    "file": "editorial-after-open-390x844.png",
+    "problems": []
+  },
+  {
+    "flow": "arch",
+    "state": {
+      "open": "true",
+      "running": 0,
+      "infinite": []
+    },
+    "file": "arch-after-open-390x844.png",
+    "problems": []
+  },
+  {
+    "flow": "midnight",
+    "state": {
+      "open": "true",
+      "running": 0,
+      "infinite": []
+    },
+    "file": "midnight-after-open-390x844.png",
+    "problems": []
+  }
+]
