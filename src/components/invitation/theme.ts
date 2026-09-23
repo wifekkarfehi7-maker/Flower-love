@@ -98,7 +98,9 @@ export function radiusClass(radius: TemplateTheme["cardRadius"]): string {
     case "none":
       return "rounded-none";
     case "soft":
-      return "rounded-md";
+      // Pinned: the site's radius scale is not the invitation's. This is the
+      // value `rounded-md` resolved to before the site moved to 2/4/6px.
+      return "rounded-[12.4px]";
     case "round":
       return "rounded-[1.25rem]";
     case "ornate":

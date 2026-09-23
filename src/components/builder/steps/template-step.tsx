@@ -28,7 +28,7 @@ export function TemplateStep({
 
   return (
     <div>
-      <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+      <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>
 
       <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">

@@ -13,8 +13,8 @@ export function Testimonials() {
     <section className="bg-background py-24 sm:py-32">
       <Container>
         <Reveal className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold tracking-wide text-gold-600">{t.testimonials.eyebrow}</span>
-          <h2 className="mt-3 text-balance font-heading text-3xl font-bold text-ink-900 sm:text-4xl">
+          <span className="text-sm font-medium tracking-wide text-gold-600">{t.testimonials.eyebrow}</span>
+          <h2 className="mt-3 text-balance font-heading text-3xl text-ink-900 sm:text-4xl">
             {t.testimonials.title}
           </h2>
           <p className="mt-4 text-balance text-ink-500">{t.testimonials.description}</p>
@@ -29,7 +29,7 @@ export function Testimonials() {
                   {item.text}
                 </blockquote>
                 <figcaption className="mt-6 border-t border-ink-100 pt-4">
-                  <p className="font-heading font-semibold text-ink-900">{item.name}</p>
+                  <p className="font-heading text-ink-900">{item.name}</p>
                   <p className="text-sm text-ink-400">{item.location}</p>
                 </figcaption>
               </figure>

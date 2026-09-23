@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CalendarCheck, Copy, Eye, Heart, HelpCircle, Loader2, MoreVertical, Pencil, Plus, Trash2, Users } from "lucide-react";
+import { CalendarCheck, Copy, Eye, HelpCircle, Loader2, MoreVertical, Pencil, Plus, Trash2, Users } from "lucide-react";
 
 import { Container } from "@/components/ui/container";
 import { Card } from "@/components/ui/card";
@@ -88,29 +88,25 @@ export function MyInvitationsView({
             {t.dashboard.welcomePrefix}
             {profile?.full_name ? `, ${profile.full_name}` : ""} 👋
           </p>
-          <h1 className="font-heading text-3xl font-bold text-ink-900">{t.dashboard.title}</h1>
+          <h1 className="type-h1">{t.dashboard.title}</h1>
         </div>
 
         {invitations.length === 0 ? (
-          <Card className="mt-10 flex flex-col items-center gap-4 border-dashed p-12 text-center">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-gold-gradient shadow-soft">
-              <Heart className="h-7 w-7 text-ink-950" fill="currentColor" />
-            </span>
-            <div>
-              <p className="font-heading text-xl font-semibold text-ink-900">{t.dashboard.emptyTitle}</p>
-              <p className="mt-2 max-w-sm text-sm text-ink-500">{t.dashboard.emptyDescription}</p>
-            </div>
-            <Button asChild variant="gold" size="lg" className="mt-2">
+          <div className="mt-block flex flex-col items-center border-y border-ink-900/10 px-6 py-section-sm text-center">
+            <span aria-hidden="true" className="block h-px w-12 bg-gold-500/60" />
+            <p className="type-h2 mt-8">{t.dashboard.emptyTitle}</p>
+            <p className="type-body mt-4 max-w-sm">{t.dashboard.emptyDescription}</p>
+            <Button asChild variant="primary" size="lg" className="mt-10">
               <Link href="/invitations/new">
                 <Plus className="h-4 w-4" />
                 {t.dashboard.createCta}
               </Link>
             </Button>
-          </Card>
+          </div>
         ) : (
           <>
             <div className="mt-8 flex justify-end">
-              <Button asChild variant="gold">
+              <Button asChild variant="primary">
                 <Link href="/invitations/new">
                   <Plus className="h-4 w-4" />
                   {t.dashboard.createCta}
@@ -122,7 +118,7 @@ export function MyInvitationsView({
               {invitations.map((invitation) => (
                 <Card key={invitation.id} className="relative flex flex-col p-6">
                   <div className="flex items-start justify-between gap-3">
-                    <p className="font-heading text-lg font-semibold text-ink-900">
+                    <p className="font-heading text-lg text-ink-900">
                       {invitation.groom_name || "—"} &amp; {invitation.bride_name || "—"}
                     </p>
                     <Badge variant={STATUS_BADGE_VARIANT[invitation.status]}>
@@ -148,7 +144,7 @@ export function MyInvitationsView({
                   </div>
 
                   <div className="mt-5 flex items-center gap-2">
-                    <Button asChild variant="outline" size="sm" className="flex-1">
+                    <Button asChild variant="secondary" size="sm" className="flex-1">
                       <Link href={`/invitations/${invitation.id}/builder`}>
                         <Pencil className="h-3.5 w-3.5" />
                         {t.dashboard.edit}

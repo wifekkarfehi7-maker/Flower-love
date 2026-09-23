@@ -110,7 +110,7 @@ export function LoginForm() {
           <FieldError>{errors.password && t.auth[errors.password]}</FieldError>
         </div>
 
-        <Button type="submit" variant="gold" size="lg" className="w-full" disabled={submitting}>
+        <Button type="submit" variant="primary" size="lg" className="w-full" disabled={submitting}>
           {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {submitting ? t.auth.loginCtaLoading : t.auth.loginCta}
         </Button>
@@ -118,7 +118,7 @@ export function LoginForm() {
 
       <p className="text-center text-sm text-ink-500">
         {t.auth.noAccount}{" "}
-        <Link href="/register" className="font-semibold text-gold-700 underline-offset-2 hover:underline">
+        <Link href="/register" className="font-medium text-gold-700 underline-offset-2 hover:underline">
           {t.auth.registerLink}
         </Link>
       </p>

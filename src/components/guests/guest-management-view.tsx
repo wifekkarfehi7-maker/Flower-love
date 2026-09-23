@@ -42,7 +42,7 @@ export function GuestManagementView({
           {t.back}
         </Link>
 
-        <h1 className="mt-3 font-heading text-2xl font-bold text-ink-900 sm:text-3xl">
+        <h1 className="mt-3 font-heading text-2xl text-ink-900 sm:text-3xl">
           {invitation.groom_name || "—"} &amp; {invitation.bride_name || "—"}
         </h1>
 

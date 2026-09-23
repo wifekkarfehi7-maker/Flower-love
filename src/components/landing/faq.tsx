@@ -12,8 +12,8 @@ export function Faq() {
     <section id="faq" className="bg-ink-50/60 py-24 sm:py-32">
       <Container className="max-w-3xl">
         <Reveal className="text-center">
-          <span className="text-sm font-semibold tracking-wide text-gold-600">{t.faq.eyebrow}</span>
-          <h2 className="mt-3 text-balance font-heading text-3xl font-bold text-ink-900 sm:text-4xl">
+          <span className="text-sm font-medium tracking-wide text-gold-600">{t.faq.eyebrow}</span>
+          <h2 className="mt-3 text-balance font-heading text-3xl text-ink-900 sm:text-4xl">
             {t.faq.title}
           </h2>
         </Reveal>

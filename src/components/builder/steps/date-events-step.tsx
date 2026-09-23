@@ -117,7 +117,7 @@ export function DateEventsStep({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+        <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
         <SaveIndicator status={saveStatus} />
       </div>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>
@@ -148,7 +148,7 @@ export function DateEventsStep({
       <div className="mt-8">
         <div className="flex items-center justify-between">
           <Label className="mb-0">{t.events}</Label>
-          <Button type="button" variant="outline" size="sm" onClick={addEvent}>
+          <Button type="button" variant="secondary" size="sm" onClick={addEvent}>
             <Plus className="h-3.5 w-3.5" />
             {t.addEvent}
           </Button>

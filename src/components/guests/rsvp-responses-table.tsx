@@ -79,14 +79,14 @@ export function RsvpResponsesTable({ rsvps: initial, locale }: { rsvps: RsvpRow[
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="font-heading text-lg font-bold text-ink-900">{t.title}</h2>
+        <h2 className="font-heading text-lg text-ink-900">{t.title}</h2>
         {rsvps.length > 0 && (
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" onClick={() => exportToCsv(rsvps, columns, "rsvp-responses.csv")}>
+            <Button variant="secondary" size="sm" onClick={() => exportToCsv(rsvps, columns, "rsvp-responses.csv")}>
               <Download className="h-3.5 w-3.5" />
               {t.csv}
             </Button>
-            <Button variant="outline" size="sm" onClick={() => exportToExcel(rsvps, columns, "rsvp-responses.xls")}>
+            <Button variant="secondary" size="sm" onClick={() => exportToExcel(rsvps, columns, "rsvp-responses.xls")}>
               <FileSpreadsheet className="h-3.5 w-3.5" />
               {t.excel}
             </Button>

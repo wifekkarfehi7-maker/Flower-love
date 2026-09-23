@@ -40,7 +40,7 @@ export function ResetPasswordForm() {
       <AuthCard title={t.auth.resetPasswordTitle}>
         <div className="text-center">
           <CheckCircle2 className="mx-auto h-10 w-10 text-gold-500" />
-          <p className="mt-4 font-heading text-lg font-semibold text-ink-900">
+          <p className="mt-4 font-heading text-lg text-ink-900">
             {t.auth.resetPasswordSuccessTitle}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-ink-500">{t.auth.resetPasswordSuccessDescription}</p>
@@ -109,7 +109,7 @@ export function ResetPasswordForm() {
           <FieldError>{errors.confirmPassword && t.auth[errors.confirmPassword]}</FieldError>
         </div>
 
-        <Button type="submit" variant="gold" size="lg" className="w-full" disabled={submitting}>
+        <Button type="submit" variant="primary" size="lg" className="w-full" disabled={submitting}>
           {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {submitting ? t.auth.resetPasswordCtaLoading : t.auth.resetPasswordCta}
         </Button>

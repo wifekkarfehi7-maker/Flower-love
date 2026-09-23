@@ -54,9 +54,9 @@ export function RegisterForm() {
       <AuthCard title={t.auth.registerTitle}>
         <div className="text-center">
           <MailCheck className="mx-auto h-10 w-10 text-gold-500" />
-          <p className="mt-4 font-heading text-lg font-semibold text-ink-900">{t.auth.registerSuccessTitle}</p>
+          <p className="mt-4 font-heading text-lg text-ink-900">{t.auth.registerSuccessTitle}</p>
           <p className="mt-2 text-sm leading-relaxed text-ink-500">{t.auth.registerSuccessDescription}</p>
-          <Button asChild variant="outline" className="mt-6">
+          <Button asChild variant="secondary" className="mt-6">
             <Link href="/login">{t.auth.loginLink}</Link>
           </Button>
         </div>
@@ -232,14 +232,14 @@ export function RegisterForm() {
       </label>
       <FieldError>{errors.agreeTerms && t.auth[errors.agreeTerms]}</FieldError>
 
-      <Button type="submit" variant="gold" size="lg" className="w-full" disabled={submitting}>
+      <Button type="submit" variant="primary" size="lg" className="w-full" disabled={submitting}>
         {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
         {submitting ? t.auth.registerCtaLoading : t.auth.registerCta}
       </Button>
 
       <p className="text-center text-sm text-ink-500">
         {t.auth.haveAccount}{" "}
-        <Link href="/login" className="font-semibold text-gold-700 underline-offset-2 hover:underline">
+        <Link href="/login" className="font-medium text-gold-700 underline-offset-2 hover:underline">
           {t.auth.loginLink}
         </Link>
       </p>

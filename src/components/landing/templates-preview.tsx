@@ -13,31 +13,20 @@ import type { TemplateCardItem } from "@/lib/templates/presentation";
  * separately; this section only stops showing invented cards.
  */
 export function TemplatesPreview({ items }: { items: TemplateCardItem[] }) {
-  const { t, locale } = useTranslation();
-  const isArabic = locale === "ar";
+  const { t } = useTranslation();
 
   return (
-    <section id="templates" className="bg-background py-24 sm:py-32">
+    <section id="templates" className="bg-background py-section">
       <Container>
         <div className="flex flex-col gap-6 border-b border-ink-900/10 pb-8 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-xl">
-            <p className={isArabic ? "text-[0.8rem] text-ink-400" : "text-[0.66rem] uppercase tracking-[0.3em] text-ink-400"}>
-              {t.templates.eyebrow}
-            </p>
-            <h2
-              className={
-                isArabic
-                  ? "mt-4 font-editorial text-[2.1rem] leading-[1.4] text-ink-900 sm:text-[2.6rem]"
-                  : "mt-4 font-editorial text-[2.2rem] font-light leading-[1.1] text-ink-900 sm:text-[2.8rem]"
-              }
-            >
-              {t.templates.title}
-            </h2>
-            <p className="mt-4 text-[0.95rem] leading-relaxed text-ink-500">{t.templates.description}</p>
+            <p className="type-meta">{t.templates.eyebrow}</p>
+            <h2 className="type-h1 mt-5">{t.templates.title}</h2>
+            <p className="type-lead mt-5">{t.templates.description}</p>
           </div>
           <Link
             href="/templates"
-            className="self-start border-b border-ink-900 pb-0.5 text-[0.85rem] text-ink-900 outline-offset-4 transition-colors hover:border-ink-400 hover:text-ink-600 focus-visible:outline focus-visible:outline-1 focus-visible:outline-ink-900 sm:self-auto"
+            className="type-small self-start border-b border-ink-900 pb-0.5 text-ink-900 outline-offset-4 transition-colors hover:border-ink-400 hover:text-ink-600 focus-visible:outline focus-visible:outline-1 focus-visible:outline-ink-900 sm:self-auto"
           >
             {t.templates.viewAll}
           </Link>

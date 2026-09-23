@@ -19,6 +19,10 @@ import { getCurrentUserAndProfile } from "@/lib/auth/get-current-user";
 import { SITE_NAME, SITE_URL } from "@/lib/config";
 
 const playfair = Playfair_Display({
+  // No metric fallback: next/font's fallback face is local("Times New Roman")
+  // with no unicode-range, and on Windows it carries Arabic — so it would
+  // draw every Arabic glyph before the stack reached Amiri or Naskh.
+  adjustFontFallback: false,
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   variable: "--font-playfair",
@@ -49,6 +53,10 @@ const cairo = Cairo({
 /* Invitation typography: editorial serif, Roman display caps, copperplate script,
    and two Arabic faces (Naskh for reading, Kufi for display). */
 const cormorant = Cormorant_Garamond({
+  // No metric fallback: next/font's fallback face is local("Times New Roman")
+  // with no unicode-range, and on Windows it carries Arabic — so it would
+  // draw every Arabic glyph before the stack reached Amiri or Naskh.
+  adjustFontFallback: false,
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
@@ -57,6 +65,10 @@ const cormorant = Cormorant_Garamond({
 });
 
 const cinzel = Cinzel({
+  // No metric fallback: next/font's fallback face is local("Times New Roman")
+  // with no unicode-range, and on Windows it carries Arabic — so it would
+  // draw every Arabic glyph before the stack reached Amiri or Naskh.
+  adjustFontFallback: false,
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-cinzel",
@@ -64,6 +76,10 @@ const cinzel = Cinzel({
 });
 
 const pinyon = Pinyon_Script({
+  // No metric fallback: next/font's fallback face is local("Times New Roman")
+  // with no unicode-range, and on Windows it carries Arabic — so it would
+  // draw every Arabic glyph before the stack reached Amiri or Naskh.
+  adjustFontFallback: false,
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-pinyon",
@@ -117,14 +133,21 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { user, profile } = await getCurrentUserAndProfile();
 
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
+    /*
+     * The font variables live on <html>, the same element that declares the
+     * aliases in globals.css (--font-heading: var(--font-cormorant) …). A
+     * custom property resolves where it is declared: with these on <body>,
+     * every alias on :root was invalid and the whole site fell through to
+     * the operating system's default font.
+     */
+    <html lang="ar" dir="rtl" suppressHydrationWarning className={`${playfair.variable} ${inter.variable} ${amiri.variable} ${cairo.variable} ${cormorant.variable} ${cinzel.variable} ${pinyon.variable} ${notoNaskh.variable} ${notoKufi.variable}`}>
       <head>
         <Script id="no-flash-locale" strategy="beforeInteractive">
           {NO_FLASH_LOCALE_SCRIPT}
         </Script>
       </head>
       <body
-        className={`${playfair.variable} ${inter.variable} ${amiri.variable} ${cairo.variable} ${cormorant.variable} ${cinzel.variable} ${pinyon.variable} ${notoNaskh.variable} ${notoKufi.variable} font-body`}
+        className="font-body"
         suppressHydrationWarning
       >
         <LanguageProvider>

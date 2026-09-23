@@ -71,7 +71,7 @@ export function TypographyStep({
 
   return (
     <div>
-      <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+      <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2">
@@ -117,7 +117,7 @@ export function TypographyStep({
       </div>
 
       <div className="mt-8 rounded-2xl border border-ink-100 bg-ink-50/60 p-8 text-center">
-        <p className="text-2xl font-bold" style={{ fontFamily: fontFamilyFor(heading) }}>
+        <p className="text-2xl font-medium" style={{ fontFamily: fontFamilyFor(heading) }}>
           {t.preview}
         </p>
         <p className="mt-2 text-sm" style={{ fontFamily: fontFamilyFor(body) }}>

@@ -44,9 +44,9 @@ export default function NewInvitationPage() {
   }, [loading, user, router]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-ink-50/40">
-      <Loader2 className="h-8 w-8 animate-spin text-gold-500" />
-      <p className="text-sm text-ink-500">{LABEL[locale]}</p>
+    <div data-ui="" className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
+      <Loader2 strokeWidth={1.25} className="h-7 w-7 animate-spin text-ink-400" />
+      <p className="type-small">{LABEL[locale]}</p>
     </div>
   );
 }

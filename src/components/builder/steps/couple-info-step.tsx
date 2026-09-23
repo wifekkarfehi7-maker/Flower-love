@@ -95,7 +95,7 @@ export function CoupleInfoStep({
 
   return (
     <div>
-      <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+      <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>
 
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -140,7 +140,7 @@ export function CoupleInfoStep({
             onPatch({ invitation_text: e.target.value });
           }}
           rows={4}
-          className="mt-1.5 w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-base text-ink-900 shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="mt-1.5 w-full rounded-sm border border-ink-900/15 bg-paper-raised px-4 py-3 text-base text-ink-900 outline-none focus-visible:ring-2 focus-visible:ring-ring"
         />
       </div>
     </div>

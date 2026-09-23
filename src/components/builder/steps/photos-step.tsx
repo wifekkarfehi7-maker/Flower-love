@@ -84,12 +84,12 @@ function SortableThumb({
       className={cn(
         "group relative aspect-square cursor-grab overflow-hidden rounded-xl border-2 active:cursor-grabbing",
         isCover ? "border-gold-500" : "border-transparent",
-        isDragging && "opacity-60 shadow-lg"
+        isDragging && "opacity-60 shadow-float"
       )}
     >
       <Image src={image.url ?? ""} alt="" fill className="object-cover" sizes="150px" />
       {isCover && (
-        <span className="absolute start-1.5 top-1.5 flex items-center gap-1 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-semibold text-white">
+        <span className="absolute start-1.5 top-1.5 flex items-center gap-1 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-medium text-white">
           <Star className="h-2.5 w-2.5" fill="currentColor" />
           {label.cover}
         </span>
@@ -184,7 +184,7 @@ export function PhotosStep({
 
   return (
     <div>
-      <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+      <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>
       {error && <p className="mt-2 text-sm text-destructive">{t.error}</p>}
 

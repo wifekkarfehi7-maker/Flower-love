@@ -37,7 +37,7 @@ export function AuditLogView({ entries }: { entries: AdminAuditEntry[] }) {
 
   return (
     <div className="mt-6">
-      <h1 className="font-heading text-2xl font-bold text-ink-900">{t.title}</h1>
+      <h1 className="font-heading text-2xl text-ink-900">{t.title}</h1>
 
       {entries.length === 0 ? (
         <div className="mt-6 rounded-2xl border border-dashed border-ink-200 p-10 text-center text-sm text-ink-500">

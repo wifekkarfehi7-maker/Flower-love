@@ -18,7 +18,7 @@ const en: Dictionary = {
   },
   hero: {
     badge: "A first in Tunisia",
-    title: "Create your digital wedding invitation in minutes ❤️",
+    title: "Create your digital wedding invitation in minutes",
     description:
       "Choose your design, add your details and photos, and share your most beautiful moments with your loved ones.",
     ctaPrimary: "Create invitation",
@@ -30,8 +30,8 @@ const en: Dictionary = {
     stat3Value: "WhatsApp",
     stat3Label: "simple, secure payment",
     previewCoupleNames: "Mohamed & Sirine",
-    previewDate: "09 / 09 / 2026",
-    previewOpen: "Open Invitation ❤️",
+    previewDate: "17 · 07 · 2027",
+    previewOpen: "Open Invitation",
   },
   howItWorks: {
     eyebrow: "Wonderfully simple",
@@ -173,7 +173,7 @@ const en: Dictionary = {
     privacy: "Privacy Policy",
     terms: "Terms of Service",
     rights: "All rights reserved.",
-    madeWith: "Made with love in Tunisia 🇹🇳",
+    madeWith: "Made with love in Tunisia",
   },
   comingSoon: {
     badge: "Coming soon",
@@ -219,7 +219,7 @@ const en: Dictionary = {
     registerCtaLoading: "Creating account...",
     haveAccount: "Already have an account?",
     loginLink: "Log in",
-    registerSuccessTitle: "Check your email ✓",
+    registerSuccessTitle: "Check your email",
     registerSuccessDescription:
       "We've sent a confirmation link to your email. Click it to activate your account, then log in to start creating your invitation.",
 
@@ -241,7 +241,7 @@ const en: Dictionary = {
     forgotPasswordDescription: "Enter your email and we'll send you a password reset link.",
     forgotPasswordCta: "Send reset link",
     forgotPasswordCtaLoading: "Sending...",
-    forgotPasswordSuccessTitle: "Check your email ✓",
+    forgotPasswordSuccessTitle: "Check your email",
     forgotPasswordSuccessDescription: "If that email is registered with us, a password reset link will arrive shortly.",
 
     resetPasswordTitle: "Set a new password",
@@ -249,7 +249,7 @@ const en: Dictionary = {
     newPasswordLabel: "New password",
     resetPasswordCta: "Save password",
     resetPasswordCtaLoading: "Saving...",
-    resetPasswordSuccessTitle: "Password updated ✓",
+    resetPasswordSuccessTitle: "Password updated",
     resetPasswordSuccessDescription: "You can now log in with your new password.",
     goToLogin: "Go to login",
 

@@ -80,7 +80,7 @@ export function AdminInvitationsView({
 
   return (
     <div className="mt-6">
-      <h1 className="font-heading text-2xl font-bold text-ink-900">{t.title}</h1>
+      <h1 className="font-heading text-2xl text-ink-900">{t.title}</h1>
 
       <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
         <Link

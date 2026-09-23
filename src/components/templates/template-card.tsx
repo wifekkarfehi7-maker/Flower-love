@@ -106,20 +106,23 @@ export function TemplateCard({
         />
       </Link>
 
-      <div className="mt-5 flex items-baseline justify-between gap-3 text-[0.62rem] text-ink-400">
-        <span className="tabular-nums tracking-[0.1em]">{String(index + 1).padStart(2, "0")}</span>
-        <span className={cn(!isArabic && "uppercase tracking-[0.16em]")}>{OPENING_LABELS[item.opening][locale]}</span>
+      <div className="mt-5 flex items-baseline justify-between gap-3">
+        <span className="type-meta type-numeral">{String(index + 1).padStart(2, "0")}</span>
+        <span className="type-meta">{OPENING_LABELS[item.opening][locale]}</span>
       </div>
 
-      <h3 className="mt-2 font-editorial text-[1.35rem] leading-snug text-ink-900">{primaryName}</h3>
+      <h3 className="type-h3 mt-2">{primaryName}</h3>
       {secondaryName && (
-        <p className={cn("mt-1 text-ink-400", isArabic ? "text-[0.6rem] uppercase tracking-[0.22em]" : "text-[0.75rem]")}>
+        <p
+          lang={isArabic ? "fr" : "ar"}
+          className={cn("mt-1 text-ink-400", isArabic ? "text-[0.6rem] uppercase tracking-[0.22em]" : "text-[0.8125rem]")}
+        >
           {secondaryName}
         </p>
       )}
 
       {item.blurb && (
-        <p className="mt-3 line-clamp-3 text-[0.8rem] leading-relaxed text-ink-500 md:line-clamp-none">
+        <p className="type-small mt-3 line-clamp-3 md:line-clamp-none">
           {item.blurb[locale]}
         </p>
       )}

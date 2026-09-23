@@ -3,7 +3,9 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Heart, X } from "lucide-react";
+
+import { Wordmark } from "@/components/brand/wordmark";
+import { ArrowLeft, ArrowRight, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SaveIndicator } from "./save-indicator";
@@ -201,23 +203,23 @@ export function WeddingBuilder({
   const isLastStep = stepIndex === STEPS.length - 1;
 
   return (
-    <div className="min-h-screen bg-ink-50/40">
-      <header className="sticky top-0 z-40 border-b border-ink-100 bg-white/95 backdrop-blur-sm">
+    <div data-ui="" className="min-h-screen bg-background">
+      <header className="sticky top-0 z-40 border-b border-ink-900/10 bg-background">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <Link href="/my-invitations" className="flex items-center gap-2 shrink-0">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gold-gradient">
-              <Heart className="h-4 w-4 text-ink-950" fill="currentColor" />
+          <Link href="/my-invitations" aria-label="Flower & Love" className="shrink-0">
+            <Wordmark size="sm" className="hidden sm:inline" />
+            <span lang="en" aria-hidden="true" className="wordmark text-[1.2rem] sm:hidden">
+              F<em>&amp;</em>L
             </span>
-            <span className="hidden font-heading text-sm font-semibold text-ink-900 sm:inline">Flower &amp; Love</span>
           </Link>
 
           <div className="flex flex-1 items-center gap-3">
-            <span className="shrink-0 text-xs font-medium text-ink-500">
+            <span className="type-meta type-numeral shrink-0">
               {t.step} {stepIndex + 1} {t.of} {STEPS.length}
             </span>
-            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-100">
+            <div className="h-px flex-1 bg-ink-900/10">
               <div
-                className="h-full rounded-full bg-gold-gradient transition-all duration-500"
+                className="h-px bg-ink-900 transition-[width] duration-500"
                 style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }}
               />
             </div>
@@ -260,17 +262,17 @@ export function WeddingBuilder({
             ))}
           </div>
 
-          <div className="rounded-[2rem] border border-ink-100 bg-white p-5 shadow-card sm:p-8">
+          <div className="rounded-md border border-ink-900/10 bg-paper-raised p-5 sm:p-10">
             {STEPS[stepIndex]}
           </div>
 
           <div className="mt-6 flex items-center justify-between pb-20 xl:pb-0">
-            <Button variant="outline" onClick={() => goTo(stepIndex - 1)} disabled={stepIndex === 0}>
+            <Button variant="secondary" onClick={() => goTo(stepIndex - 1)} disabled={stepIndex === 0}>
               <BackIcon className="h-4 w-4" />
               {t.back}
             </Button>
             {!isLastStep && (
-              <Button variant="gold" onClick={() => goTo(stepIndex + 1)}>
+              <Button variant="primary" onClick={() => goTo(stepIndex + 1)}>
                 {t.next}
                 <NextIcon className="h-4 w-4" />
               </Button>

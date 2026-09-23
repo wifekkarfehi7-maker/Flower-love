@@ -18,7 +18,7 @@ const fr: Dictionary = {
   },
   hero: {
     badge: "Une première en Tunisie",
-    title: "Créez votre faire-part de mariage numérique en quelques minutes ❤️",
+    title: "Créez votre faire-part de mariage numérique en quelques minutes",
     description:
       "Choisissez votre design, ajoutez vos informations et vos photos, et partagez vos plus beaux moments avec vos proches.",
     ctaPrimary: "Créer une invitation",
@@ -30,8 +30,8 @@ const fr: Dictionary = {
     stat3Value: "WhatsApp",
     stat3Label: "paiement simple et sûr",
     previewCoupleNames: "Mohamed & Sirine",
-    previewDate: "09 / 09 / 2026",
-    previewOpen: "Ouvrir l'invitation ❤️",
+    previewDate: "17 · 07 · 2027",
+    previewOpen: "Ouvrir l'invitation",
   },
   howItWorks: {
     eyebrow: "En toute simplicité",
@@ -173,7 +173,7 @@ const fr: Dictionary = {
     privacy: "Politique de confidentialité",
     terms: "Conditions d'utilisation",
     rights: "Tous droits réservés.",
-    madeWith: "Fait avec amour en Tunisie 🇹🇳",
+    madeWith: "Fait avec amour en Tunisie",
   },
   comingSoon: {
     badge: "Bientôt disponible",
@@ -219,7 +219,7 @@ const fr: Dictionary = {
     registerCtaLoading: "Création du compte...",
     haveAccount: "Vous avez déjà un compte ?",
     loginLink: "Connexion",
-    registerSuccessTitle: "Vérifiez votre e-mail ✓",
+    registerSuccessTitle: "Vérifiez votre e-mail",
     registerSuccessDescription:
       "Nous vous avons envoyé un lien de confirmation par e-mail. Cliquez dessus pour activer votre compte, puis connectez-vous pour créer votre invitation.",
 
@@ -241,7 +241,7 @@ const fr: Dictionary = {
     forgotPasswordDescription: "Entrez votre e-mail et nous vous enverrons un lien de réinitialisation du mot de passe.",
     forgotPasswordCta: "Envoyer le lien de récupération",
     forgotPasswordCtaLoading: "Envoi...",
-    forgotPasswordSuccessTitle: "Vérifiez votre e-mail ✓",
+    forgotPasswordSuccessTitle: "Vérifiez votre e-mail",
     forgotPasswordSuccessDescription: "Si cet e-mail est enregistré chez nous, vous recevrez sous peu un lien de réinitialisation du mot de passe.",
 
     resetPasswordTitle: "Définir un nouveau mot de passe",
@@ -249,7 +249,7 @@ const fr: Dictionary = {
     newPasswordLabel: "Nouveau mot de passe",
     resetPasswordCta: "Enregistrer le mot de passe",
     resetPasswordCtaLoading: "Enregistrement...",
-    resetPasswordSuccessTitle: "Mot de passe mis à jour ✓",
+    resetPasswordSuccessTitle: "Mot de passe mis à jour",
     resetPasswordSuccessDescription: "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
     goToLogin: "Aller à la connexion",
 

@@ -40,7 +40,7 @@ export function StatTiles({
         {tiles.map((tile) => (
           <div key={tile.label} className="rounded-2xl border border-ink-100 bg-white p-4 text-center">
             <tile.icon className={`mx-auto h-5 w-5 ${tile.color}`} />
-            <p className="mt-2 font-heading text-2xl font-bold text-ink-900">{tile.value}</p>
+            <p className="mt-2 font-heading text-2xl text-ink-900">{tile.value}</p>
             <p className="mt-0.5 text-xs text-ink-500">{tile.label}</p>
           </div>
         ))}

@@ -128,9 +128,9 @@ export function AdminPricingView({ plans: initialPlans }: { plans: PricingPlanRe
   return (
     <div className="mt-6">
       <div className="flex items-center justify-between">
-        <h1 className="font-heading text-2xl font-bold text-ink-900">{t.title}</h1>
+        <h1 className="font-heading text-2xl text-ink-900">{t.title}</h1>
         {!creating && (
-          <Button variant="gold" size="sm" onClick={() => setCreating(true)}>
+          <Button variant="primary" size="sm" onClick={() => setCreating(true)}>
             <Plus className="h-4 w-4" />
             {t.newPlan}
           </Button>
@@ -302,7 +302,7 @@ function PlanForm({
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={2}
-          className="flex w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm text-ink-900 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex w-full rounded-sm border border-ink-900/15 bg-paper-raised px-4 py-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         />
       </div>
       <div className="sm:col-span-2">
@@ -311,7 +311,7 @@ function PlanForm({
           value={featuresText}
           onChange={(e) => setFeaturesText(e.target.value)}
           rows={4}
-          className="flex w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm text-ink-900 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex w-full rounded-sm border border-ink-900/15 bg-paper-raised px-4 py-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         />
       </div>
       <div className="flex items-center gap-4 sm:col-span-2">
@@ -325,7 +325,7 @@ function PlanForm({
         </label>
       </div>
       <div className="flex items-center gap-2 sm:col-span-2">
-        <Button variant="gold" size="sm" onClick={handleSubmit} disabled={saving}>
+        <Button variant="primary" size="sm" onClick={handleSubmit} disabled={saving}>
           {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
           {t.save}
         </Button>

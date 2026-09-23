@@ -142,7 +142,7 @@ export function CompleteProfileForm() {
           </Select>
         </div>
 
-        <Button type="submit" variant="gold" size="lg" className="w-full" disabled={submitting}>
+        <Button type="submit" variant="primary" size="lg" className="w-full" disabled={submitting}>
           {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
           {submitting ? t.auth.completeProfileCtaLoading : t.auth.completeProfileCta}
         </Button>

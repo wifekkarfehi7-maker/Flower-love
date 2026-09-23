@@ -188,7 +188,7 @@ export function OrderDetailView({ detail }: { detail: AdminOrderDetail }) {
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="font-heading text-2xl font-bold text-ink-900" dir="ltr">
+          <h1 className="font-heading text-2xl text-ink-900" dir="ltr">
             {t.orderNumber} {order.order_number}
           </h1>
         </div>
@@ -197,7 +197,7 @@ export function OrderDetailView({ detail }: { detail: AdminOrderDetail }) {
 
       <div className="mt-6 grid gap-5 lg:grid-cols-2">
         <Card className="p-5">
-          <h2 className="font-heading text-base font-bold text-ink-900">{t.customer}</h2>
+          <h2 className="font-heading text-base text-ink-900">{t.customer}</h2>
           <dl className="mt-3 flex flex-col gap-2 text-sm">
             <div className="flex items-center justify-between">
               <dt className="text-ink-500">{t.name}</dt>
@@ -221,7 +221,7 @@ export function OrderDetailView({ detail }: { detail: AdminOrderDetail }) {
         </Card>
 
         <Card className="p-5">
-          <h2 className="font-heading text-base font-bold text-ink-900">{t.invitation}</h2>
+          <h2 className="font-heading text-base text-ink-900">{t.invitation}</h2>
           <dl className="mt-3 flex flex-col gap-2 text-sm">
             <div className="flex items-center justify-between">
               <dt className="text-ink-500">{t.couple}</dt>
@@ -243,14 +243,14 @@ export function OrderDetailView({ detail }: { detail: AdminOrderDetail }) {
             </div>
           </dl>
           <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-            <Button asChild variant="outline" size="sm" className="flex-1">
+            <Button asChild variant="secondary" size="sm" className="flex-1">
               <Link href={`/invitations/${invitation.id}/preview`} target="_blank">
                 {t.viewInvitation}
                 <ExternalLink className="h-3.5 w-3.5" />
               </Link>
             </Button>
             {invitation.status === "active" && invitation.slug && (
-              <Button asChild variant="gold" size="sm" className="flex-1">
+              <Button asChild variant="primary" size="sm" className="flex-1">
                 <Link href={`${SITE_URL}/invite/${invitation.slug}`} target="_blank">
                   {t.viewPublic}
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -261,7 +261,7 @@ export function OrderDetailView({ detail }: { detail: AdminOrderDetail }) {
         </Card>
 
         <Card className="p-5 lg:col-span-2">
-          <h2 className="font-heading text-base font-bold text-ink-900">{t.orderInfo}</h2>
+          <h2 className="font-heading text-base text-ink-900">{t.orderInfo}</h2>
           <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
             <div className="flex items-center justify-between">
               <dt className="text-ink-500">{t.plan}</dt>
@@ -309,19 +309,19 @@ export function OrderDetailView({ detail }: { detail: AdminOrderDetail }) {
 
       <div className="mt-6 flex flex-wrap gap-3">
         {canConfirmPayment && (
-          <Button variant="gold" onClick={handleConfirmPayment} disabled={busy}>
+          <Button variant="primary" onClick={handleConfirmPayment} disabled={busy}>
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
             {t.confirmPayment}
           </Button>
         )}
         {canActivate && (
-          <Button variant="gold" onClick={handleActivate} disabled={busy}>
+          <Button variant="primary" onClick={handleActivate} disabled={busy}>
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <CheckCircle2 className="h-4 w-4" />}
             {t.activate}
           </Button>
         )}
         {canCancel && (
-          <Button variant="outline" onClick={handleCancel} disabled={busy}>
+          <Button variant="secondary" onClick={handleCancel} disabled={busy}>
             <XCircle className="h-4 w-4" />
             {t.cancelOrder}
           </Button>

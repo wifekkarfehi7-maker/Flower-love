@@ -40,28 +40,17 @@ const STRINGS = {
 export function TemplateCollection({ items }: { items: TemplateCardItem[] }) {
   const { locale } = useTranslation();
   const t = STRINGS[locale];
-  const isArabic = locale === "ar";
 
   return (
     <section className="bg-background">
-      <Container className="pb-24 pt-14 sm:pb-32 sm:pt-20">
+      <Container className="pb-section pt-section-sm">
         <header className="max-w-2xl">
-          <p className={isArabic ? "text-[0.8rem] text-ink-400" : "text-[0.66rem] uppercase tracking-[0.3em] text-ink-400"}>
-            {t.eyebrow}
-          </p>
-          <h1
-            className={
-              isArabic
-                ? "mt-5 font-editorial text-[2.4rem] leading-[1.35] text-ink-900 sm:text-[3.3rem]"
-                : "mt-5 font-editorial text-[2.5rem] font-light leading-[1.08] text-ink-900 sm:text-[3.6rem]"
-            }
-          >
-            {t.title}
-          </h1>
-          <p className="mt-6 max-w-xl text-[0.95rem] leading-relaxed text-ink-500">{t.body}</p>
+          <p className="type-meta">{t.eyebrow}</p>
+          <h1 className="type-display mt-6">{t.title}</h1>
+          <p className="type-lead mt-7 max-w-xl">{t.body}</p>
         </header>
 
-        <div className="mt-12 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-ink-900/10 pt-4 text-[0.72rem] text-ink-400 sm:mt-16">
+        <div className="type-small mt-block flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-ink-900/10 pt-4 text-ink-400">
           <span>{t.count(items.length)}</span>
           <span>{t.languages}</span>
         </div>

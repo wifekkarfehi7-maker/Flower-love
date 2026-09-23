@@ -2,10 +2,12 @@
 
 import * as React from "react";
 import Link from "next/link";
+
+import { Wordmark } from "@/components/brand/wordmark";
 import { usePathname } from "next/navigation";
 import {
   ClipboardList,
-  Heart,
+  Mail,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -69,7 +71,7 @@ export function AdminShell({ adminName, children }: { adminName: string | null; 
   const navItems = [
     { href: "/admin", label: t.overview, icon: LayoutDashboard },
     { href: "/admin/orders", label: t.orders, icon: ClipboardList },
-    { href: "/admin/invitations", label: t.invitations, icon: Heart },
+    { href: "/admin/invitations", label: t.invitations, icon: Mail },
     { href: "/admin/users", label: t.users, icon: Users },
     { href: "/admin/templates", label: t.templates, icon: Palette },
     { href: "/admin/pricing", label: t.pricing, icon: Tags },
@@ -132,18 +134,13 @@ export function AdminShell({ adminName, children }: { adminName: string | null; 
   }
 
   return (
-    <div className="flex min-h-screen bg-ink-50/40">
+    <div data-ui="" className="flex min-h-screen bg-background">
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col bg-ink-950 py-6 lg:flex">
         <div className="px-5">
-          <Link href="/admin" className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gold-gradient shadow-soft">
-              <Heart className="h-4 w-4 text-ink-950" fill="currentColor" />
-            </span>
-            <div>
-              <p className="font-heading text-sm font-semibold text-white">Flower &amp; Love</p>
-              <p className="text-[11px] text-ink-400">{t.badge}</p>
-            </div>
+          <Link href="/admin" className="block">
+            <Wordmark size="sm" className="text-paper" />
+            <p className="type-meta mt-2 text-ink-400">{t.badge}</p>
           </Link>
         </div>
         <div className="mt-6 flex-1 overflow-y-auto">{navList()}</div>
@@ -155,7 +152,7 @@ export function AdminShell({ adminName, children }: { adminName: string | null; 
         <div className="fixed inset-0 z-50 flex lg:hidden">
           <div className="flex h-full w-72 flex-col bg-ink-950 py-6 animate-fade-in">
             <div className="flex items-center justify-between px-5">
-              <p className="font-heading text-sm font-semibold text-white">{t.badge}</p>
+              <p className="type-meta text-ink-300">{t.badge}</p>
               <button
                 type="button"
                 onClick={() => setMobileOpen(false)}
@@ -188,7 +185,7 @@ export function AdminShell({ adminName, children }: { adminName: string | null; 
           >
             <Menu className="h-5 w-5" />
           </button>
-          <p className="font-heading text-sm font-semibold text-ink-900">{t.badge}</p>
+          <p className="font-heading text-sm text-ink-900">{t.badge}</p>
           <span className="w-9" />
         </header>
 

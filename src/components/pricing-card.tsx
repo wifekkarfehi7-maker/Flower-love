@@ -35,38 +35,35 @@ export function PricingCard({
   return (
     <Card
       className={cn(
-        "relative flex h-full flex-col overflow-hidden p-2",
-        highlighted ? "border-gold-400/60 shadow-luxe" : "border-ink-100"
+        "relative flex h-full flex-col",
+        highlighted ? "border-ink-900" : "border-ink-900/10"
       )}
     >
-      {highlighted && (
-        <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1.5 bg-gold-gradient" />
-      )}
-      <div className="flex flex-1 flex-col p-6">
+      <div className="flex flex-1 flex-col p-7 sm:p-8">
         {badgeLabel && (
           <Badge variant="gold" className="mb-4 w-fit">
             {badgeLabel}
           </Badge>
         )}
-        <h3 className="font-heading text-xl font-bold text-ink-900">{name}</h3>
-        <p className="mt-1.5 text-sm text-ink-500">{description}</p>
+        <h3 className="type-h2">{name}</h3>
+        <p className="type-small mt-2">{description}</p>
 
-        <div className="mt-6 flex items-baseline gap-2">
-          <span className="font-heading text-4xl font-bold text-ink-900">{price}</span>
-          <span className="text-sm font-semibold text-ink-500">{currency}</span>
-          <span className="text-xs text-ink-400">/ {period}</span>
+        <div className="mt-8 flex items-baseline gap-2 border-t border-ink-900/10 pt-6">
+          <span className="type-display type-numeral">{price}</span>
+          <span className="type-small text-ink-700">{currency}</span>
+          <span className="type-small text-ink-400">/ {period}</span>
         </div>
 
-        <ul className="mt-6 flex flex-1 flex-col gap-3">
+        <ul className="mt-8 flex flex-1 flex-col gap-3.5">
           {features.map((feature) => (
-            <li key={feature} className="flex items-start gap-2.5 text-sm text-ink-600">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" />
+            <li key={feature} className="type-small flex items-start gap-3 text-ink-600">
+              <Check strokeWidth={1.5} className="mt-1 h-3.5 w-3.5 shrink-0 text-gold-600" />
               <span>{feature}</span>
             </li>
           ))}
         </ul>
 
-        <Button asChild variant={highlighted ? "gold" : "outline"} className="mt-8 w-full">
+        <Button asChild variant={highlighted ? "dark" : "secondary"} className="mt-10 w-full">
           <Link href={ctaHref}>{ctaLabel}</Link>
         </Button>
       </div>

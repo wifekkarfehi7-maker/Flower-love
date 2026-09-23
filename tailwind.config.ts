@@ -52,17 +52,26 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        // Antique brass, not yellow. Gold is an accent in this system — rules,
+        // monograms, seals, selected states — never a surface. Desaturated
+        // (~30%) so it reads as metal on paper rather than as a highlighter.
         gold: {
-          50: "#fdf9ee",
-          100: "#f8edc8",
-          200: "#f0da96",
-          300: "#e6c165",
-          400: "#dcaa42",
-          500: "#c9962e",
-          600: "#a97622",
-          700: "#87591f",
-          800: "#6f481f",
-          900: "#5e3d1e",
+          50: "#FAF7F1",
+          100: "#F2ECE0",
+          200: "#E4D8C1",
+          300: "#D2BF9B",
+          400: "#BFA47A",
+          500: "#A88B5C",
+          600: "#8E7348",
+          700: "#735C3A",
+          800: "#5B4930",
+          900: "#463927",
+        },
+        // The page itself: warm paper, a whiter card stock, a deeper band.
+        paper: {
+          DEFAULT: "#FBF9F5",
+          raised: "#FFFFFF",
+          sunk: "#F4F0E8",
         },
         ink: {
           50: "#f5f5f4",
@@ -96,21 +105,39 @@ const config: Config = {
         // Cormorant doesn't have. Same pairing the invitations use.
         editorial: ["var(--font-cormorant)", "var(--font-amiri)", "Georgia", "serif"],
       },
+      /*
+       * Three radii, on purpose. 0 for editorial blocks and imagery, 2px for
+       * controls (buttons, inputs, badges), 4px for containers (cards,
+       * menus). The larger keys collapse onto that scale so legacy
+       * rounded-xl / rounded-2xl can't reintroduce floating app cards.
+       * `full` stays for true circles: avatars, dots, icon buttons.
+       */
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        xl: "calc(var(--radius) + 6px)",
-        "2xl": "calc(var(--radius) + 14px)",
+        none: "0",
+        sm: "2px",
+        DEFAULT: "2px",
+        md: "4px",
+        lg: "4px",
+        xl: "6px",
+        "2xl": "6px",
+        "3xl": "6px",
       },
+      /*
+       * Depth comes from paper, rules and contrast — not glow. The only real
+       * shadow is `float`, for layers that genuinely sit above the page
+       * (menus, popovers). No coloured shadows.
+       */
       boxShadow: {
-        soft: "0 2px 20px -4px rgb(20 18 16 / 0.08)",
-        luxe: "0 12px 45px -12px rgb(169 118 34 / 0.35)",
-        card: "0 8px 30px -10px rgb(20 18 16 / 0.12)",
+        hairline: "0 0 0 1px rgb(20 18 16 / 0.08)",
+        float: "0 18px 40px -24px rgb(20 18 16 / 0.28), 0 0 0 1px rgb(20 18 16 / 0.06)",
+        soft: "0 1px 2px 0 rgb(20 18 16 / 0.05)",
+        card: "0 0 0 1px rgb(20 18 16 / 0.08)",
       },
-      backgroundImage: {
-        "gold-gradient": "linear-gradient(135deg, #f0da96 0%, #c9962e 45%, #87591f 100%)",
-        "ink-gradient": "linear-gradient(180deg, #241f1c 0%, #0b0a09 100%)",
+      /* Vertical rhythm for page sections: generous, and it breathes with the viewport. */
+      spacing: {
+        section: "clamp(4.5rem, 3rem + 6vw, 8.5rem)",
+        "section-sm": "clamp(3.5rem, 2.5rem + 4vw, 6rem)",
+        block: "clamp(2.5rem, 2rem + 2vw, 4rem)",
       },
       keyframes: {
         "accordion-down": {

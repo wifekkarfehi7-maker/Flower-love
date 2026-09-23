@@ -18,7 +18,7 @@ const ar: Dictionary = {
   },
   hero: {
     badge: "الأولى من نوعها في تونس",
-    title: "اصنع دعوة زفافك الرقمية في دقائق ❤️",
+    title: "اصنع دعوة زفافك الرقمية في دقائق",
     description:
       "اختر تصميمك، أضف معلوماتك وصورك، وشارك أجمل لحظاتك مع أحبائك.",
     ctaPrimary: "إنشاء دعوة",
@@ -30,8 +30,8 @@ const ar: Dictionary = {
     stat3Value: "واتساب",
     stat3Label: "دفع بسيط وآمن",
     previewCoupleNames: "محمد & سيرين",
-    previewDate: "09 / 09 / 2026",
-    previewOpen: "افتحوا الدعوة ❤️",
+    previewDate: "17 · 07 · 2027",
+    previewOpen: "افتحوا الدعوة",
   },
   howItWorks: {
     eyebrow: "بكل بساطة",
@@ -173,7 +173,7 @@ const ar: Dictionary = {
     privacy: "سياسة الخصوصية",
     terms: "شروط الاستخدام",
     rights: "جميع الحقوق محفوظة.",
-    madeWith: "صُنع بحب في تونس 🇹🇳",
+    madeWith: "صُنع بحبّ في تونس",
   },
   comingSoon: {
     badge: "قريباً",
@@ -219,7 +219,7 @@ const ar: Dictionary = {
     registerCtaLoading: "جاري إنشاء الحساب...",
     haveAccount: "لديك حساب بالفعل؟",
     loginLink: "تسجيل الدخول",
-    registerSuccessTitle: "تحقق من بريدك الإلكتروني ✓",
+    registerSuccessTitle: "تحقق من بريدك الإلكتروني",
     registerSuccessDescription:
       "أرسلنا لك رابط تأكيد إلى بريدك الإلكتروني. اضغط عليه لتفعيل حسابك، ثم يمكنك تسجيل الدخول والبدء في إنشاء دعوتك.",
 
@@ -241,7 +241,7 @@ const ar: Dictionary = {
     forgotPasswordDescription: "أدخل بريدك الإلكتروني وسنرسل لك رابطاً لإعادة تعيين كلمة السر.",
     forgotPasswordCta: "إرسال رابط الاستعادة",
     forgotPasswordCtaLoading: "جاري الإرسال...",
-    forgotPasswordSuccessTitle: "تحقق من بريدك الإلكتروني ✓",
+    forgotPasswordSuccessTitle: "تحقق من بريدك الإلكتروني",
     forgotPasswordSuccessDescription: "إذا كان بريدك الإلكتروني مسجلاً لدينا، فستصلك رسالة تحتوي على رابط استعادة كلمة السر خلال لحظات.",
 
     resetPasswordTitle: "تعيين كلمة سر جديدة",
@@ -249,7 +249,7 @@ const ar: Dictionary = {
     newPasswordLabel: "كلمة السر الجديدة",
     resetPasswordCta: "حفظ كلمة السر",
     resetPasswordCtaLoading: "جاري الحفظ...",
-    resetPasswordSuccessTitle: "تم تحديث كلمة السر ✓",
+    resetPasswordSuccessTitle: "تم تحديث كلمة السر",
     resetPasswordSuccessDescription: "يمكنك الآن تسجيل الدخول بكلمة السر الجديدة.",
     goToLogin: "الذهاب إلى تسجيل الدخول",
 

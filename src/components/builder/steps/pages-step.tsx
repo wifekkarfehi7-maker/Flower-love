@@ -99,7 +99,7 @@ function SortableRow({
       style={style}
       className={cn(
         "flex items-center gap-3 rounded-xl border border-ink-100 bg-white px-4 py-3",
-        isDragging && "opacity-60 shadow-lg"
+        isDragging && "opacity-60 shadow-float"
       )}
     >
       <button
@@ -177,7 +177,7 @@ export function PagesStep({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+        <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
         <SaveIndicator status={saveStatus} />
       </div>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>

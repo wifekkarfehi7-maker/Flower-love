@@ -81,19 +81,19 @@ export function OverviewView({ overview }: { overview: AdminOverview }) {
 
   return (
     <div className="mt-6">
-      <h1 className="font-heading text-2xl font-bold text-ink-900">{t.title}</h1>
+      <h1 className="font-heading text-2xl text-ink-900">{t.title}</h1>
 
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {tiles.map((tile) => (
           <Card key={tile.label} className="p-4">
             <tile.icon className="h-5 w-5 text-gold-600" />
-            <p className="mt-3 font-heading text-2xl font-bold text-ink-900">{tile.value}</p>
+            <p className="mt-3 font-heading text-2xl text-ink-900">{tile.value}</p>
             <p className="mt-0.5 text-xs text-ink-500">{tile.label}</p>
           </Card>
         ))}
         <Card className="col-span-2 p-4 sm:col-span-4">
           <Coins className="h-5 w-5 text-gold-600" />
-          <p className="mt-3 font-heading text-2xl font-bold text-ink-900" dir="ltr">
+          <p className="mt-3 font-heading text-2xl text-ink-900" dir="ltr">
             {overview.revenueThisMonth.toFixed(2)} TND
           </p>
           <p className="mt-0.5 text-xs text-ink-500">{t.revenue}</p>
@@ -102,7 +102,7 @@ export function OverviewView({ overview }: { overview: AdminOverview }) {
 
       <div className="mt-8">
         <div className="flex items-center justify-between">
-          <h2 className="font-heading text-lg font-bold text-ink-900">{t.recentOrders}</h2>
+          <h2 className="font-heading text-lg text-ink-900">{t.recentOrders}</h2>
           <Link href="/admin/orders" className="text-sm font-medium text-gold-700 hover:underline">
             {t.viewAll}
           </Link>

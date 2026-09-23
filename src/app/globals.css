@@ -13,34 +13,50 @@
     --primary: 30 12% 10%;
     --primary-foreground: 40 33% 98%;
 
-    --secondary: 38 45% 92%;
+    --secondary: 38 30% 94%;
     --secondary-foreground: 30 12% 10%;
 
-    --muted: 36 25% 95%;
+    --muted: 36 20% 95%;
     --muted-foreground: 30 8% 40%;
 
-    --accent: 38 60% 55%;
-    --accent-foreground: 30 12% 10%;
+    --accent: 36 30% 46%;
+    --accent-foreground: 40 33% 98%;
 
-    --destructive: 4 72% 51%;
+    --destructive: 4 62% 44%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 34 20% 89%;
-    --input: 34 20% 89%;
-    --ring: 38 60% 55%;
+    --input: 34 16% 84%;
+    /* Focus is ink, not brass: a gold ring on paper falls under 3:1 contrast. */
+    --ring: 30 12% 10%;
 
-    --radius: 0.9rem;
+    --radius: 0.25rem;
 
-    /* Latin type — reassigned for lang="ar" below */
-    --font-heading: var(--font-playfair);
-    --font-body: var(--font-inter);
+    /*
+     * Latin: Cormorant for display and headings, Inter for text. Each names
+     * its Arabic partner second, so an Arabic word inside a French page still
+     * lands in a designed face rather than the operating system's.
+     */
+    --font-heading: var(--font-cormorant), var(--font-amiri);
+    --font-body: var(--font-inter), var(--font-cairo);
+    --font-display: var(--font-cormorant), var(--font-amiri);
     --font-arabic-display: var(--font-amiri);
   }
 
+  /* Arabic: Amiri for display and headings, Cairo for text. First choice, not fallback. */
   :root:lang(ar),
   [lang="ar"] {
     --font-heading: var(--font-amiri);
     --font-body: var(--font-cairo);
+    --font-display: var(--font-amiri);
+  }
+
+  /* A Latin island inside an Arabic page (a French template name, the brand) takes Latin faces back. */
+  :root:lang(ar) [lang="fr"],
+  :root:lang(ar) [lang="en"] {
+    --font-heading: var(--font-cormorant), var(--font-amiri);
+    --font-body: var(--font-inter), var(--font-cairo);
+    --font-display: var(--font-cormorant), var(--font-amiri);
   }
 
   * {
@@ -54,16 +70,162 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background font-body text-ink-800 antialiased;
+    line-height: 1.65;
     font-feature-settings: "kern", "liga", "calt";
   }
 
+  /* Naskh and Cairo need more air between lines than Latin does. */
+  html:lang(ar) body {
+    line-height: 1.85;
+  }
+
+  /* Headings are set, never shouted: weight 400, colour does the work. */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    @apply font-heading text-ink-900;
+    font-weight: 400;
   }
 
   ::selection {
     @apply bg-gold-200 text-ink-900;
+  }
+}
+
+/*
+ * ─── Type roles ──────────────────────────────────────────────────────────
+ * One class per role, so hierarchy comes from scale and restraint rather
+ * than from font-bold. Every role is tuned twice: Latin in Cormorant/Inter
+ * with light weights and tight display leading; Arabic in Amiri/Cairo with
+ * taller leading, no tracking and no uppercase — and a slightly smaller
+ * display size, because Amiri's ascenders already carry the height.
+ */
+@layer components {
+  .type-display {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.018em;
+    color: theme("colors.ink.900");
+  }
+  .type-display:lang(ar) {
+    font-weight: 400;
+    font-size: clamp(2.2rem, 1.5rem + 3vw, 3.75rem);
+    line-height: 1.45;
+    letter-spacing: 0;
+  }
+
+  .type-h1 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 300;
+    font-size: clamp(2.1rem, 1.6rem + 2vw, 3.1rem);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    color: theme("colors.ink.900");
+  }
+  .type-h1:lang(ar) {
+    font-weight: 400;
+    font-size: clamp(1.9rem, 1.5rem + 1.6vw, 2.7rem);
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .type-h2 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.6rem, 1.35rem + 1vw, 2.2rem);
+    line-height: 1.18;
+    letter-spacing: -0.008em;
+    color: theme("colors.ink.900");
+  }
+  .type-h2:lang(ar) {
+    font-size: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+    line-height: 1.55;
+    letter-spacing: 0;
+  }
+
+  .type-h3 {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1.3;
+    color: theme("colors.ink.900");
+  }
+  .type-h3:lang(ar) {
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .type-lead {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: theme("colors.ink.500");
+  }
+  .type-lead:lang(ar) {
+    line-height: 1.95;
+  }
+
+  .type-body {
+    font-size: 0.9375rem;
+    line-height: 1.75;
+    color: theme("colors.ink.600");
+  }
+  .type-body:lang(ar) {
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  .type-small {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: theme("colors.ink.500");
+  }
+  .type-small:lang(ar) {
+    font-size: 0.875rem;
+    line-height: 1.8;
+  }
+
+  /* Labels, eyebrows, column heads: small tracked capitals in Latin; in Arabic, simply small. */
+  .type-meta {
+    /* Named explicitly: on an <h2> it would otherwise inherit the heading serif. */
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: theme("colors.ink.400");
+  }
+  .type-meta:lang(ar) {
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .type-numeral {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* The brand is a word, not a badge. Always Latin, whatever the page language. */
+  .wordmark {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    color: theme("colors.ink.900");
+  }
+  .wordmark em {
+    font-style: italic;
+    color: theme("colors.gold.600");
+  }
+
+  /* Control labels (buttons, nav): a breath of tracking in Latin, none in Arabic. */
+  .ui-label {
+    letter-spacing: 0.02em;
+  }
+  .ui-label:lang(ar) {
+    letter-spacing: 0;
   }
 }
 
@@ -72,13 +234,26 @@
     text-wrap: balance;
   }
 
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  }
-
   .mask-fade-b {
     mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   }
+}
+
+/*
+ * ─── Arabic, inside the site chrome ───────────────────────────────────────
+ * `data-ui` marks the site's own shells (marketing, auth, dashboard,
+ * builder, admin) — never an invitation. Two corrections apply there:
+ * Arabic is never letter-spaced, because tracking pulls a cursive script's
+ * joins apart (an element that declares itself Latin, e.g. a French template
+ * name with lang="fr", keeps its tracking); and Arabic headings get the
+ * taller leading Amiri needs, whatever leading utility a page chose.
+ */
+[data-ui] [class*="tracking-"]:lang(ar) {
+  letter-spacing: normal;
+}
+
+[data-ui] :is(h1, h2, h3, h4):lang(ar) {
+  line-height: 1.5;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -126,6 +301,22 @@ html[lang="ar"] [data-invitation] {
  */
 [data-invitation] .inv-figures {
   font-variant-numeric: lining-nums tabular-nums;
+}
+
+/*
+ * The invitation keeps the inheritance it was designed with. The site's
+ * reading rhythm (taller body leading, ink text, set headings) is for the
+ * site; anything the renderer leaves unset resolves to exactly what it did
+ * before the site's type system changed.
+ */
+[data-invitation] {
+  line-height: 1.5;
+  color: hsl(var(--foreground));
+}
+
+[data-invitation] :is(h1, h2, h3, h4, h5, h6) {
+  color: inherit;
+  font-weight: inherit;
 }
 
 [data-invitation] :focus-visible {

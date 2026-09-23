@@ -36,7 +36,7 @@ export function LivePreviewPanel({ invitation, template }: { invitation: Invitat
       <button
         type="button"
         onClick={() => setMobileOpen(true)}
-        className="fixed bottom-6 end-6 z-30 flex items-center gap-2 rounded-full bg-ink-900 px-5 py-3 text-sm font-semibold text-white shadow-xl xl:hidden"
+        className="ui-label fixed bottom-6 end-6 z-30 flex items-center gap-2 rounded-sm bg-ink-900 px-5 py-3 text-[0.8125rem] font-medium text-paper shadow-float xl:hidden"
       >
         <Eye className="h-4 w-4" />
         {LABEL[locale]}

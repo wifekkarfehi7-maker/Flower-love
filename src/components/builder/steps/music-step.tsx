@@ -16,6 +16,8 @@ const STRINGS = {
     uploading: "جاري الرفع...",
     error: "تعذر رفع الملف، تحقق من نوع وحجم الملف (MP3، حتى 15 م.ب).",
     autoplay: "تشغيل تلقائي بعد فتح الدعوة",
+    play: "تشغيل",
+    pause: "إيقاف مؤقت",
     remove: "حذف الموسيقى",
     none: "لم تتم إضافة موسيقى بعد.",
   },
@@ -26,6 +28,8 @@ const STRINGS = {
     uploading: "Envoi...",
     error: "Échec de l'envoi — vérifiez le type et la taille (MP3, 15 Mo max).",
     autoplay: "Lecture automatique après ouverture",
+    play: "Lire",
+    pause: "Pause",
     remove: "Supprimer la musique",
     none: "Aucune musique ajoutée pour le moment.",
   },
@@ -36,6 +40,8 @@ const STRINGS = {
     uploading: "Uploading...",
     error: "Upload failed — check the file type and size (MP3, up to 15MB).",
     autoplay: "Autoplay after opening the invitation",
+    play: "Play",
+    pause: "Pause",
     remove: "Remove music",
     none: "No music added yet.",
   },
@@ -98,7 +104,7 @@ export function MusicStep({
 
   return (
     <div>
-      <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+      <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>
       {error && <p className="mt-2 text-sm text-destructive">{t.error}</p>}
 
@@ -108,7 +114,8 @@ export function MusicStep({
             <button
               type="button"
               onClick={togglePlay}
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gold-gradient text-ink-950"
+              aria-label={playing ? t.pause : t.play}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-900 text-paper transition-colors hover:bg-ink-700"
             >
               {playing ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
             </button>
@@ -133,7 +140,7 @@ export function MusicStep({
           <div className="flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-ink-200 p-10 text-center">
             <Music2 className="h-8 w-8 text-ink-300" />
             <p className="text-sm text-ink-400">{t.none}</p>
-            <Button type="button" variant="outline" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
+            <Button type="button" variant="secondary" onClick={() => fileInputRef.current?.click()} disabled={uploading}>
               {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
               {uploading ? t.uploading : t.upload}
             </Button>

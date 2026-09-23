@@ -74,7 +74,7 @@ export function AdminTemplatesView({ templates }: { templates: TemplateRecord[] 
 
   return (
     <div className="mt-6">
-      <h1 className="font-heading text-2xl font-bold text-ink-900">{t.title}</h1>
+      <h1 className="font-heading text-2xl text-ink-900">{t.title}</h1>
 
       {templates.length === 0 ? (
         <div className="mt-6 rounded-2xl border border-dashed border-ink-200 p-10 text-center text-sm text-ink-500">
@@ -162,7 +162,7 @@ function TemplateRow({ template, t }: { template: TemplateRecord; t: (typeof STR
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={2}
-              className="flex w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm text-ink-900 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="flex w-full rounded-sm border border-ink-900/15 bg-paper-raised px-4 py-3 text-sm text-ink-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
           <div>
@@ -182,7 +182,7 @@ function TemplateRow({ template, t }: { template: TemplateRecord; t: (typeof STR
             />
           </div>
           <div className="flex items-center gap-2 sm:col-span-2">
-            <Button variant="gold" size="sm" onClick={handleSave} disabled={saving}>
+            <Button variant="primary" size="sm" onClick={handleSave} disabled={saving}>
               {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               {t.save}
             </Button>

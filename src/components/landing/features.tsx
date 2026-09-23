@@ -24,8 +24,8 @@ export function Features() {
     <section className="bg-background py-24 sm:py-32">
       <Container>
         <Reveal className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold tracking-wide text-gold-600">{t.features.eyebrow}</span>
-          <h2 className="mt-3 text-balance font-heading text-3xl font-bold text-ink-900 sm:text-4xl">
+          <span className="text-sm font-medium tracking-wide text-gold-600">{t.features.eyebrow}</span>
+          <h2 className="mt-3 text-balance font-heading text-3xl text-ink-900 sm:text-4xl">
             {t.features.title}
           </h2>
           <p className="mt-4 text-balance text-ink-500">{t.features.description}</p>
@@ -40,7 +40,7 @@ export function Features() {
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold-50 text-gold-600">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="mt-4 font-heading text-base font-semibold text-ink-900">{feature.title}</h3>
+                  <h3 className="mt-4 font-heading text-base text-ink-900">{feature.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-ink-500">{feature.description}</p>
                 </div>
               </Reveal>

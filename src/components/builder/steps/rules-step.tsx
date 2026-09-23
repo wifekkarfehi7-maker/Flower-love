@@ -126,7 +126,7 @@ export function RulesStep({
 
   return (
     <div>
-      <h2 className="font-heading text-xl font-bold text-ink-900">{t.title}</h2>
+      <h2 className="font-heading text-xl text-ink-900">{t.title}</h2>
       <p className="mt-1 text-sm text-ink-500">{t.description}</p>
 
       <label className="mt-6 flex items-center gap-3">
@@ -150,7 +150,7 @@ export function RulesStep({
       {enabled && (
         <div className="mt-6 flex flex-col gap-6">
           <div>
-            <p className="text-sm font-semibold text-ink-700">{t.presetsTitle}</p>
+            <p className="text-sm font-medium text-ink-700">{t.presetsTitle}</p>
             <div className="mt-2.5 flex flex-wrap gap-2">
               {presets.map((preset) => {
                 const active = rules.includes(preset);
@@ -174,7 +174,7 @@ export function RulesStep({
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-ink-700">{t.yourRules}</p>
+            <p className="text-sm font-medium text-ink-700">{t.yourRules}</p>
             <div className="mt-2.5 flex gap-2">
               <Input
                 value={customText}
@@ -188,7 +188,7 @@ export function RulesStep({
                 placeholder={t.customPlaceholder}
                 maxLength={200}
               />
-              <Button type="button" variant="outline" onClick={addCustom} disabled={!customText.trim()}>
+              <Button type="button" variant="secondary" onClick={addCustom} disabled={!customText.trim()}>
                 <Plus className="h-4 w-4" />
                 {t.add}
               </Button>

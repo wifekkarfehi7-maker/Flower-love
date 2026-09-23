@@ -182,23 +182,23 @@ export function PublishStep({
     return (
       <div className="text-center">
         <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
-        <h2 className="mt-4 font-heading text-2xl font-bold text-ink-900">{t.orderCreatedTitle}</h2>
+        <h2 className="mt-4 font-heading text-2xl text-ink-900">{t.orderCreatedTitle}</h2>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-500">{t.orderCreatedDescription}</p>
 
         <div className="mx-auto mt-6 flex max-w-sm flex-col gap-3 rounded-2xl border border-ink-100 bg-ink-50/60 p-5 text-start">
           <div className="flex items-center justify-between text-sm">
             <span className="text-ink-500">{t.orderNumber}</span>
-            <span className="font-semibold text-ink-900" dir="ltr">
+            <span className="font-medium text-ink-900" dir="ltr">
               {order.order_number}
             </span>
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-ink-500">{t.plan}</span>
-            <span className="font-semibold text-ink-900">{order.plan_name}</span>
+            <span className="font-medium text-ink-900">{order.plan_name}</span>
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-ink-500">{t.price}</span>
-            <span className="font-semibold text-ink-900" dir="ltr">
+            <span className="font-medium text-ink-900" dir="ltr">
               {order.price} {order.currency}
             </span>
           </div>
@@ -223,20 +223,20 @@ export function PublishStep({
   return (
     <div className="text-center">
       <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" />
-      <h2 className="mt-4 font-heading text-2xl font-bold text-ink-900">{t.title}</h2>
+      <h2 className="mt-4 font-heading text-2xl text-ink-900">{t.title}</h2>
       <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink-500">{t.description}</p>
 
       <div className="mx-auto mt-6 flex max-w-sm flex-col gap-3 rounded-2xl border border-ink-100 bg-ink-50/60 p-5 text-start">
         <div className="flex items-center justify-between text-sm">
           <span className="text-ink-500">{t.template}</span>
-          <span className="font-semibold text-ink-900" style={{ fontFamily: template ? fontFamilyFor(template.fonts.heading) : undefined }}>
+          <span className="font-medium text-ink-900" style={{ fontFamily: template ? fontFamilyFor(template.fonts.heading) : undefined }}>
             {locale === "ar" ? template?.nameAr : template?.name}
           </span>
         </div>
         {invitation.wedding_date && (
           <div className="flex items-center justify-between text-sm">
             <span className="text-ink-500">{t.date}</span>
-            <span className="font-semibold text-ink-900" dir="ltr">
+            <span className="font-medium text-ink-900" dir="ltr">
               {invitation.wedding_date}
             </span>
           </div>
@@ -244,7 +244,7 @@ export function PublishStep({
       </div>
 
       <div className="mx-auto mt-8 max-w-2xl text-start">
-        <h3 className="text-center font-heading text-lg font-bold text-ink-900">{t.selectPlan}</h3>
+        <h3 className="text-center font-heading text-lg text-ink-900">{t.selectPlan}</h3>
         <div className="mt-4 grid gap-4 sm:grid-cols-3">
           {plans.map((plan) => {
             const isSelected = plan.id === selectedPlanId;
@@ -269,10 +269,10 @@ export function PublishStep({
                     {t.mostPopular}
                   </Badge>
                 )}
-                <span className="font-heading text-base font-bold text-ink-900">
+                <span className="font-heading text-base text-ink-900">
                   {locale === "ar" ? plan.nameAr : plan.name}
                 </span>
-                <span className="mt-1 text-lg font-bold text-ink-900" dir="ltr">
+                <span className="mt-1 text-lg font-medium text-ink-900" dir="ltr">
                   {plan.price === 0 ? t.free : `${plan.price} ${plan.currency}`}
                 </span>
               </button>
@@ -300,7 +300,7 @@ export function PublishStep({
         {error && <p className="mt-3 text-center text-sm text-destructive">{error}</p>}
 
         <div className="mt-6 flex justify-center">
-          <Button variant="gold" size="lg" onClick={handleConfirmOrder} disabled={creating}>
+          <Button variant="primary" size="lg" onClick={handleConfirmOrder} disabled={creating}>
             {creating ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
             {creating ? t.creating : t.confirm}
           </Button>

@@ -157,23 +157,23 @@ export function GuestListTable({
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="font-heading text-lg font-bold text-ink-900">{t.title}</h2>
+          <h2 className="font-heading text-lg text-ink-900">{t.title}</h2>
           <p className="mt-0.5 text-xs text-ink-500">{t.description}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           {guests.length > 0 && (
             <>
-              <Button variant="outline" size="sm" onClick={() => exportToCsv(guests, columns, "guest-list.csv")}>
+              <Button variant="secondary" size="sm" onClick={() => exportToCsv(guests, columns, "guest-list.csv")}>
                 <Download className="h-3.5 w-3.5" />
                 {t.csv}
               </Button>
-              <Button variant="outline" size="sm" onClick={() => exportToExcel(guests, columns, "guest-list.xls")}>
+              <Button variant="secondary" size="sm" onClick={() => exportToExcel(guests, columns, "guest-list.xls")}>
                 <FileSpreadsheet className="h-3.5 w-3.5" />
                 {t.excel}
               </Button>
             </>
           )}
-          <Button variant="gold" size="sm" onClick={startCreate}>
+          <Button variant="primary" size="sm" onClick={startCreate}>
             <Plus className="h-3.5 w-3.5" />
             {t.add}
           </Button>
@@ -215,7 +215,7 @@ export function GuestListTable({
             onChange={(e) => setForm((f) => ({ ...f, notes: e.target.value }))}
           />
           <div className="flex gap-2 sm:col-span-2">
-            <Button size="sm" variant="gold" onClick={handleSave} disabled={saving || !form.name.trim()}>
+            <Button size="sm" variant="primary" onClick={handleSave} disabled={saving || !form.name.trim()}>
               {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
               {t.save}
             </Button>
