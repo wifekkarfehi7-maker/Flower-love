@@ -1,0 +1,4534 @@
+[
+  {
+    "layout": "editorial",
+    "locale": "ar",
+    "viewport": "360×800",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12,
+        "ink": 160,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 12,
+        "ink": 861,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 64.8,
+        "ink": 1901,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 33.6,
+        "ink": 196,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 64.8,
+        "ink": 2471,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 11.2,
+        "ink": 105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 14,
+        "ink": 316,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 11.2,
+        "ink": 87,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "fr",
+    "viewport": "360×800",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 10,
+        "ink": 349,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 12.8,
+        "ink": 1105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 64.8,
+        "ink": 1901,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 33.6,
+        "ink": 274,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 64.8,
+        "ink": 2471,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi 17 Juillet",
+        "size": 14,
+        "ink": 398,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Lieu",
+        "size": 11.2,
+        "ink": 66,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Heure",
+        "size": 11.2,
+        "ink": 97,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "en",
+    "viewport": "360×800",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 10,
+        "ink": 317,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Together with their families , I",
+        "size": 12.8,
+        "ink": 1060,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 64.8,
+        "ink": 1901,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 33.6,
+        "ink": 274,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 64.8,
+        "ink": 2471,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday 17 July",
+        "size": 14,
+        "ink": 381,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Venue",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Time",
+        "size": 11.2,
+        "ink": 68,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "ar",
+    "viewport": "390×844",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12,
+        "ink": 160,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 12,
+        "ink": 861,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 70.2,
+        "ink": 2282,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 33.6,
+        "ink": 196,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 70.2,
+        "ink": 2986,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 11.2,
+        "ink": 105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 14,
+        "ink": 316,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 11.2,
+        "ink": 87,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "fr",
+    "viewport": "390×844",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 10,
+        "ink": 349,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 12.8,
+        "ink": 1105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 70.2,
+        "ink": 2282,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 33.6,
+        "ink": 274,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 70.2,
+        "ink": 2986,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi 17 Juillet",
+        "size": 14,
+        "ink": 398,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Lieu",
+        "size": 11.2,
+        "ink": 66,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Heure",
+        "size": 11.2,
+        "ink": 97,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "en",
+    "viewport": "390×844",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 10,
+        "ink": 317,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Together with their families , I",
+        "size": 12.8,
+        "ink": 1060,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 70.2,
+        "ink": 2282,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 33.6,
+        "ink": 274,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 70.2,
+        "ink": 2986,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday 17 July",
+        "size": 14,
+        "ink": 381,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Venue",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Time",
+        "size": 11.2,
+        "ink": 68,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "ar",
+    "viewport": "430×932",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12,
+        "ink": 160,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 12,
+        "ink": 861,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 77.4,
+        "ink": 2684,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 33.6,
+        "ink": 196,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 77.4,
+        "ink": 3430,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 11.2,
+        "ink": 105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 14,
+        "ink": 316,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 11.2,
+        "ink": 87,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "fr",
+    "viewport": "430×932",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 10,
+        "ink": 349,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 12.8,
+        "ink": 1105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 77.4,
+        "ink": 2684,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 33.6,
+        "ink": 274,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 77.4,
+        "ink": 3430,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi 17 Juillet",
+        "size": 14,
+        "ink": 398,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Lieu",
+        "size": 11.2,
+        "ink": 66,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Heure",
+        "size": 11.2,
+        "ink": 97,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "en",
+    "viewport": "430×932",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 10,
+        "ink": 317,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Together with their families , I",
+        "size": 12.8,
+        "ink": 1060,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 77.4,
+        "ink": 2684,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 33.6,
+        "ink": 274,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 77.4,
+        "ink": 3430,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday 17 July",
+        "size": 14,
+        "ink": 381,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Venue",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Time",
+        "size": 11.2,
+        "ink": 68,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "ar",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12,
+        "ink": 160,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 12,
+        "ink": 861,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 99.84,
+        "ink": 4445,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 41.6,
+        "ink": 310,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 99.84,
+        "ink": 5694,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 11.2,
+        "ink": 105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 14,
+        "ink": 316,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 11.2,
+        "ink": 87,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "fr",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 10,
+        "ink": 349,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 12.8,
+        "ink": 1105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 99.84,
+        "ink": 4445,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 41.6,
+        "ink": 401,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 99.84,
+        "ink": 5694,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi 17 Juillet",
+        "size": 14,
+        "ink": 398,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Lieu",
+        "size": 11.2,
+        "ink": 66,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Heure",
+        "size": 11.2,
+        "ink": 97,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "en",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 10,
+        "ink": 317,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Together with their families , I",
+        "size": 12.8,
+        "ink": 1060,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 99.84,
+        "ink": 4445,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 41.6,
+        "ink": 401,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 99.84,
+        "ink": 5694,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 11.2,
+        "ink": 74,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday 17 July",
+        "size": 14,
+        "ink": 381,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Venue",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Time",
+        "size": 11.2,
+        "ink": 68,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "ar",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 15.2,
+        "ink": 246,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 13.6,
+        "ink": 235,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 15.2,
+        "ink": 1410,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 132,
+        "ink": 7759,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 48,
+        "ink": 399,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 132,
+        "ink": 9967,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 13.6,
+        "ink": 152,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 17.6,
+        "ink": 446,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 13.6,
+        "ink": 135,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 631,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 13.6,
+        "ink": 125,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 257,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "fr",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 15.2,
+        "ink": 745,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 13.6,
+        "ink": 235,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 15.2,
+        "ink": 1426,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 132,
+        "ink": 7759,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 48,
+        "ink": 522,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 132,
+        "ink": 9967,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 13.6,
+        "ink": 104,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi 17 Juillet",
+        "size": 17.6,
+        "ink": 509,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Lieu",
+        "size": 13.6,
+        "ink": 82,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 631,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Heure",
+        "size": 13.6,
+        "ink": 123,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 257,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "en",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 15.2,
+        "ink": 688,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 13.6,
+        "ink": 235,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Together with their families , I",
+        "size": 15.2,
+        "ink": 1428,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 132,
+        "ink": 7759,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 48,
+        "ink": 522,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 132,
+        "ink": 9967,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 13.6,
+        "ink": 104,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday 17 July",
+        "size": 17.6,
+        "ink": 476,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Venue",
+        "size": 13.6,
+        "ink": 114,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 631,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Time",
+        "size": 13.6,
+        "ink": 99,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 257,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "ar",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 15.2,
+        "ink": 246,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 13.6,
+        "ink": 235,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 15.2,
+        "ink": 1410,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 132,
+        "ink": 7759,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 48,
+        "ink": 399,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 132,
+        "ink": 9967,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 13.6,
+        "ink": 152,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 17.6,
+        "ink": 446,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 13.6,
+        "ink": 135,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 631,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 13.6,
+        "ink": 125,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 257,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "fr",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 15.2,
+        "ink": 745,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 13.6,
+        "ink": 235,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 15.2,
+        "ink": 1426,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 132,
+        "ink": 7759,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 48,
+        "ink": 522,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 132,
+        "ink": 9967,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 13.6,
+        "ink": 104,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi 17 Juillet",
+        "size": 17.6,
+        "ink": 509,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Lieu",
+        "size": 13.6,
+        "ink": 82,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 631,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Heure",
+        "size": 13.6,
+        "ink": 123,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 257,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial",
+    "locale": "en",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/modern",
+    "leaves": 12,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 15.2,
+        "ink": 688,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 13.6,
+        "ink": 235,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Together with their families , I",
+        "size": 15.2,
+        "ink": 1428,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 132,
+        "ink": 7759,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 48,
+        "ink": 522,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 132,
+        "ink": 9967,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "Date",
+        "size": 13.6,
+        "ink": 104,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday 17 July",
+        "size": 17.6,
+        "ink": 476,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Venue",
+        "size": 13.6,
+        "ink": 114,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 631,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "Time",
+        "size": 13.6,
+        "ink": 99,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 257,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "ar",
+    "viewport": "360×800",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين",
+        "size": 12,
+        "ink": 428,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 12,
+        "ink": 469,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 54.7554,
+        "ink": 694,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 23.8677,
+        "ink": 49,
+        "ratio": 6.96,
+        "need": 4.5
+      },
+      {
+        "text": "سيرين",
+        "size": 54.7554,
+        "ink": 901,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "السبت 17 جويلية 2027",
+        "size": 19.2,
+        "ink": 715,
+        "ratio": 14.24,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 12,
+        "ink": 333,
+        "ratio": 8.5,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 12,
+        "ink": 143,
+        "ratio": 8.43,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "fr",
+    "viewport": "360×800",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 12,
+        "ink": 1230,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 12,
+        "ink": 1055,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 54.7554,
+        "ink": 694,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 23.8677,
+        "ink": 104,
+        "ratio": 6.96,
+        "need": 4.5
+      },
+      {
+        "text": "سيرين",
+        "size": 54.7554,
+        "ink": 901,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "Samedi 17 Juillet 2027",
+        "size": 19.2,
+        "ink": 949,
+        "ratio": 14.24,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.5,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.5,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "en",
+    "viewport": "360×800",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Together with their families",
+        "size": 12,
+        "ink": 1007,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 12,
+        "ink": 1295,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 54.7554,
+        "ink": 694,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 23.8677,
+        "ink": 104,
+        "ratio": 6.96,
+        "need": 4.5
+      },
+      {
+        "text": "سيرين",
+        "size": 54.7554,
+        "ink": 901,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "Saturday 17 July 2027",
+        "size": 19.2,
+        "ink": 910,
+        "ratio": 14.24,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.5,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.5,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "ar",
+    "viewport": "390×844",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين",
+        "size": 12.457,
+        "ink": 475,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 12.457,
+        "ink": 512,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 59.2465,
+        "ink": 791,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 25.8254,
+        "ink": 55,
+        "ratio": 6.96,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 59.2465,
+        "ink": 1045,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "السبت 17 جويلية 2027",
+        "size": 19.2,
+        "ink": 715,
+        "ratio": 14.12,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 12,
+        "ink": 333,
+        "ratio": 8.42,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 12,
+        "ink": 143,
+        "ratio": 8.42,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "fr",
+    "viewport": "390×844",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 12.457,
+        "ink": 1379,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 12.457,
+        "ink": 1128,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 59.2465,
+        "ink": 791,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 25.8254,
+        "ink": 130,
+        "ratio": 6.96,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 59.2465,
+        "ink": 1045,
+        "ratio": 13.03,
+        "need": 3
+      },
+      {
+        "text": "Samedi 17 Juillet 2027",
+        "size": 19.2,
+        "ink": 949,
+        "ratio": 14.12,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.42,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.43,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "en",
+    "viewport": "390×844",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Together with their families",
+        "size": 12.457,
+        "ink": 1107,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 12.457,
+        "ink": 1393,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 59.2465,
+        "ink": 791,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 25.8254,
+        "ink": 130,
+        "ratio": 6.96,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 59.2465,
+        "ink": 1045,
+        "ratio": 13.03,
+        "need": 3
+      },
+      {
+        "text": "Saturday 17 July 2027",
+        "size": 19.2,
+        "ink": 910,
+        "ratio": 14.12,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.42,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.43,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "ar",
+    "viewport": "430×932",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين",
+        "size": 13.751,
+        "ink": 559,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 13.751,
+        "ink": 616,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 65.4012,
+        "ink": 959,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 28.5082,
+        "ink": 67,
+        "ratio": 6.96,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 65.4012,
+        "ink": 1252,
+        "ratio": 13.03,
+        "need": 3
+      },
+      {
+        "text": "السبت 17 جويلية 2027",
+        "size": 19.2,
+        "ink": 715,
+        "ratio": 14.1,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 12,
+        "ink": 333,
+        "ratio": 8.42,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 12,
+        "ink": 143,
+        "ratio": 8.42,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "fr",
+    "viewport": "430×932",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.89,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 13.751,
+        "ink": 1611,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 13.751,
+        "ink": 1343,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 65.4012,
+        "ink": 959,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 28.5082,
+        "ink": 148,
+        "ratio": 6.89,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 65.4012,
+        "ink": 1252,
+        "ratio": 13.03,
+        "need": 3
+      },
+      {
+        "text": "Samedi 17 Juillet 2027",
+        "size": 19.2,
+        "ink": 949,
+        "ratio": 14.1,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.42,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.42,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "en",
+    "viewport": "430×932",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.89,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Together with their families",
+        "size": 13.751,
+        "ink": 1278,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 13.751,
+        "ink": 1621,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 65.4012,
+        "ink": 959,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 28.5082,
+        "ink": 148,
+        "ratio": 6.89,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 65.4012,
+        "ink": 1252,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "Saturday 17 July 2027",
+        "size": 19.2,
+        "ink": 910,
+        "ratio": 14.1,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.42,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.42,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "ar",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.89,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين",
+        "size": 15.1136,
+        "ink": 697,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 15.1136,
+        "ink": 726,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 71.8819,
+        "ink": 1136,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 31.3331,
+        "ink": 82,
+        "ratio": 6.89,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 71.8819,
+        "ink": 1487,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "السبت 17 جويلية 2027",
+        "size": 19.2,
+        "ink": 715,
+        "ratio": 14.08,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 12,
+        "ink": 333,
+        "ratio": 8.41,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 12,
+        "ink": 143,
+        "ratio": 8.34,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "fr",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.89,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 15.1136,
+        "ink": 1686,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 15.1136,
+        "ink": 1415,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 71.8819,
+        "ink": 1136,
+        "ratio": 13.03,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 31.3331,
+        "ink": 177,
+        "ratio": 6.89,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 71.8819,
+        "ink": 1487,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "Samedi 17 Juillet 2027",
+        "size": 19.2,
+        "ink": 949,
+        "ratio": 14.08,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.34,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.41,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "en",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.88,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Together with their families",
+        "size": 15.1136,
+        "ink": 1354,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 15.1136,
+        "ink": 1728,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 71.8819,
+        "ink": 1136,
+        "ratio": 13.03,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 31.3331,
+        "ink": 177,
+        "ratio": 6.88,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 71.8819,
+        "ink": 1487,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "Saturday 17 July 2027",
+        "size": 19.2,
+        "ink": 910,
+        "ratio": 14.08,
+        "need": 4.5
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.34,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.41,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "ar",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.88,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين",
+        "size": 23.616,
+        "ink": 1354,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 23.616,
+        "ink": 1452,
+        "ratio": 7.77,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 112.32,
+        "ink": 2635,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 48.96,
+        "ink": 171,
+        "ratio": 6.88,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 112.32,
+        "ink": 3365,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "السبت 17 جويلية 2027",
+        "size": 30.4,
+        "ink": 1482,
+        "ratio": 13.79,
+        "need": 3
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 16,
+        "ink": 517,
+        "ratio": 8.22,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 16,
+        "ink": 203,
+        "ratio": 8.15,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "fr",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.88,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 23.616,
+        "ink": 3519,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 23.616,
+        "ink": 3050,
+        "ratio": 7.77,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 112.32,
+        "ink": 2635,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 48.96,
+        "ink": 365,
+        "ratio": 6.88,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 112.32,
+        "ink": 3365,
+        "ratio": 12.99,
+        "need": 3
+      },
+      {
+        "text": "Samedi 17 Juillet 2027",
+        "size": 30.4,
+        "ink": 1939,
+        "ratio": 13.79,
+        "need": 3
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 256,
+        "ratio": 8.15,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.22,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "en",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.88,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Together with their families",
+        "size": 23.616,
+        "ink": 2855,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 23.616,
+        "ink": 3674,
+        "ratio": 7.77,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 112.32,
+        "ink": 2635,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 48.96,
+        "ink": 365,
+        "ratio": 6.88,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 112.32,
+        "ink": 3365,
+        "ratio": 12.99,
+        "need": 3
+      },
+      {
+        "text": "Saturday 17 July 2027",
+        "size": 30.4,
+        "ink": 1873,
+        "ratio": 13.79,
+        "need": 3
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 256,
+        "ratio": 8.15,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.22,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "ar",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.89,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين",
+        "size": 13.284,
+        "ink": 539,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 13.284,
+        "ink": 579,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 63.18,
+        "ink": 907,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 27.54,
+        "ink": 65,
+        "ratio": 6.89,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 63.18,
+        "ink": 1157,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "السبت 17 جويلية 2027",
+        "size": 30.4,
+        "ink": 1486,
+        "ratio": 14.1,
+        "need": 3
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 16,
+        "ink": 521,
+        "ratio": 8.41,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 16,
+        "ink": 207,
+        "ratio": 8.41,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "fr",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.89,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Avec la bénédiction de leurs fam",
+        "size": 13.284,
+        "ink": 1399,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 13.284,
+        "ink": 1162,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 63.18,
+        "ink": 907,
+        "ratio": 13.15,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 27.54,
+        "ink": 143,
+        "ratio": 6.89,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 63.18,
+        "ink": 1157,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "Samedi 17 Juillet 2027",
+        "size": 30.4,
+        "ink": 1941,
+        "ratio": 14.1,
+        "need": 3
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.41,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.41,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "arch",
+    "locale": "en",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/traditional-arabic",
+    "leaves": 8,
+    "minRatio": 6.89,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Together with their families",
+        "size": 13.284,
+        "ink": 1104,
+        "ratio": 7.87,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 13.284,
+        "ink": 1414,
+        "ratio": 7.85,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 63.18,
+        "ink": 907,
+        "ratio": 13.03,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 27.54,
+        "ink": 143,
+        "ratio": 6.89,
+        "need": 3
+      },
+      {
+        "text": "سيرين",
+        "size": 63.18,
+        "ink": 1157,
+        "ratio": 13.01,
+        "need": 3
+      },
+      {
+        "text": "Saturday 17 July 2027",
+        "size": 30.4,
+        "ink": 1875,
+        "ratio": 14.1,
+        "need": 3
+      },
+      {
+        "text": "· قاعة الأفراح الكبرى",
+        "size": 10,
+        "ink": 264,
+        "ratio": 8.41,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 10,
+        "ink": 107,
+        "ratio": 8.41,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "ar",
+    "viewport": "360×800",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 5.86,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12.8,
+        "ink": 162,
+        "ratio": 5.86,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 12,
+        "ink": 459,
+        "ratio": 7.03,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 48.6,
+        "ink": 1764,
+        "ratio": 17.65,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 29.16,
+        "ink": 104,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 13,
+        "ink": 103,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "fr",
+    "viewport": "360×800",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 6.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 9.92,
+        "ink": 422,
+        "ratio": 6.23,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 10,
+        "ink": 536,
+        "ratio": 7.03,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 48.6,
+        "ink": 1764,
+        "ratio": 17.65,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 29.16,
+        "ink": 228,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi",
+        "size": 13,
+        "ink": 144,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "en",
+    "viewport": "360×800",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 6.04,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 9.92,
+        "ink": 402,
+        "ratio": 6.04,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 10,
+        "ink": 670,
+        "ratio": 7.03,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 48.6,
+        "ink": 1764,
+        "ratio": 17.65,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 29.16,
+        "ink": 228,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday",
+        "size": 13,
+        "ink": 174,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "ar",
+    "viewport": "390×844",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 5.42,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12.8,
+        "ink": 163,
+        "ratio": 5.42,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 12,
+        "ink": 459,
+        "ratio": 7.08,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 52.65,
+        "ink": 2055,
+        "ratio": 17.75,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 31.59,
+        "ink": 122,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 13,
+        "ink": 103,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "fr",
+    "viewport": "390×844",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 5.6,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 9.92,
+        "ink": 422,
+        "ratio": 5.6,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 10,
+        "ink": 538,
+        "ratio": 7.08,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 52.65,
+        "ink": 2055,
+        "ratio": 17.75,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 31.59,
+        "ink": 249,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi",
+        "size": 13,
+        "ink": 144,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "en",
+    "viewport": "390×844",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 6.14,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 9.92,
+        "ink": 401,
+        "ratio": 6.14,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 10,
+        "ink": 671,
+        "ratio": 7.08,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 52.65,
+        "ink": 2055,
+        "ratio": 17.75,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 31.59,
+        "ink": 249,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday",
+        "size": 13,
+        "ink": 174,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "ar",
+    "viewport": "430×932",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 5.26,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12.8,
+        "ink": 162,
+        "ratio": 5.26,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 12,
+        "ink": 459,
+        "ratio": 7.18,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 58.05,
+        "ink": 2438,
+        "ratio": 17.85,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 34.83,
+        "ink": 132,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 13,
+        "ink": 103,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "fr",
+    "viewport": "430×932",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 5.36,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 9.92,
+        "ink": 421,
+        "ratio": 5.36,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 10,
+        "ink": 541,
+        "ratio": 7.13,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 58.05,
+        "ink": 2438,
+        "ratio": 17.85,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 34.83,
+        "ink": 303,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi",
+        "size": 13,
+        "ink": 144,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "en",
+    "viewport": "430×932",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 6.02,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 9.92,
+        "ink": 401,
+        "ratio": 6.02,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 10,
+        "ink": 677,
+        "ratio": 7.13,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 58.05,
+        "ink": 2438,
+        "ratio": 17.85,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 34.83,
+        "ink": 303,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday",
+        "size": 13,
+        "ink": 174,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "ar",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 6.96,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12.8,
+        "ink": 161,
+        "ratio": 7.02,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 12,
+        "ink": 459,
+        "ratio": 6.96,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 103.68,
+        "ink": 7064,
+        "ratio": 17.75,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 62.208,
+        "ink": 375,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 13,
+        "ink": 103,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "fr",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 4.77,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 9.92,
+        "ink": 417,
+        "ratio": 4.77,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 10,
+        "ink": 543,
+        "ratio": 6.97,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 103.68,
+        "ink": 7064,
+        "ratio": 17.75,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 62.208,
+        "ink": 839,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi",
+        "size": 13,
+        "ink": 144,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "en",
+    "viewport": "768×1024",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 4.71,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 9.92,
+        "ink": 394,
+        "ratio": 4.71,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 10,
+        "ink": 673,
+        "ratio": 6.92,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 103.68,
+        "ink": 7064,
+        "ratio": 17.75,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 62.208,
+        "ink": 839,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday",
+        "size": 13,
+        "ink": 174,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "ar",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 7.31,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 16,
+        "ink": 244,
+        "ratio": 8.05,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 16,
+        "ink": 778,
+        "ratio": 7.31,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 112,
+        "ink": 8235,
+        "ratio": 17.96,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 67.2,
+        "ink": 425,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 16,
+        "ink": 299,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 17.6,
+        "ink": 165,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 264,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 638,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "fr",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 4.9,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 9.92,
+        "ink": 415,
+        "ratio": 4.9,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 16,
+        "ink": 1036,
+        "ratio": 7.18,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 112,
+        "ink": 8235,
+        "ratio": 17.96,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 67.2,
+        "ink": 984,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 16,
+        "ink": 299,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi",
+        "size": 17.6,
+        "ink": 241,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 264,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 638,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "en",
+    "viewport": "1200×1600",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 4.94,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 9.92,
+        "ink": 391,
+        "ratio": 4.94,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 16,
+        "ink": 1301,
+        "ratio": 7.18,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 112,
+        "ink": 8235,
+        "ratio": 17.96,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 67.2,
+        "ink": 984,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 16,
+        "ink": 299,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday",
+        "size": 17.6,
+        "ink": 283,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 264,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 638,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "ar",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 5.24,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 16,
+        "ink": 246,
+        "ratio": 8.01,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 16,
+        "ink": 772,
+        "ratio": 5.24,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 112,
+        "ink": 8221,
+        "ratio": 16.64,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 67.2,
+        "ink": 425,
+        "ratio": 11.03,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 16,
+        "ink": 299,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 17.6,
+        "ink": 165,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 264,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 638,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "fr",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 5.3,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Faire-part de mariage",
+        "size": 9.92,
+        "ink": 421,
+        "ratio": 8.97,
+        "need": 4.5
+      },
+      {
+        "text": "Vous êtes conviés au mariage de",
+        "size": 16,
+        "ink": 1030,
+        "ratio": 5.3,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 112,
+        "ink": 8225,
+        "ratio": 16.64,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 67.2,
+        "ink": 984,
+        "ratio": 10.96,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 16,
+        "ink": 299,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Samedi",
+        "size": 17.6,
+        "ink": 241,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 264,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 638,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight",
+    "locale": "en",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/black-gold",
+    "leaves": 8,
+    "minRatio": 4.8,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "Wedding invitation",
+        "size": 9.92,
+        "ink": 402,
+        "ratio": 8.97,
+        "need": 4.5
+      },
+      {
+        "text": "Invite you to celebrate the wedd",
+        "size": 16,
+        "ink": 1285,
+        "ratio": 4.8,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 112,
+        "ink": 8225,
+        "ratio": 16.64,
+        "need": 3
+      },
+      {
+        "text": "&",
+        "size": 67.2,
+        "ink": 984,
+        "ratio": 10.96,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 16,
+        "ink": 299,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "Saturday",
+        "size": 17.6,
+        "ink": 283,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 264,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 638,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial:no-photo",
+    "locale": "ar",
+    "viewport": "390×844",
+    "url": "/qa/invitation/modern?photo=0",
+    "leaves": 14,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12,
+        "ink": 160,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 11.2,
+        "ink": 187,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 12,
+        "ink": 861,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 70.2,
+        "ink": 2282,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 33.6,
+        "ink": 196,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "17",
+        "size": 132.6,
+        "ink": 1898,
+        "ratio": 4.64,
+        "need": 3
+      },
+      {
+        "text": "جويلية 2027",
+        "size": 12,
+        "ink": 199,
+        "ratio": 5.49,
+        "need": 4.5
+      },
+      {
+        "text": "سيرين",
+        "size": 70.2,
+        "ink": 2986,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 11.2,
+        "ink": 105,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 14,
+        "ink": 316,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 11.2,
+        "ink": 91,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 14,
+        "ink": 451,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 11.2,
+        "ink": 87,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 14,
+        "ink": 183,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "editorial:no-photo",
+    "locale": "ar",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/modern?photo=0",
+    "leaves": 14,
+    "minRatio": 4.23,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 15.2,
+        "ink": 246,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "17.07.2027",
+        "size": 13.6,
+        "ink": 235,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "بمشيئة الله وبمباركة العائلتين ،",
+        "size": 15.2,
+        "ink": 1410,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "محمد",
+        "size": 132,
+        "ink": 7759,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 48,
+        "ink": 399,
+        "ratio": 4.23,
+        "need": 3
+      },
+      {
+        "text": "17",
+        "size": 208,
+        "ink": 4586,
+        "ratio": 4.64,
+        "need": 3
+      },
+      {
+        "text": "جويلية 2027",
+        "size": 15.2,
+        "ink": 298,
+        "ratio": 5.49,
+        "need": 4.5
+      },
+      {
+        "text": "سيرين",
+        "size": 132,
+        "ink": 9967,
+        "ratio": 14.37,
+        "need": 3
+      },
+      {
+        "text": "التاريخ",
+        "size": 13.6,
+        "ink": 152,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "السبت 17 جويلية",
+        "size": 17.6,
+        "ink": 446,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "المكان",
+        "size": 13.6,
+        "ink": 135,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 631,
+        "ratio": 14.37,
+        "need": 4.5
+      },
+      {
+        "text": "الساعة",
+        "size": 13.6,
+        "ink": 125,
+        "ratio": 4.99,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 257,
+        "ratio": 14.37,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight:no-photo",
+    "locale": "ar",
+    "viewport": "390×844",
+    "url": "/qa/invitation/black-gold?photo=0",
+    "leaves": 8,
+    "minRatio": 7.53,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 12.8,
+        "ink": 170,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 12,
+        "ink": 459,
+        "ratio": 7.53,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 52.65,
+        "ink": 2055,
+        "ratio": 17.96,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 31.59,
+        "ink": 122,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 12.8,
+        "ink": 217,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 13,
+        "ink": 103,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 13,
+        "ink": 162,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 13,
+        "ink": 400,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  },
+  {
+    "layout": "midnight:no-photo",
+    "locale": "ar",
+    "viewport": "1440×900",
+    "url": "/qa/invitation/black-gold?photo=0",
+    "leaves": 8,
+    "minRatio": 7.53,
+    "low": [],
+    "collisions": [],
+    "contrast": [
+      {
+        "text": "دعوة زفاف",
+        "size": 16,
+        "ink": 251,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "يسعدنا حضوركم للاحتفال بزفاف",
+        "size": 16,
+        "ink": 779,
+        "ratio": 7.53,
+        "need": 4.5
+      },
+      {
+        "text": "محمد سيرين",
+        "size": 112,
+        "ink": 8235,
+        "ratio": 17.96,
+        "need": 3
+      },
+      {
+        "text": "و",
+        "size": 67.2,
+        "ink": 425,
+        "ratio": 11.08,
+        "need": 3
+      },
+      {
+        "text": "17.07.2027",
+        "size": 16,
+        "ink": 299,
+        "ratio": 11.08,
+        "need": 4.5
+      },
+      {
+        "text": "السبت",
+        "size": 17.6,
+        "ink": 165,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "20:00",
+        "size": 17.6,
+        "ink": 264,
+        "ratio": 14.23,
+        "need": 4.5
+      },
+      {
+        "text": "قاعة الأفراح الكبرى",
+        "size": 17.6,
+        "ink": 638,
+        "ratio": 14.23,
+        "need": 4.5
+      }
+    ]
+  }
+]
