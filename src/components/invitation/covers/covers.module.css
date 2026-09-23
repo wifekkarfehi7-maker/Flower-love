@@ -1,6 +1,7 @@
 /*
- * P2 cover prototypes. Scoped to this module: nothing here reaches the live
- * renderer or the site.
+ * Cover compositions chosen by `theme.coverLayout` (editorial, arch,
+ * midnight). Scoped to this module; the classic cover and every other
+ * section keep their own styles.
  *
  * Motion rule: every element's resting style IS its final state. Movement is
  * layered on only under `prefers-reduced-motion: no-preference`, so reduced
@@ -8,34 +9,34 @@
  * special casing. Nothing loops; one easing throughout.
  */
 
-.stage {
-  --p2-ease: cubic-bezier(0.22, 1, 0.36, 1);
+.cover {
+  --cover-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ─── Shared motion primitives ─────────────────────────────────────────── */
 
-@keyframes p2-mask {
+@keyframes cover-mask {
   from { clip-path: inset(0 0 100% 0); }
   to { clip-path: inset(0 0 0 0); }
 }
 
-@keyframes p2-rise {
+@keyframes cover-rise {
   /* Clear of the mask's own padding, so no ascender or dot shows before the line enters. */
   from { transform: translateY(calc(100% + 0.3em)); }
   to { transform: translateY(0); }
 }
 
-@keyframes p2-fade {
+@keyframes cover-fade {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
-@keyframes p2-draw {
+@keyframes cover-draw {
   from { stroke-dashoffset: 1; }
   to { stroke-dashoffset: 0; }
 }
 
-@keyframes p2-push {
+@keyframes cover-push {
   from { transform: scale(1.06); }
   to { transform: scale(1); }
 }
@@ -58,29 +59,29 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .stage[data-open="false"] :is(.maskReveal, .fade, .fadeSlow, .push) { opacity: 0; }
-  .stage[data-open="false"] .line { transform: translateY(calc(100% + 0.3em)); }
-  .stage[data-open="false"] .draw { stroke-dashoffset: 1; }
+  .cover[data-open="false"] :is(.maskReveal, .fade, .fadeSlow, .push) { opacity: 0; }
+  .cover[data-open="false"] .line { transform: translateY(calc(100% + 0.3em)); }
+  .cover[data-open="false"] .draw { stroke-dashoffset: 1; }
 
-  .stage[data-open="true"] .maskReveal {
-    animation: p2-mask 1600ms var(--p2-ease) var(--d, 0ms) both;
+  .cover[data-open="true"] .maskReveal {
+    animation: cover-mask 1600ms var(--cover-ease) var(--d, 0ms) both;
   }
-  .stage[data-open="true"] .line {
-    animation: p2-rise 1300ms var(--p2-ease) var(--d, 0ms) both;
+  .cover[data-open="true"] .line {
+    animation: cover-rise 1300ms var(--cover-ease) var(--d, 0ms) both;
   }
-  .stage[data-open="true"] .fade {
-    animation: p2-fade 1100ms ease-out var(--d, 0ms) both;
+  .cover[data-open="true"] .fade {
+    animation: cover-fade 1100ms ease-out var(--d, 0ms) both;
   }
-  .stage[data-open="true"] .fadeSlow {
-    animation: p2-fade 2400ms ease-out var(--d, 0ms) both;
+  .cover[data-open="true"] .fadeSlow {
+    animation: cover-fade 2400ms ease-out var(--d, 0ms) both;
   }
-  .stage[data-open="true"] .draw {
-    animation: p2-draw 2600ms cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0ms) both;
+  .cover[data-open="true"] .draw {
+    animation: cover-draw 2600ms cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0ms) both;
   }
-  .stage[data-open="true"] .push {
+  .cover[data-open="true"] .push {
     animation:
-      p2-fade 2400ms ease-out var(--d, 0ms) both,
-      p2-push 7000ms cubic-bezier(0.2, 0.6, 0.2, 1) var(--d, 0ms) both;
+      cover-fade 2400ms ease-out var(--d, 0ms) both,
+      cover-push 7000ms cubic-bezier(0.2, 0.6, 0.2, 1) var(--d, 0ms) both;
   }
 }
 
@@ -122,13 +123,9 @@
   column-gap: 1rem;
   padding: 1.35rem 1.35rem 1.6rem;
   color: var(--inv-text);
-  /* Minimal Luxe's own muted (#8A8175) and brass (#A08C6E) sit at 3.4:1 and 2.9:1 on its ivory —
-     under AA for small type. Both are pulled toward the ink here; the real fix is the template token. */
-  --ed-muted: color-mix(in srgb, var(--inv-text) 30%, var(--inv-text-muted));
+  /* Minimal Luxe's brass (#A08C6E) is 2.9:1 on its ivory — too faint even for the large و and
+     date numeral. Pulled a quarter of the way to the ink it reads at 4.2:1 and stays brass. */
   --ed-brass: color-mix(in srgb, var(--inv-text) 25%, var(--inv-primary));
-}
-.editorial .label {
-  color: var(--ed-muted);
 }
 
 .edFolio {
@@ -211,7 +208,7 @@
   gap: 0.6rem;
   border: 1px solid color-mix(in srgb, var(--inv-primary) 35%, transparent);
   background: var(--inv-surface);
-  color: var(--ed-muted);
+  color: var(--inv-text-muted);
 }
 .edNumeral .figures:first-child {
   font-size: clamp(6rem, 34vw, 13rem);
@@ -232,7 +229,7 @@
 }
 .edCredits dt {
   font-size: 0.7rem;
-  color: var(--ed-muted);
+  color: var(--inv-text-muted);
 }
 .edCredits dd {
   margin-top: 0.15rem;

@@ -32,19 +32,19 @@ values
   ('modern', 'Minimal Luxe', 'مينيمال فاخر', 'editorial',
    'Warm ivory, taupe and champagne with oversized type and generous negative space.',
    'active',
-   '{"background":"#F6F2EC","surface":"#FFFDFA","primary":"#A08C6E","accent":"#D9C7A8","text":"#24211D","textMuted":"#8A8175","backgroundStyle":"solid","cardRadius":"none","buttonStyle":"sharp","galleryLayout":"grid","countdownStyle":"minimal","dividerStyle":"line","motif":"square","openAnimation":"minimal-fade","texture":"satin","frameStyle":"hairline","sealColor":"#A08C6E","foil":true}',
+   '{"background":"#F6F2EC","surface":"#FFFDFA","primary":"#A08C6E","accent":"#D9C7A8","text":"#24211D","textMuted":"#6F675C","backgroundStyle":"solid","cardRadius":"none","buttonStyle":"sharp","galleryLayout":"grid","countdownStyle":"minimal","dividerStyle":"line","motif":"square","openAnimation":"minimal-fade","texture":"satin","frameStyle":"hairline","sealColor":"#A08C6E","foil":true,"coverLayout":"editorial"}',
    '{"heading":"cinzel","body":"cormorant","display":"kufi"}', 5),
 
   ('black-gold', 'Onyx & Champagne', 'أونيكس وشمبانيا', 'luxury',
    'Near-black satin with champagne rules and a single champagne wax seal.',
    'active',
-   '{"background":"#050505","surface":"#121212","primary":"#D8BC7E","accent":"#F2E4C1","text":"#F6F0E4","textMuted":"#A79C88","backgroundStyle":"radial","cardRadius":"none","buttonStyle":"sharp","galleryLayout":"masonry","countdownStyle":"ornate","dividerStyle":"line","motif":"moon","openAnimation":"wax-seal","texture":"satin","frameStyle":"double-rule","sealColor":"#D8BC7E","foil":true}',
+   '{"background":"#050505","surface":"#121212","primary":"#D8BC7E","accent":"#F2E4C1","text":"#F6F0E4","textMuted":"#A79C88","backgroundStyle":"radial","cardRadius":"none","buttonStyle":"sharp","galleryLayout":"masonry","countdownStyle":"ornate","dividerStyle":"line","motif":"moon","openAnimation":"wax-seal","texture":"satin","frameStyle":"double-rule","sealColor":"#D8BC7E","foil":true,"coverLayout":"midnight"}',
    '{"heading":"cinzel","body":"cormorant","display":"naskh"}', 6),
 
   ('traditional-arabic', 'Royal Arabesque', 'أرابيسك ملكي', 'heritage',
    'Midnight navy and gold under an arch, with interlaced geometry and a gold seal.',
    'active',
-   '{"background":"#071A2C","surface":"#0E2C46","primary":"#CBA95C","accent":"#EBD6A0","text":"#F4EBD6","textMuted":"#A9BACB","backgroundStyle":"gradient","cardRadius":"ornate","buttonStyle":"outline-ornate","galleryLayout":"carousel","countdownStyle":"ornate","dividerStyle":"ornament","motif":"wave","openAnimation":"wax-seal","decorativeStyle":"arabesque","texture":"velvet","frameStyle":"arch","sealColor":"#CBA95C","foil":true}',
+   '{"background":"#071A2C","surface":"#0E2C46","primary":"#CBA95C","accent":"#EBD6A0","text":"#F4EBD6","textMuted":"#A9BACB","backgroundStyle":"gradient","cardRadius":"ornate","buttonStyle":"outline-ornate","galleryLayout":"carousel","countdownStyle":"ornate","dividerStyle":"ornament","motif":"wave","openAnimation":"wax-seal","decorativeStyle":"arabesque","texture":"velvet","frameStyle":"arch","sealColor":"#CBA95C","foil":true,"coverLayout":"arch"}',
    '{"heading":"amiri","body":"naskh","display":"amiri"}', 7),
 
   ('minimal', 'Blanc Satin', 'أبيض ساتان', 'minimal',

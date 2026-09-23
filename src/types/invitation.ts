@@ -101,7 +101,15 @@ export interface TemplateTheme {
   sealColor?: string;
   /** When true, metallic elements catch a slow travelling highlight, like foil under light. */
   foil?: boolean;
+  /**
+   * The cover's composition. Absent (or "classic") keeps the original centred
+   * cover; a named layout swaps in its own composition under the same opening.
+   */
+  coverLayout?: "classic" | CoverLayout;
 }
+
+/** Cover compositions a template can name. Each is a component in components/invitation/covers. */
+export type CoverLayout = "editorial" | "arch" | "midnight";
 
 export interface TemplateFonts {
   heading: "amiri" | "playfair" | "inter" | "cairo" | "cormorant" | "cinzel" | "naskh" | "kufi";

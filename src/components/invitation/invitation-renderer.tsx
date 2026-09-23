@@ -33,6 +33,25 @@ const SECTION_COMPONENTS: Record<
   final_message: FinalMessageSection,
 };
 
+/*
+ * One tap, even before hydration. The cover is server-rendered, so on a slow
+ * connection a guest can see the seal seconds before React has attached its
+ * handlers, and a tap in that window used to do nothing. This inline script
+ * runs as the HTML is parsed: it remembers a tap on the cover until the
+ * renderer is ready, and the renderer then opens the invitation itself.
+ * Once ready (`__flOpenReady`), React handles taps directly and the script
+ * records nothing, so a later preview can never inherit a stale tap.
+ * About 250 bytes of HTML; no client JavaScript bundle is added for it.
+ */
+const EARLY_TAP_SCRIPT = `(function(){var c=document.currentScript&&document.currentScript.previousElementSibling;if(c)c.addEventListener("click",function(){if(!window.__flOpenReady)window.__flOpenQueued=true},{capture:true,once:true})})();`;
+
+declare global {
+  interface Window {
+    __flOpenQueued?: boolean;
+    __flOpenReady?: boolean;
+  }
+}
+
 export function InvitationRenderer({
   invitation,
   theme,
@@ -45,6 +64,15 @@ export function InvitationRenderer({
   isPreview?: boolean;
 }) {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  // A tap that landed before hydration opens the invitation now — no second tap.
+  React.useEffect(() => {
+    window.__flOpenReady = true;
+    if (window.__flOpenQueued) {
+      window.__flOpenQueued = false;
+      setIsOpen(true);
+    }
+  }, []);
 
   const orderedPages = [...invitation.pages]
     .filter((p) => p.isEnabled)
@@ -64,6 +92,8 @@ export function InvitationRenderer({
       {coverEnabled && (
         <CoverSection invitation={invitation} theme={theme} isOpen={isOpen} onOpen={() => setIsOpen(true)} />
       )}
+      {/* Must directly follow the cover's <section>: the script listens on its previous sibling. */}
+      {coverEnabled && <script dangerouslySetInnerHTML={{ __html: EARLY_TAP_SCRIPT }} />}
 
       {(isOpen || !coverEnabled) &&
         restPages.map((page) => {

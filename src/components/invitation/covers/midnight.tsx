@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { at, type CoverModel } from "./model";
-import styles from "./prototypes.module.css";
+import styles from "./covers.module.css";
 
 /**
  * Midnight — a film's title card. The photograph fills the screen, graded

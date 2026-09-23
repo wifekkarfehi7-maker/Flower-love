@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { at, type CoverModel } from "./model";
-import styles from "./prototypes.module.css";
+import styles from "./covers.module.css";
 
 /**
  * Editorial — a magazine opener rather than a card. Asymmetric: the groom's

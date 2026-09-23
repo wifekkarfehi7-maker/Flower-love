@@ -1,5 +1,5 @@
 import { generateInvitationText } from "@/lib/invitation-text";
-import type { InvitationData, PageConfig } from "@/types/invitation";
+import type { CoverLayout, InvitationData, PageConfig, TemplateTheme } from "@/types/invitation";
 
 const DEMO_GROOM = "محمد";
 const DEMO_BRIDE = "سيرين";
@@ -79,3 +79,24 @@ export const DEMO_INVITATION: InvitationData = {
   gallery: DEMO_GALLERY_URLS.map((url, index) => ({ id: `demo-gallery-${index}`, url })),
   pages: DEMO_PAGES,
 };
+
+/**
+ * Cover photos for the photo-led cover layouts, chosen the way a couple would
+ * pick one in the Photos step. Requested at 2400px: a cover crops a landscape
+ * frame into a tall column, which needs far more width than the gallery grid.
+ */
+const DEMO_COVER_PHOTO: Partial<Record<CoverLayout, string>> = {
+  editorial: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=2400&q=80",
+  midnight: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=2400&q=80",
+};
+
+/**
+ * The demo couple as a template's preview shows them. Only a template whose
+ * cover layout is led by a photograph gets a cover photo; every other template
+ * receives DEMO_INVITATION itself, so its preview is exactly what it was.
+ */
+export function demoInvitationFor(theme: TemplateTheme): InvitationData {
+  const layout = theme.coverLayout;
+  const photo = layout && layout !== "classic" ? DEMO_COVER_PHOTO[layout] : undefined;
+  return photo ? { ...DEMO_INVITATION, coverImageUrl: photo } : DEMO_INVITATION;
+}

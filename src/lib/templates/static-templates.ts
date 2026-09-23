@@ -153,7 +153,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       primary: "#A08C6E",
       accent: "#D9C7A8",
       text: "#24211D",
-      textMuted: "#8A8175",
+      textMuted: "#6F675C",
       backgroundStyle: "solid",
       cardRadius: "none",
       buttonStyle: "sharp",
@@ -166,6 +166,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       frameStyle: "hairline",
       sealColor: "#A08C6E",
       foil: true,
+      coverLayout: "editorial",
     },
   },
   {
@@ -197,6 +198,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       frameStyle: "double-rule",
       sealColor: "#D8BC7E",
       foil: true,
+      coverLayout: "midnight",
     },
   },
   {
@@ -229,6 +231,7 @@ export const STATIC_TEMPLATES: TemplateRecord[] = [
       frameStyle: "arch",
       sealColor: "#CBA95C",
       foil: true,
+      coverLayout: "arch",
     },
   },
   {

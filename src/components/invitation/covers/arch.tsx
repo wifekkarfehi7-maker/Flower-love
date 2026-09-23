@@ -1,5 +1,5 @@
 import { at, type CoverModel } from "./model";
-import styles from "./prototypes.module.css";
+import styles from "./covers.module.css";
 
 /*
  * The arch is drawn in a 200 × 400 box. A horseshoe: the dome's circle is

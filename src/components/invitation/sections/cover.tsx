@@ -7,6 +7,7 @@ import { BotanicalCorner } from "../ornament";
 import { FoilSweep, FrameBorder, TextureOverlay } from "../luxury";
 import { OpeningExperience } from "../opening-experience";
 import { formatDateParts } from "../date-parts";
+import { LayoutCover, isCoverLayout } from "../covers";
 import type { InvitationData, TemplateTheme } from "@/types/invitation";
 
 const STRINGS = {
@@ -31,6 +32,22 @@ export function CoverSection({
   isOpen: boolean;
 }) {
   const { locale } = useTranslation();
+
+  // A template that names a cover layout gets that composition; every other
+  // template keeps the classic cover below, untouched.
+  if (isCoverLayout(theme.coverLayout)) {
+    return (
+      <LayoutCover
+        layout={theme.coverLayout}
+        invitation={invitation}
+        theme={theme}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        monogram={initialsOf(invitation.groomName, invitation.brideName)}
+      />
+    );
+  }
+
   const t = STRINGS[locale];
   const hasCoverImage = Boolean(invitation.coverImageUrl);
   const date = formatDateParts(invitation.weddingDate, locale);

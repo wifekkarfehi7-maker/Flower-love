@@ -2,11 +2,12 @@
 /**
  * One-tap opening QA: URL → cover → ONE tap → opening animation → content.
  *
- *   node scripts/qa-one-tap.mjs --base http://localhost:3200 [--prototypes] [--out dir]
+ *   node scripts/qa-one-tap.mjs --base http://localhost:3200 [--qa-routes] [--only flow,reduced,audio,early] [--out dir]
  *
- * Point it at a production build (`next build && next start`). With
- * `--prototypes` the server must also run with ENABLE_P2_PROTOTYPES=1, and the
- * three P2 cover layouts are tested alongside every template.
+ * Point it at a production build (`next build && next start`). Every template
+ * is tested through its real preview route. With `--qa-routes` the server must
+ * also run with ENABLE_QA_ROUTES=1: the bare /qa/invitation/[slug] page adds
+ * what a preview cannot have — a music track, and no photos at all.
  *
  * Every run taps exactly once and never again. It records how long after the
  * tap the opening starts, when the opening layer stops blocking, and whether
@@ -23,11 +24,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 
-const args = { base: "http://localhost:3000", prototypes: false, out: null, only: null };
+const args = { base: "http://localhost:3000", qaRoutes: false, out: null, only: null };
 for (let i = 2; i < process.argv.length; i++) {
   const a = process.argv[i];
   if (a === "--base") args.base = process.argv[++i].replace(/\/$/, "");
-  else if (a === "--prototypes") args.prototypes = true;
+  else if (a === "--qa-routes") args.qaRoutes = true;
   else if (a === "--out") args.out = process.argv[++i];
   else if (a === "--only") args.only = process.argv[++i];
 }
@@ -43,7 +44,8 @@ async function loadPlaywright() {
 const { chromium, devices } = await loadPlaywright();
 
 const TEMPLATES = ["luxury-gold", "elegant-white", "floral", "romantic", "modern", "black-gold", "traditional-arabic", "minimal"];
-const LAYOUTS = ["editorial", "arch", "midnight"];
+/** The cover each template must render: its named layout, or the classic cover. */
+const EXPECTED_COVER = { modern: "editorial", "traditional-arabic": "arch", "black-gold": "midnight" };
 const OPEN_LABEL = { ar: "افتحوا الدعوة", fr: "Ouvrir l'invitation", en: "Open Invitation" };
 const GROOM = "محمد";
 const DEVICES = {
@@ -52,9 +54,11 @@ const DEVICES = {
 };
 
 const surfaces = [
-  ...TEMPLATES.map((slug) => ({ name: slug, url: `/templates/${slug}/preview`, kind: "template" })),
-  ...(args.prototypes ? LAYOUTS.map((l) => ({ name: `p2:${l}`, url: `/prototypes/p2/${l}?sealed=1`, kind: "prototype" })) : []),
+  ...TEMPLATES.map((slug) => ({ name: slug, slug, url: `/templates/${slug}/preview` })),
+  // No cover photo and no gallery: the photo-led layouts' designed fallbacks.
+  ...(args.qaRoutes ? ["modern", "black-gold"].map((slug) => ({ name: `${slug}:no-photo`, slug, url: `/qa/invitation/${slug}?photo=0` })) : []),
 ];
+const qaSurface = (slug) => ({ name: `${slug}:qa`, slug, url: `/qa/invitation/${slug}` });
 
 const browser = await chromium.launch();
 const results = [];
@@ -116,8 +120,8 @@ async function tapOnce(page, device, locale) {
 }
 
 /** After the reveal: nothing covers the page, the names are visible, and the page's own content is in the accessibility tree. */
-async function contentState(page, kind) {
-  return page.evaluate(({ kind, groom }) => {
+async function contentState(page) {
+  return page.evaluate(({ groom }) => {
     const layer = document.querySelector("[data-invitation] div.z-20");
     const hit = document.elementFromPoint(innerWidth / 2, innerHeight / 2);
     const blocked = !!layer && layer.contains(hit);
@@ -130,8 +134,9 @@ async function contentState(page, kind) {
       visible = true;
     }
     const sections = document.querySelectorAll("[data-invitation] section").length;
-    return { blocked, namesVisible: visible, sections, contentRendered: kind === "template" ? sections > 1 : visible, dialog: !!document.querySelector("[role=dialog],[aria-modal=true]") };
-  }, { kind, groom: GROOM });
+    const coverLayout = document.querySelector("[data-invitation] section[data-cover-layout]")?.getAttribute("data-cover-layout") ?? "classic";
+    return { blocked, namesVisible: visible, sections, contentRendered: sections > 1, coverLayout, dialog: !!document.querySelector("[role=dialog],[aria-modal=true]") };
+  }, { groom: GROOM });
 }
 
 async function runFlow(surface, device, { locale = "ar", reduced = false, music = null, refusePlay = false } = {}) {
@@ -156,7 +161,7 @@ async function runFlow(surface, device, { locale = "ar", reduced = false, music 
   // Let the reveal's own motion finish before judging what the guest can see.
   await page.waitForTimeout(reduced ? 300 : 3800);
   const qa = await page.evaluate(() => window.__qa);
-  const content = await contentState(page, surface.kind);
+  const content = await contentState(page);
   const audio = music ? await page.evaluate(() => { const a = document.querySelector("audio"); return a ? { paused: a.paused, calls: window.__qa.playCalls } : null; }) : null;
   await context.close();
   // A missing track is the point of that case: its 404 is expected, not a page error.
@@ -168,7 +173,8 @@ async function runFlow(surface, device, { locale = "ar", reduced = false, music 
     revealMs: qa.revealedAt != null ? Math.round(qa.revealedAt - qa.tapAt) : null,
     ...content, audio, errors,
   };
-  r.pass = r.taps === 1 && r.startMs != null && r.startMs <= 100 && r.revealMs != null && !r.blocked && r.contentRendered && r.namesVisible && !r.dialog && errors.length === 0;
+  r.expectedCover = EXPECTED_COVER[surface.slug] ?? "classic";
+  r.pass = r.taps === 1 && r.startMs != null && r.startMs <= 100 && r.revealMs != null && !r.blocked && r.contentRendered && r.namesVisible && r.coverLayout === r.expectedCover && !r.dialog && errors.length === 0;
   return r;
 }
 
@@ -216,14 +222,14 @@ if (want("flow")) for (const s of surfaces) for (const device of Object.keys(DEV
 if (want("reduced")) for (const s of surfaces) for (const device of Object.keys(DEVICES)) {
   const r = await runFlow(s, device, { reduced: true }); results.push({ suite: "reduced", ...r }); log(r);
 }
-// 3. Audio never blocks the opening (prototype stage mounts the real MusicPlayer).
-if (want("audio") && args.prototypes) for (const s of surfaces.filter((x) => x.kind === "prototype")) for (const device of Object.keys(DEVICES)) {
+// 3. Audio never blocks the opening: the three new covers and one classic cover, through the real MusicPlayer.
+if (want("audio") && args.qaRoutes) for (const s of ["modern", "traditional-arabic", "black-gold", "luxury-gold"].map(qaSurface)) for (const device of Object.keys(DEVICES)) {
   for (const [music, refusePlay] of [["ok", false], ["missing", false], ["hang", false], ["ok", true]]) {
     const r = await runFlow(s, device, { music, refusePlay }); results.push({ suite: "audio", ...r }); log(r);
   }
 }
 // 4. A tap before hydration on a slow phone.
-if (want("early")) for (const s of [surfaces.find((x) => x.name === "black-gold"), surfaces.find((x) => x.name === "luxury-gold"), ...surfaces.filter((x) => x.kind === "prototype")].filter(Boolean)) {
+if (want("early")) for (const s of surfaces.filter((x) => TEMPLATES.includes(x.name))) {
   const r = await runEarly(s); results.push({ suite: "early", ...r }); log(r);
 }
 

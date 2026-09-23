@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { getTemplateBySlug } from "@/lib/templates/get-templates";
 import { getTemplatePreview } from "@/lib/templates/previews";
-import { DEMO_INVITATION } from "@/lib/templates/demo-invitation";
+import { demoInvitationFor } from "@/lib/templates/demo-invitation";
 import { InvitationPreviewShell } from "@/components/invitation/invitation-preview-shell";
 import { templateUseHref } from "@/lib/templates/presentation";
 
@@ -24,5 +24,5 @@ export default async function TemplatePreviewPage({ params }: { params: { slug: 
   const template = await getTemplateBySlug(params.slug);
   if (!template) notFound();
 
-  return <InvitationPreviewShell template={template} invitation={DEMO_INVITATION} ctaHref={templateUseHref(template.slug)} />;
+  return <InvitationPreviewShell template={template} invitation={demoInvitationFor(template.theme)} ctaHref={templateUseHref(template.slug)} />;
 }
